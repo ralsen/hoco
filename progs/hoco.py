@@ -15,6 +15,23 @@ import config as cfg
 logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
+def getOnlineDevices():
+    devlist = []
+    for i in range (1, 140):
+        print(i)
+        url = f"http://192.168.2.{i}"  # Beispiel-URL des Geräts
+        try:
+            response = requests.get(url, timeout=1)
+            if response.status_code == 200:
+                devlist.append(f"http://192.168.2.{i}")
+        except:
+            pass
+    return devlist
+
+def isDeviceOnline(dev):
+    response = os.system(f"ping -c 1 -W 1 {dev}.local > /dev/null 2>&1")
+    return response == 0
+
 class Shelly:
     def __init__(self, name, ip):
         self.ip = ip
@@ -61,13 +78,18 @@ if __name__ == '__main__':
         DevList = yaml.safe_load(ymlfile)
     logger.info(DevList)
     
-    
+    for netname in DevList:
+        if isDeviceOnline(netname):
+            print(f"{netname} is online")
+        else:
+            print(f"{netname} is offline")
+    #print(getOnlineDevices())
     for key, value in DevList.items():
         devdict = {key: value}
         logger.info(f"Hardware: {devdict[key]['Hardware']} - Type: {devdict[key]['Type']}")
         logger.info(devdict)
         logger.info("")
-
+    """
     GartenLampe = Shelly('Gartenlampe', '192.168.2.139')
     data = GartenLampe.read("rpc/Shelly.GetComponents")
     for key in data['components']:
@@ -80,6 +102,7 @@ if __name__ == '__main__':
         print(f"RSSI: {rssi}")
         print(f"SSID: {ssid}")    #print(data['components'])
 
+    
     data = GartenLampe.read("rpc/Shelly.GetStatus")
     data = GartenLampe.read("rpc/Shelly.GetConfig")
     data = GartenLampe.read("rpc/Shelly.GetDeviceInfo")
@@ -96,8 +119,9 @@ if __name__ == '__main__':
     data = GartenLampe.read("rpc/Ws.GetStatus")
     data = GartenLampe.read("rpc/Ws.GetConfig")
 
-    Balkon = Shelly('Balkon', '192.168.2.136')
-    data = Balkon.read("settings")
-    data = Balkon.read("status")
-    data = Balkon.read("relay/0")    
-    data = Balkon.read("meter/0")        
+    Solar = Shelly('Solar', '192.168.2.136')
+    data = Solar.read("settings")
+    data = Solar.read("status")
+    data = Solar.read("relay/0")    
+    data = Solar.read("meter/0")        
+    """

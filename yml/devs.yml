@@ -1,6 +1,16 @@
 shellyplug-083A8DF437C7:
     Hardware: Shelly
     Type: SHPLG2-1
+    name: Solar
+    time: 60
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: modulname_fuer_SHPLG2-1
+
+ShellyPlus1-E465B8F0F750:
+    Hardware: Shelly
+    Type: SHPLG2-1
+    name: Gartenlampe
     time: 60
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
