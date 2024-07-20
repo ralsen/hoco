@@ -1,0 +1,13 @@
+png/
+docs/
+node_modules/
+__pycache__/
+*.log
+*.pyc
+*.zip
+*.rrd
+*.json
+._*
+.DS*
+
+
