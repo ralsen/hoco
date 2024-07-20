@@ -1,0 +1,41 @@
+shellyplug-083A8DF437C7:
+    Hardware: Shelly
+    Type: SHPLG2-1
+    time: 60
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: modulname_fuer_SHPLG2-1
+
+Buero_68_C6_3A_87_FA_CE:
+    Hardware: NODEMCU
+    Type: DS1820
+    time: 300
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: modulname_fuer_DS1820
+
+ToF_Sensor_BC_DD_C2_24_3B_F4:
+    Hardware: D1MINI
+    Type: ToF
+    time: 150
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: modulname_fuer_ToF
+
+Palisade_DC_4F_22_0A_F5_52:
+    Hardware: SONOFF_S20
+    Type: Switch
+    time: 150
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: modulname_fuer_Switch
+
+NeuesTeil_AA_BB_CC_DD_EE_FF:
+    Hardware: Shelly
+    Type: SHSWT
+    time: 150
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: modulname_fuer_Shelly_SHSWT
+
+
