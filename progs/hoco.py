@@ -12,7 +12,6 @@ import requests
 
 import config as cfg
 
-
 logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
