@@ -15,40 +15,42 @@ import config as cfg
 logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
-def getOnlineDevices():
-    devlist = []
-    for i in range (1, 140):
-        print(i)
-        url = f"http://192.168.2.{i}"  # Beispiel-URL des Geräts
+class DevHandle:
+    def __init__(self, myDefs, hostname):
         try:
-            response = requests.get(url, timeout=1)
-            if response.status_code == 200:
-                devlist.append(f"http://192.168.2.{i}")
-        except:
-            pass
-    return devlist
-
-def isDeviceOnline(dev):
-    response = os.system(f"ping -c 1 -W 1 {dev}.local > /dev/null 2>&1")
-    return response == 0
-
-class Shelly:
-    def __init__(self, name, ip):
-        self.ip = ip
-        self.name = name
+            self.ip = socket.gethostbyname(hostname)
+            self.hostname = hostname
+            self.myDefs = myDefs
+            logger.debug(f"Die IP-Adresse von {hostname} ist {self.ip}")
+        except socket.gaierror as e:
+            self.isonline = False            
+            logger.error(f"{hostname}: {e}")
+        else:
+            self.isonline = self.isDeviceOnline(self.ip)
         
     def read(self, endpoint):
-        print(self.ip)
+        logger.debug(f"START: http://{self.ip}/{endpoint}: --------------------->")
         try:
             res = requests.get (f"http://{self.ip}/{endpoint}")
+            if not res.ok:
+                raise ValueError (f"endpoint was '{endpoint}'")
         except Exception as e:
             logger.error(f"cant get the Shelly data: {e}")
             return None
-        data = json.loads(res.text)
-        logger.info(f"START: {self.name} - {endpoint}: --------------------->")
-        logger.info(data)
-        logger.info(f"END:   {self.name} - {endpoint}: --------------------->")
+        if self.myDefs['format'] == "json":
+            data = json.loads(res.text)
+        elif self.myDefs['format'] == 'text':
+            data = res.text
+        else:
+            logger.error(f"wrong response format for {self.hostname}")
+            data = None   
+        logger.debug(data)
+        logger.debug(f"END:   http://{self.ip}/{endpoint}: --------------------->")
         return data
+
+    def isDeviceOnline(self, dev):
+        response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")
+        return response == 0
         
 if __name__ == '__main__':
     current_file_path = os.path.realpath(__file__)
@@ -76,52 +78,17 @@ if __name__ == '__main__':
     
     with open(f"{cfg.ini['YMLPath']}/devs.yml", 'r') as ymlfile:
         DevList = yaml.safe_load(ymlfile)
-    logger.info(DevList)
+    logger.debug(DevList)
     
     for netname in DevList:
-        if isDeviceOnline(netname):
-            print(f"{netname} is online")
-        else:
-            print(f"{netname} is offline")
-    #print(getOnlineDevices())
-    for key, value in DevList.items():
-        devdict = {key: value}
-        logger.info(f"Hardware: {devdict[key]['Hardware']} - Type: {devdict[key]['Type']}")
-        logger.info(devdict)
-        logger.info("")
-    """
-    GartenLampe = Shelly('Gartenlampe', '192.168.2.139')
-    data = GartenLampe.read("rpc/Shelly.GetComponents")
-    for key in data['components']:
-        print(key)
-        ssid = key.get('config', {}).get('ap', {}).get('ssid', 'N/A')
-        sta_ip = key.get('status', {}).get('sta_ip', 'N/A')
-        rssi = key.get('status', {}).get('rssi', 'N/A')
-        
-        print(f"IP:   {sta_ip}")
-        print(f"RSSI: {rssi}")
-        print(f"SSID: {ssid}")    #print(data['components'])
-
-    
-    data = GartenLampe.read("rpc/Shelly.GetStatus")
-    data = GartenLampe.read("rpc/Shelly.GetConfig")
-    data = GartenLampe.read("rpc/Shelly.GetDeviceInfo")
-    data = GartenLampe.read("rpc/Sys.GetStatus")
-    data = GartenLampe.read("rpc/Sys.GetConfig")
-    data = GartenLampe.read("rpc/Wifi.GetStatus")
-    data = GartenLampe.read("rpc/Wifi.GetConfig")
-    data = GartenLampe.read("rpc/Eth.GetStatus")
-    data = GartenLampe.read("rpc/Eth.GetConfig")
-    data = GartenLampe.read("rpc/BLE.GetStatus")
-    data = GartenLampe.read("rpc/BLE.GetConfig")
-    data = GartenLampe.read("rpc/Cloud.GetStatus")
-    data = GartenLampe.read("rpc/Cloud.GetConfig")
-    data = GartenLampe.read("rpc/Ws.GetStatus")
-    data = GartenLampe.read("rpc/Ws.GetConfig")
-
-    Solar = Shelly('Solar', '192.168.2.136')
-    data = Solar.read("settings")
-    data = Solar.read("status")
-    data = Solar.read("relay/0")    
-    data = Solar.read("meter/0")        
-    """
+        print(netname)
+        try:
+            DevList[netname]['eps']
+            DevList[netname]['format']
+        except KeyError as err:
+            logger.error(f"{err} not specified for {netname}")
+            continue
+        DevList[netname]['devhandle'] = DevHandle(DevList[netname], f"{netname}.local")
+        if DevList[netname]['devhandle'].isonline:
+            for ep in DevList[netname]['eps']:
+                DevList[netname][ep] = DevList[netname]['devhandle'].read(ep)
