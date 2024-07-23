@@ -1,17 +1,49 @@
-shellyplug-083A8DF437C7:
-    Hardware: Shelly
-    Type: SHPLG2-1
-    name: Solar
-    time: 60
-    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
-    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: modulname_fuer_SHPLG2-1
-
 ShellyPlus1-E465B8F0F750:
     Hardware: Shelly
     Type: SHPLG2-1
     name: Gartenlampe
     time: 60
+    format: json
+    eps: [  
+        rpc/Shelly.GetDeviceInfo,
+        rpc/Shelly.GetStatus,
+        rpc/shelly.GetConfig,
+        rpc/Sys.GetStatus,
+        rpc/Sys.GetConfig
+        ]
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: modulname_fuer_SHPLG2-1
+
+shellyplug-083A8DF437C7:
+    Hardware: Shelly
+    Type: SHPLG2-1
+    name: Solar
+    time: 60
+    format: json
+    eps: [  
+        settings,
+        status,
+        relay/0,
+        meter/0
+        ]
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: modulname_fuer_SHPLG2-1
+
+ShellyPMMiniG3-DCDA0CB60CD0:
+    Hardware: Shelly
+    Type: SHPLG2-1
+    name: Solar-Power
+    time: 60
+    format: json
+    eps: [  
+        rpc/Shelly.GetDeviceInfo,
+        rpc/Shelly.GetStatus,
+        rpc/shelly.GetConfig,
+        rpc/Sys.GetStatus,
+        rpc/Sys.GetConfig
+        ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: modulname_fuer_SHPLG2-1
@@ -19,6 +51,12 @@ ShellyPlus1-E465B8F0F750:
 Buero_68_C6_3A_87_FA_CE:
     Hardware: NODEMCU
     Type: DS1820
+    name: Buero
+    format: text
+    eps: [  
+        info
+        ]
+
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -27,7 +65,12 @@ Buero_68_C6_3A_87_FA_CE:
 ToF_Sensor_BC_DD_C2_24_3B_F4:
     Hardware: D1MINI
     Type: ToF
+    name: ToF_Sensor
     time: 150
+    format: text
+    eps: [  
+        info
+        ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: modulname_fuer_ToF
@@ -35,7 +78,12 @@ ToF_Sensor_BC_DD_C2_24_3B_F4:
 Palisade_DC_4F_22_0A_F5_52:
     Hardware: SONOFF_S20
     Type: Switch
+    name: Palisade
     time: 150
+    format: text
+    eps: [  
+        info
+        ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: modulname_fuer_Switch
@@ -43,7 +91,15 @@ Palisade_DC_4F_22_0A_F5_52:
 NeuesTeil_AA_BB_CC_DD_EE_FF:
     Hardware: Shelly
     Type: SHSWT
+    name: neues_Teil
     time: 150
+    format: text
+    eps: [  
+        info,
+        test1,
+        test2,
+        test3
+        ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: modulname_fuer_Shelly_SHSWT
