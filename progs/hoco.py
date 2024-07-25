@@ -7,50 +7,13 @@ import logging
 import os
 import socket
 import yaml
-import json
-import requests
+import time
 
 import config as cfg
+import devhandler as dh
 
 logger = logging.getLogger(__name__)
-logging.getLogger('urllib3').setLevel(logging.WARNING)
 
-class DevHandle:
-    def __init__(self, myDefs, hostname):
-        try:
-            self.ip = socket.gethostbyname(hostname)
-            self.hostname = hostname
-            self.myDefs = myDefs
-            logger.debug(f"Die IP-Adresse von {hostname} ist {self.ip}")
-        except socket.gaierror as e:
-            self.isonline = False            
-            logger.error(f"{hostname}: {e}")
-        else:
-            self.isonline = self.isDeviceOnline(self.ip)
-        
-    def read(self, endpoint):
-        logger.debug(f"START: http://{self.ip}/{endpoint}: --------------------->")
-        try:
-            res = requests.get (f"http://{self.ip}/{endpoint}")
-            if not res.ok:
-                raise ValueError (f"endpoint was '{endpoint}'")
-        except Exception as e:
-            logger.error(f"cant get the Shelly data: {e}")
-            return None
-        if self.myDefs['format'] == "json":
-            data = json.loads(res.text)
-        elif self.myDefs['format'] == 'text':
-            data = res.text
-        else:
-            logger.error(f"wrong response format for {self.hostname}")
-            data = None   
-        logger.debug(data)
-        logger.debug(f"END:   http://{self.ip}/{endpoint}: --------------------->")
-        return data
-
-    def isDeviceOnline(self, dev):
-        response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")
-        return response == 0
         
 if __name__ == '__main__':
     current_file_path = os.path.realpath(__file__)
@@ -88,7 +51,9 @@ if __name__ == '__main__':
         except KeyError as err:
             logger.error(f"{err} not specified for {netname}")
             continue
-        DevList[netname]['devhandle'] = DevHandle(DevList[netname], f"{netname}.local")
-        if DevList[netname]['devhandle'].isonline:
+        DevList[netname]['devhandler'] = dh.DevHandler(f"{netname}.local", DevList[netname])
+        if DevList[netname]['devhandler'].iBlock['isonline']:
             for ep in DevList[netname]['eps']:
-                DevList[netname][ep] = DevList[netname]['devhandle'].read(ep)
+                DevList[netname][ep] = DevList[netname]['devhandler'].read(ep)
+    while True:
+        time.sleep(10)
