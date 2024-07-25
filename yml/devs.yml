@@ -1,6 +1,6 @@
 ShellyPlus1-E465B8F0F750:
     Hardware: Shelly
-    Type: SHPLG2-1
+    Type: SNSW-001X16EU
     name: Gartenlampe
     time: 60
     format: json
@@ -13,7 +13,7 @@ ShellyPlus1-E465B8F0F750:
         ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: modulname_fuer_SHPLG2-1
+    modul: SNSW-001X16EU
 
 shellyplug-083A8DF437C7:
     Hardware: Shelly
@@ -29,11 +29,11 @@ shellyplug-083A8DF437C7:
         ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: modulname_fuer_SHPLG2-1
+    modul: SHPLG2-1
 
 ShellyPMMiniG3-DCDA0CB60CD0:
     Hardware: Shelly
-    Type: SHPLG2-1
+    Type: S3PM-001PCEU16
     name: Solar-Power
     time: 60
     format: json
@@ -46,7 +46,7 @@ ShellyPMMiniG3-DCDA0CB60CD0:
         ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: modulname_fuer_SHPLG2-1
+    modul: S3PM-001PCEU16
 
 Buero_68_C6_3A_87_FA_CE:
     Hardware: NODEMCU
@@ -60,7 +60,7 @@ Buero_68_C6_3A_87_FA_CE:
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: modulname_fuer_DS1820
+    modul: DS1820
 
 ToF_Sensor_BC_DD_C2_24_3B_F4:
     Hardware: D1MINI
@@ -73,7 +73,7 @@ ToF_Sensor_BC_DD_C2_24_3B_F4:
         ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: modulname_fuer_ToF
+    modul: ToF
 
 Palisade_DC_4F_22_0A_F5_52:
     Hardware: SONOFF_S20
@@ -82,11 +82,11 @@ Palisade_DC_4F_22_0A_F5_52:
     time: 150
     format: text
     eps: [  
-        info
+        status
         ]
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: modulname_fuer_Switch
+    modul: Switch
 
 NeuesTeil_AA_BB_CC_DD_EE_FF:
     Hardware: Shelly
@@ -95,7 +95,7 @@ NeuesTeil_AA_BB_CC_DD_EE_FF:
     time: 150
     format: text
     eps: [  
-        info,
+        Info,
         test1,
         test2,
         test3
