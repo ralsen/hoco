@@ -4,13 +4,7 @@ ShellyPlus1-E465B8F0F750:
     name: Gartenlampe
     time: 60
     format: json
-    eps: [  
-        rpc/Shelly.GetDeviceInfo,
-        rpc/Shelly.GetStatus,
-        rpc/shelly.GetConfig,
-        rpc/Sys.GetStatus,
-        rpc/Sys.GetConfig
-        ]
+    infoURL: rpc/Shelly.GetDeviceInfo
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: SNSW-001X16EU
@@ -21,29 +15,18 @@ shellyplug-083A8DF437C7:
     name: Solar
     time: 60
     format: json
-    eps: [  
-        settings,
-        status,
-        relay/0,
-        meter/0
-        ]
+    infoURL: settings
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: SHPLG2-1
-
+    
 ShellyPMMiniG3-DCDA0CB60CD0:
     Hardware: Shelly
     Type: S3PM-001PCEU16
     name: Solar-Power
     time: 60
     format: json
-    eps: [  
-        rpc/Shelly.GetDeviceInfo,
-        rpc/Shelly.GetStatus,
-        rpc/shelly.GetConfig,
-        rpc/Sys.GetStatus,
-        rpc/Sys.GetConfig
-        ]
+    infoURL: rpc/Shelly.GetDeviceInfo
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: S3PM-001PCEU16
@@ -53,10 +36,7 @@ Buero_68_C6_3A_87_FA_CE:
     Type: DS1820
     name: Buero
     format: text
-    eps: [  
-        info
-        ]
-
+    infoURL: info
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -68,9 +48,7 @@ ToF_Sensor_BC_DD_C2_24_3B_F4:
     name: ToF_Sensor
     time: 150
     format: text
-    eps: [  
-        info
-        ]
+    infoURL: info
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: ToF
@@ -81,9 +59,7 @@ Palisade_DC_4F_22_0A_F5_52:
     name: Palisade
     time: 150
     format: text
-    eps: [  
-        status
-        ]
+    infoURL: status
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: Switch
@@ -94,14 +70,9 @@ NeuesTeil_AA_BB_CC_DD_EE_FF:
     name: neues_Teil
     time: 150
     format: text
-    eps: [  
-        Info,
-        test1,
-        test2,
-        test3
-        ]
+    infoURL: Info
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: modulname_fuer_Shelly_SHSWT
+    modul: SNSW-001X16EU
 
 
