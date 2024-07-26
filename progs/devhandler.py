@@ -28,7 +28,7 @@ class DevHandler:
             logger.error(f"{hostname}: {e}")
         else:
             self.mBlock['isonline'] = self.isDeviceOnline(self.mBlock['ip'])
-            print(f"importiere: {self.iBlock['modul']}")
+            print(f"import: {self.iBlock['modul']}")
             self.mBlock['driver'] = importlib.import_module(self.iBlock['modul'])
             instance = self.mBlock['driver'].driver(self, self.iBlock, self.mBlock)
             print("installed")
