@@ -39,7 +39,7 @@ class DevHandler:
             if not res.ok:
                 raise ValueError (f"endpoint was '{endpoint}'")
         except Exception as e:
-            logger.error(f"cant get the device data: {e}")
+            logger.error(f"cant get data from device '{self.iBlock['name']}' with {self.mBlock['ip']} ({e})")
             return None
         if self.iBlock['format'] == "json":
             data = json.loads(res.text)
