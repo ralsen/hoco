@@ -27,10 +27,10 @@ class DevHandler:
             self.mBlock['isonline']= False            
             logger.error(f"{hostname}: {e}")
         else:
-            self.mBlock['isonline'] = True #self.isDeviceOnline(self.mBlock['ip'])
+            self.mBlock['isonline'] = self.isDeviceOnline(self.mBlock['ip'])
             print(f"importiere: {self.iBlock['modul']}")
             self.mBlock['driver'] = importlib.import_module(self.iBlock['modul'])
-            instance = self.mBlock['driver'].driver(self.iBlock)
+            instance = self.mBlock['driver'].driver(self, self.iBlock, self.mBlock)
             print("installed")
     def read(self, endpoint):
         logger.debug(f"START: http://{self.mBlock['ip']}/{endpoint}: --------------------->")
@@ -53,5 +53,6 @@ class DevHandler:
         return data
 
     def isDeviceOnline(self, dev):
+        return True
         response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")
         return response == 0
