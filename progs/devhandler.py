@@ -16,28 +16,30 @@ logging.getLogger('urllib3').setLevel(logging.WARNING)
 
 class DevHandler:
     def __init__(self, hostname, iBlock):
+        self.mBlock = {}
         try:
             self.iBlock = iBlock
-            self.iBlock['ip'] = socket.gethostbyname(hostname)
             self.iBlock['hostname'] = hostname
-            logger.debug(f"IP-Address for {hostname} is {self.iBlock['ip']}")
+            self.mBlock['ip'] = '11111111' #socket.gethostbyname(hostname)
+            logger.debug(f"IP-Address for {hostname} is {self.mBlock['ip']}")
         except socket.gaierror as e:
-            self.iBlock['isonline']= False            
+            self.mBlock['ip]'] = None
+            self.mBlock['isonline']= False            
             logger.error(f"{hostname}: {e}")
         else:
-            self.iBlock['isonline'] = self.isDeviceOnline(self.iBlock['ip'])
+            self.mBlock['isonline'] = True #self.isDeviceOnline(self.mBlock['ip'])
             print(f"importiere: {self.iBlock['modul']}")
-            self.iBlock['driver'] = importlib.import_module(self.iBlock['modul'])
-            instance = self.iBlock['driver'].driver(self.iBlock)
-        
+            self.mBlock['driver'] = importlib.import_module(self.iBlock['modul'])
+            instance = self.mBlock['driver'].driver(self.iBlock)
+            print("installed")
     def read(self, endpoint):
-        logger.debug(f"START: http://{self.iBlock['ip']}/{endpoint}: --------------------->")
+        logger.debug(f"START: http://{self.mBlock['ip']}/{endpoint}: --------------------->")
         try:
-            res = requests.get (f"http://{self.iBlock['ip']}/{endpoint}")
+            res = requests.get (f"http://{self.mBlock['ip']}/{endpoint}")
             if not res.ok:
                 raise ValueError (f"endpoint was '{endpoint}'")
         except Exception as e:
-            logger.error(f"cant get the Shelly data: {e}")
+            logger.error(f"cant get the device data: {e}")
             return None
         if self.iBlock['format'] == "json":
             data = json.loads(res.text)

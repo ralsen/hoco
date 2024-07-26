@@ -46,14 +46,14 @@ if __name__ == '__main__':
     for netname in DevList:
         print(netname)
         try:
-            DevList[netname]['eps']
+            DevList[netname]['infoURL']
             DevList[netname]['format']
         except KeyError as err:
             logger.error(f"{err} not specified for {netname}")
             continue
         DevList[netname]['devhandler'] = dh.DevHandler(f"{netname}.local", DevList[netname])
-        if DevList[netname]['devhandler'].iBlock['isonline']:
-            for ep in DevList[netname]['eps']:
-                DevList[netname][ep] = DevList[netname]['devhandler'].read(ep)
+        if DevList[netname]['devhandler'].mBlock['isonline']:
+            DevList[netname]['info'] = DevList[netname]['devhandler'].read(DevList[netname]['infoURL'])
+            logger.debug(DevList[netname]['devhandler'].mBlock)
     while True:
         time.sleep(10)
