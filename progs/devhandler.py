@@ -20,7 +20,7 @@ class DevHandler:
         try:
             self.iBlock = iBlock
             self.iBlock['hostname'] = hostname
-            self.mBlock['ip'] = '11111111' #socket.gethostbyname(hostname)
+            self.mBlock['ip'] = socket.gethostbyname(hostname)
             logger.debug(f"IP-Address for {hostname} is {self.mBlock['ip']}")
         except socket.gaierror as e:
             self.mBlock['ip]'] = None
@@ -49,10 +49,9 @@ class DevHandler:
             logger.error(f"wrong response format for {self.iBlock['hostname']}")
             data = None   
         logger.debug(data)
-        logger.debug(f"END:   http://{self.iBlock['ip']}/{endpoint}: --------------------->")
+        logger.debug(f"END:   http://{self.mBlock['ip']}/{endpoint}: --------------------->")
         return data
 
     def isDeviceOnline(self, dev):
-        return True
         response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")
         return response == 0
