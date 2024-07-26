@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     logging.basicConfig(
         level=logging.DEBUG,
-        format='%(asctime)s :: %(levelname)-7s :: [%(name)+15s] [%(lineno)+3s] :: %(message)s',
+        format='%(asctime)s :: %(levelname)-7s :: [%(name)+16s] [%(lineno)+3s] :: %(message)s',
         datefmt=cfg.ini['debugdatefmt'],
         handlers=[
             logging.FileHandler(f"{cfg.ini['LogPath']}/{current_file_name[:-3]}_{socket.gethostname()+x.strftime(cfg.ini['logSuffix'])}.log"),
