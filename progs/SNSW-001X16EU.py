@@ -10,7 +10,7 @@ class driver:
         self.mBlock = mBlock
         self.drv = driver
         threading.Thread(target=self._check, daemon=True).start()    
-        pass
+        logger.info(f"driver {self.iBlock['modul']} installed for {self.iBlock['name']}")        
     
     def _check(self):
         i = 0
@@ -18,4 +18,4 @@ class driver:
             on = self.drv.isDeviceOnline(self.mBlock['ip'])
             logger.debug(f"{self.iBlock['hostname']}: {i} is {on}")
             i+=1
-            time.sleep(1)
+            time.sleep(self.iBlock['time'])
