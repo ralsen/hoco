@@ -29,8 +29,8 @@ class DevHandler:
         else:
             self.mBlock['isonline'] = self.isDeviceOnline(self.mBlock['ip'])
             print(f"import: {self.iBlock['modul']}")
-            self.mBlock['driver'] = importlib.import_module(self.iBlock['modul'])
-            instance = self.mBlock['driver'].driver(self, self.iBlock, self.mBlock)
+            self.mBlock['modul'] = importlib.import_module(self.iBlock['modul'])
+            self.mBlock['driver'] = self.mBlock['modul'].driver(self, self.iBlock, self.mBlock)
             print("installed")
     def read(self, endpoint):
         logger.debug(f"START: http://{self.mBlock['ip']}/{endpoint}: --------------------->")

@@ -55,5 +55,6 @@ if __name__ == '__main__':
         if DevList[netname]['devhandler'].mBlock['isonline']:
             DevList[netname]['info'] = DevList[netname]['devhandler'].read(DevList[netname]['infoURL'])
             logger.debug(DevList[netname]['devhandler'].mBlock)
+            DevList[netname]['devhandler'].mBlock['driver'].test()
     while True:
         time.sleep(10)
