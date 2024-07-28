@@ -10,7 +10,7 @@ class driver:
         self.mBlock = mBlock
         self.drv = driver
         threading.Thread(target=self._check, daemon=True).start()    
-        logger.info(f"driver {self.iBlock['modul']} installed for {self.iBlock['name']}")        
+        logger.info(f"driver '{self.iBlock['modul']}' installed for {self.iBlock['name']}")        
         self.test()
         
     def _check(self):
