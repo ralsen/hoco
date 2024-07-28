@@ -23,7 +23,7 @@ if __name__ == '__main__':
     x = datetime.datetime.now()
 
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         format='%(asctime)s :: %(levelname)-7s :: [%(name)+16s] [%(lineno)+3s] :: %(message)s',
         datefmt=cfg.ini['debugdatefmt'],
         handlers=[
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     logger.debug(DevList)
     
     for netname in DevList:
-        print(netname)
+        logger.info(f"processing: {netname}")
         try:
             DevList[netname]['infoURL']
             DevList[netname]['format']
@@ -53,8 +53,8 @@ if __name__ == '__main__':
             continue
         DevList[netname]['devhandler'] = dh.DevHandler(f"{netname}.local", DevList[netname])
         if DevList[netname]['devhandler'].mBlock['isonline']:
-            DevList[netname]['info'] = DevList[netname]['devhandler'].read(DevList[netname]['infoURL'])
-            logger.debug(DevList[netname]['devhandler'].mBlock)
+            #DevList[netname]['info'] = DevList[netname]['devhandler'].read(DevList[netname]['infoURL'])
+            logger.debug(f"Device: {DevList[netname]['name']} Infos: {DevList[netname]['devhandler'].mBlock}")
             DevList[netname]['devhandler'].mBlock['driver'].test()
     while True:
         time.sleep(10)
