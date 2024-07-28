@@ -67,7 +67,7 @@ Palisade_DC_4F_22_0A_F5_52:
 Jan_CC_50_E3_5D_A7_A5:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Jan
     format: text
     infoURL: info
     time: 300
@@ -78,7 +78,7 @@ Jan_CC_50_E3_5D_A7_A5:
 Langsam_CC_50_E3_3C_17_68:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Langsam
     format: text
     infoURL: info
     time: 300
@@ -89,7 +89,7 @@ Langsam_CC_50_E3_3C_17_68:
 No-Name_7C_87_CE_BE_3D_A8:
     Hardware: Sonoff_S20
     Type: Switch
-    name: Buero
+    name: No_Name_7C
     format: text
     infoURL: info
     time: 300
@@ -100,7 +100,7 @@ No-Name_7C_87_CE_BE_3D_A8:
 No-Name_EC_FA_BC_12_F4_31:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: No_Name_EC
     format: text
     infoURL: info
     time: 300
@@ -111,7 +111,7 @@ No-Name_EC_FA_BC_12_F4_31:
 Schnell_AC_0B_FB_D6_41_74:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Schnell
     format: text
     infoURL: info
     time: 300
@@ -122,7 +122,7 @@ Schnell_AC_0B_FB_D6_41_74:
 No-Name_8C_CE_4E_DE_B2_F0:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: No_Name_8c
     format: text
     infoURL: info
     time: 300
@@ -133,7 +133,7 @@ No-Name_8C_CE_4E_DE_B2_F0:
 Heizung_CC_50_E3_3B_F6_4D:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Heizung_NODEMCU
     format: text
     infoURL: info
     time: 300
@@ -144,7 +144,7 @@ Heizung_CC_50_E3_3B_F6_4D:
 Lars_Dachboden_CC_50_E3_3C_06_71:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Lars_Dachboden
     format: text
     infoURL: info
     time: 300
@@ -155,7 +155,7 @@ Lars_Dachboden_CC_50_E3_3C_06_71:
 Heizung1:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Heizung_Raspy
     format: text
     infoURL: info
     time: 300
@@ -166,7 +166,7 @@ Heizung1:
 Wintergarten_40_91_51_4E_B4_5D:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Wintergarten
     format: text
     infoURL: info
     time: 300
@@ -177,7 +177,7 @@ Wintergarten_40_91_51_4E_B4_5D:
 Schuppen-DS_44_17_93_1B_FF_55:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Schuppen
     format: text
     infoURL: info
     time: 300
@@ -188,7 +188,7 @@ Schuppen-DS_44_17_93_1B_FF_55:
 Lars_Zimmer_CC_50_E3_5D_A8_F3:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Lars_Zimmer
     format: text
     infoURL: info
     time: 300
@@ -199,7 +199,7 @@ Lars_Zimmer_CC_50_E3_5D_A8_F3:
 Keller_CC_50_E3_3C_13_D3:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Keller
     format: text
     infoURL: info
     time: 300
@@ -210,7 +210,7 @@ Keller_CC_50_E3_3C_13_D3:
 Schlafzimmer_DC_4F_22_10_C6_0E:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Schlafzimmer
     format: text
     infoURL: info
     time: 300
@@ -221,7 +221,7 @@ Schlafzimmer_DC_4F_22_10_C6_0E:
 Wohnzimmer_44_17_93_1C_1A_E0:
     Hardware: NODEMCU
     Type: DS1820
-    name: Buero
+    name: Wohnzimmer
     format: text
     infoURL: info
     time: 300
