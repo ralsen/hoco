@@ -28,10 +28,8 @@ class DevHandler:
             logger.error(f"{hostname}: {e}")
         else:
             self.mBlock['isonline'] = self.isDeviceOnline(self.mBlock['ip'])
-            print(f"import: {self.iBlock['modul']}")
             self.mBlock['modul'] = importlib.import_module(self.iBlock['modul'])
             self.mBlock['driver'] = self.mBlock['modul'].driver(self, self.iBlock, self.mBlock)
-            print("installed")
             
     def read(self, endpoint: str):
         logger.debug(f"START: http://{self.mBlock['ip']}/{endpoint}: --------------------->")
@@ -40,16 +38,17 @@ class DevHandler:
             if not res.ok:
                 raise ValueError (f"endpoint was '{endpoint}'")
         except Exception as e:
-            logger.error(f"cant get data from device '{self.iBlock['name']}' with {self.mBlock['ip']} ({e})")
-            return None
+            errstr = f"cant get data from device '{self.iBlock['name']}' with {self.mBlock['ip']} ({e})"
+            logger.error(errstr)
+            return False, errstr
         if self.iBlock['format'] == "json":
-            data = json.loads(res.text)
+            return True, json.loads(res.text)
         elif self.iBlock['format'] == 'text':
-            data = res.text
+            return True, res.text
         else:
-            logger.error(f"wrong response format for {self.iBlock['hostname']}")
-            data = None   
-        return data
+            errstr = f"wrong response format for {self.iBlock['hostname']}"
+            logger.error(errstr)
+            return False, errstr   
 
     def isDeviceOnline(self, dev: str) -> bool:
         response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")

@@ -2,7 +2,6 @@ import time
 import logging 
 import threading
 from bs4 import BeautifulSoup
-import pandas
 
 logger = logging.getLogger(__name__)
 
@@ -20,12 +19,12 @@ class driver:
         while True:
             on = self.drv.isDeviceOnline(self.mBlock['ip'])
             if on:
-                html = self.drv.read(self.iBlock['infoURL']) 
-                if html != None:
+                res, html = self.drv.read(self.iBlock['infoURL']) 
+                if res == True:
                     htmlDict = self.getHTML_Keys(html)
                     logger.debug(f"got htmlKeys -> {htmlDict['uptime']}")
             else:
-                logger.debug(f"{self.iBlock['hostname']}: {i} is offline!!")
+                logger.error(f"{self.iBlock['hostname']}: {i} is offline!!")
             #html2 = self.drv.read('status')
             #htmlDict = self.getHTML_Keys(html2)
             i+=1
@@ -46,5 +45,4 @@ class driver:
         return data
 
     def test(self):
-        logger.debug("###########################")
         logger.debug(f"!!! bin in Test() !!! {self}")
