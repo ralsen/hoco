@@ -22,5 +22,4 @@ class driver:
             time.sleep(self.iBlock['time'])
     
     def test(self):
-        print("###########################")
         logger.debug(f"!!! bin in Test() !!! {self}")
