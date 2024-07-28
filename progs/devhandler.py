@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
 class DevHandler:
-    def __init__(self, hostname, iBlock):
+    def __init__(self, hostname: str, iBlock: dict):
         self.mBlock = {}
         try:
             self.iBlock = iBlock
@@ -32,7 +32,8 @@ class DevHandler:
             self.mBlock['modul'] = importlib.import_module(self.iBlock['modul'])
             self.mBlock['driver'] = self.mBlock['modul'].driver(self, self.iBlock, self.mBlock)
             print("installed")
-    def read(self, endpoint):
+            
+    def read(self, endpoint: str):
         logger.debug(f"START: http://{self.mBlock['ip']}/{endpoint}: --------------------->")
         try:
             res = requests.get (f"http://{self.mBlock['ip']}/{endpoint}")
@@ -48,10 +49,8 @@ class DevHandler:
         else:
             logger.error(f"wrong response format for {self.iBlock['hostname']}")
             data = None   
-        logger.debug(data)
-        logger.debug(f"END:   http://{self.mBlock['ip']}/{endpoint}: --------------------->")
         return data
 
-    def isDeviceOnline(self, dev):
+    def isDeviceOnline(self, dev: str) -> bool:
         response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")
         return response == 0
