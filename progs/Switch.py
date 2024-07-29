@@ -22,9 +22,9 @@ class driver:
                 res, html = self.drv.read(self.iBlock['infoURL']) 
                 if res == True:
                     htmlDict = self.getHTML_Keys(html)
-                    logger.debug(f"got htmlKeys -> {htmlDict['uptime']}")
+                    logger.info(f"got htmlKey from {self.iBlock['name']}: {htmlDict['uptime']}")
             else:
-                logger.error(f"{self.iBlock['hostname']}: {i} is offline!!")
+                logger.error(f"{self.iBlock['name']}: {i} is offline!!")
             #html2 = self.drv.read('status')
             #htmlDict = self.getHTML_Keys(html2)
             i+=1
