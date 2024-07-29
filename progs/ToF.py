@@ -2,7 +2,6 @@ import time
 import logging 
 import threading
 from bs4 import BeautifulSoup
-import pandas
 
 logger = logging.getLogger(__name__)
 
