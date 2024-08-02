@@ -43,6 +43,9 @@ if __name__ == '__main__':
         DevList = yaml.safe_load(ymlfile)
     logger.debug(DevList)
     
+    reachable = 0
+    unreachable = 0
+    
     for netname in DevList:
         logger.info(f"processing: {netname}")
         try:
@@ -56,5 +59,10 @@ if __name__ == '__main__':
             #DevList[netname]['info'] = DevList[netname]['devhandler'].read(DevList[netname]['infoURL'])
             logger.debug(f"Device: {DevList[netname]['name']} Infos: {DevList[netname]['devhandler'].mBlock}")
             DevList[netname]['devhandler'].mBlock['driver'].test()
+            reachable += 1
+        else:
+            unreachable += 1
+            
+    logger.info(f"got {reachable} devices and {unreachable} unreachable device(s)")
     while True:
         time.sleep(10)
