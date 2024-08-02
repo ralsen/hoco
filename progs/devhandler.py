@@ -27,7 +27,7 @@ class DevHandler:
             self.mBlock['isonline']= False            
             logger.error(f"{hostname}: {e}")
         else:
-            self.mBlock['isonline'] = self.isDeviceOnline(self.mBlock['ip'])
+            self.isDeviceOnline(self.mBlock['ip'])
             self.mBlock['modul'] = importlib.import_module(self.iBlock['modul'])
             self.mBlock['driver'] = self.mBlock['modul'].driver(self, self.iBlock, self.mBlock)
             
@@ -52,4 +52,5 @@ class DevHandler:
 
     def isDeviceOnline(self, dev: str) -> bool:
         response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")
+        self.mBlock['isonline'] = response == 0
         return response == 0
