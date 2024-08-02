@@ -17,16 +17,12 @@ class driver:
     def _monitoring_thread(self):
         i = 0
         while True:
-            on = self.drv.isDeviceOnline(self.mBlock['ip'])
-            if on:
-                res, html = self.drv.read(self.iBlock['infoURL']) 
-                if res == True:
-                    htmlDict = self.getHTML_Keys(html)
-                    logger.debug(f"got htmlKeys -> {htmlDict['uptime']}")
+            res, html = self.drv.read(self.iBlock['infoURL']) 
+            if res == True:
+                htmlDict = self.getHTML_Keys(html)
+                logger.info(f"got htmlKey from {self.iBlock['name']}: {htmlDict['uptime']}")
             else:
-                logger.error(f"{self.iBlock['hostname']}: {i} is offline!!")
-            #html2 = self.drv.read('status')
-            #htmlDict = self.getHTML_Keys(html2)
+                logger.error(f"{self.iBlock['name']}: {i} is offline!!")
             i+=1
             time.sleep(self.iBlock['time'])
     

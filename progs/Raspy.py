@@ -27,10 +27,10 @@ class driver:
             time.sleep(self.iBlock['time'])
     
     def getHTML_Keys(self, html: str) -> dict:
-        logger.debug(html)
         data = {}
-        data['uptime'] = 22222
+        data['uptime'] = 1234567890
         return data
 
     def test(self):
         logger.debug(f"!!! bin in Test() !!! {self}")
+        
