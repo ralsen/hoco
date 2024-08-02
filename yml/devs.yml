@@ -5,6 +5,7 @@ ShellyPlus1-E465B8F0F750:
     time: 300
     format: json
     infoURL: rpc/Shelly.GetDeviceInfo
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: SNSW-001X16EU
@@ -16,6 +17,7 @@ shellyplug-083A8DF437C7:
     time: 300
     format: json
     infoURL: settings
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: SHPLG2-1
@@ -27,6 +29,7 @@ ShellyPMMiniG3-DCDA0CB60CD0:
     time: 300
     format: json
     infoURL: rpc/Shelly.GetDeviceInfo
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: S3PM-001PCEU16
@@ -37,6 +40,7 @@ Buero_68_C6_3A_87_FA_CE:
     name: Buero
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -49,6 +53,7 @@ ToF_Sensor_BC_DD_C2_24_3B_F4:
     time: 150
     format: text
     infoURL: info
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: ToF
@@ -60,6 +65,7 @@ Palisade_DC_4F_22_0A_F5_52:
     time: 3600
     format: text
     infoURL: status
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: Switch
@@ -70,6 +76,7 @@ Jan_CC_50_E3_5D_A7_A5:
     name: Jan
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -81,6 +88,7 @@ Langsam_CC_50_E3_3C_17_68:
     name: Langsam
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -92,6 +100,7 @@ No-Name_7C_87_CE_BE_3D_A8:
     name: No_Name_7C
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -103,6 +112,7 @@ No-Name_EC_FA_BC_12_F4_31:
     name: No_Name_EC
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -114,6 +124,7 @@ Schnell_AC_0B_FB_D6_41_74:
     name: Schnell
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -125,6 +136,7 @@ No-Name_8C_CE_4E_DE_B2_F0:
     name: No_Name_8c
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -135,7 +147,8 @@ Heizung_CC_50_E3_3B_F6_4D:
     Type: DS1820
     name: Heizung_NODEMCU
     format: text
-    infoURL: info
+    infoURL: status
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -147,6 +160,7 @@ Lars_Dachboden_CC_50_E3_3C_06_71:
     name: Lars_Dachboden
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -157,11 +171,12 @@ Heizung1:
     Type: DS1820
     name: Heizung_Raspy
     format: text
-    infoURL: info
+    infoURL: ''
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: DS1820
+    modul: Raspy
 
 Wintergarten_40_91_51_4E_B4_5D:
     Hardware: NODEMCU
@@ -169,6 +184,7 @@ Wintergarten_40_91_51_4E_B4_5D:
     name: Wintergarten
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -180,6 +196,7 @@ Schuppen-DS_44_17_93_1B_FF_55:
     name: Schuppen
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -191,6 +208,7 @@ Lars_Zimmer_CC_50_E3_5D_A8_F3:
     name: Lars_Zimmer
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -202,6 +220,7 @@ Keller_CC_50_E3_3C_13_D3:
     name: Keller
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -213,6 +232,7 @@ Schlafzimmer_DC_4F_22_10_C6_0E:
     name: Schlafzimmer
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -224,6 +244,7 @@ Wohnzimmer_44_17_93_1C_1A_E0:
     name: Wohnzimmer
     format: text
     infoURL: info
+    retry: 3
     time: 300
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
@@ -232,10 +253,11 @@ Wohnzimmer_44_17_93_1C_1A_E0:
 Schuppen_80_7D_3A_67_BD_24:
     Hardware: SONOFF_S20
     Type: Switch
-    name: Palisade
+    name: Schuppen
     time: 3600
     format: text
     infoURL: status
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: Switch
@@ -243,10 +265,11 @@ Schuppen_80_7D_3A_67_BD_24:
 Kugellampen_DC_4F_22_37_59_ED:
     Hardware: SONOFF_S20
     Type: Switch
-    name: Palisade
+    name: Kugellampen
     time: 3600
     format: text
     infoURL: status
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: Switch
@@ -254,10 +277,11 @@ Kugellampen_DC_4F_22_37_59_ED:
 Treppe_84_F3_EB_B1_B0_A4:
     Hardware: SONOFF_S20
     Type: Switch
-    name: Palisade
+    name: Treppe
     time: 3600
     format: text
     infoURL: status
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: Switch
@@ -265,10 +289,11 @@ Treppe_84_F3_EB_B1_B0_A4:
 Steckdose-Schuppen_EC_FA_BC_9B_CC_1D:
     Hardware: SONOFF_S20
     Type: Switch
-    name: Palisade
+    name: Steckdose-Schuppen
     time: 3600
     format: text
     infoURL: status
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: Switch
@@ -276,10 +301,11 @@ Steckdose-Schuppen_EC_FA_BC_9B_CC_1D:
 Aquarium-2_CC_50_E3_53_1E_58:
     Hardware: SONOFF_S20
     Type: Switch
-    name: Palisade
+    name: Aquarium-2
     time: 3600
     format: text
     infoURL: info
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: Switch
@@ -291,6 +317,7 @@ NeuesTeil_AA_BB_CC_DD_EE_FF:
     time: 150
     format: text
     infoURL: Info
+    retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: SNSW-001X16EU
