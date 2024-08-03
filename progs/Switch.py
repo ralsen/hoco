@@ -16,13 +16,17 @@ class driver:
         
     def _monitoring_thread(self):
         i = 0
+        ison = False
         while True:
             res, html = self.drv.read(self.iBlock['infoURL']) 
             if res == True:
+                ison = True
                 htmlDict = self.getHTML_Keys(html)
                 logger.info(f"got htmlKey from {self.iBlock['name']}: {htmlDict['uptime']}")
             else:
-                logger.error(f"{self.iBlock['name']}: {i} is offline!!")
+                if ison:
+                    logger.error(f"{self.iBlock['name']}: is offline!!! counter: {i}")
+                    ison = False
             i+=1
             time.sleep(self.iBlock['time'])
     
