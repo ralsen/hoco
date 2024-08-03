@@ -1,3 +1,15 @@
+NeuesTeil_AA_BB_CC_DD_EE_FF:
+    Hardware: Shelly
+    Type: SHSWT
+    name: neues_Teil
+    time: 3
+    format: text
+    infoURL: Info
+    retry: 3
+    rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
+    Diagram: some_definitons    # tbd, if omitted no diagrams will be done
+    modul: Switch
+
 ShellyPlus1-E465B8F0F750:
     Hardware: Shelly
     Type: SNSW-001X16EU

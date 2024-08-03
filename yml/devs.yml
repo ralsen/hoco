@@ -320,6 +320,6 @@ NeuesTeil_AA_BB_CC_DD_EE_FF:
     retry: 3
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
-    modul: SNSW-001X16EU
+    modul: Switch
 
 
