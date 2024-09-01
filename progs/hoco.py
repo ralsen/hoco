@@ -39,7 +39,7 @@ if __name__ == '__main__':
     #server = HTTPServer((ServerName, ServerPort), webserverHandler)
     logger.info(f"Device server started on {socket.getfqdn()}")
     
-    with open(f"{cfg.ini['YMLPath']}/devs.yml", 'r') as ymlfile:
+    with open(f"{cfg.ini['YMLPath']}/devdata.yml", 'r') as ymlfile:
         DevList = yaml.safe_load(ymlfile)
     logger.debug(DevList)
     

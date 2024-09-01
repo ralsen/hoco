@@ -1,3 +1,73 @@
+generate_stores:
+    ShellyPlus1-E465B8F0F750: ShellyPlus1
+    shellyplug-083A8DF437C7: Shellyplug
+    ShellyPMMiniG3-DCDA0CB60CD0: ShellyPMMiniG3
+
+DataStores:
+  ShellyPlus1:
+        Commons:                 # these are Values for the messages/Datasets, they are mandatory and must have always the same names
+            TIMEOUT: 700         # time in units defined in config.yml, set both to 0 if no timeout check is needed
+            RELOAD_TIMEOUT: 700  # default time ro reload TIME counter
+            CSV_FORMAT: MULTI
+            YML_FORMAT: SINGLE
+            Format: json
+            WEB:
+                - [ESP Infos, Devider, DIV_DATA]
+                - [Name, name, CURRENT_DATA]
+                - [Hostname, hostname, CURRENT_DATA]
+                - [IP, IP, CURRENT_DATA]
+            RRD_DB:
+                - [ [OUTFILE, CONST, 'cpu'],
+                    [SELF, '§coretemp', CURRENT_DATA],
+                    [SELF, '§CPU_load_15m', CURRENT_DATA] ]
+            
+        Devider:
+            DIV_DATA: "- - - - >"
+        name:                   # this is the full name "Devicename+MAC"
+        hostname:               # this is the Devicename only, given by user    
+        IP: 
+        Type:
+        Hardware:
+        DriveData:
+            time: 300
+            format: json
+            infoURL: rpc/Shelly.GetDeviceInfo
+            modul: SNSW-001X16EU
+            retry: 3
+
+  Shellyplug:
+        Commons:                 # these are Values for the messages/Datasets, they are mandatory and must have always the same names
+            TIMEOUT: 700         # time in units defined in config.yml, set both to 0 if no timeout check is needed
+            RELOAD_TIMEOUT: 700  # default time ro reload TIME counter
+            CSV_FORMAT: MULTI
+            YML_FORMAT: SINGLE
+            Format: json
+            WEB:
+                - [ESP Infos, Devider, DIV_DATA]
+                - [Name, name, CURRENT_DATA]
+                - [Hostname, hostname, CURRENT_DATA]
+                - [IP, IP, CURRENT_DATA]
+            RRD_DB:
+                - [ [OUTFILE, CONST, 'cpu'],
+                    [SELF, '§coretemp', CURRENT_DATA],
+                    [SELF, '§CPU_load_15m', CURRENT_DATA] ]
+            
+        Devider:
+            DIV_DATA: "- - - - >"
+        name:                   # this is the full name "Devicename+MAC"
+        hostname:               # this is the Devicename only, given by user    
+        IP: 
+        Type:
+            DEFAULT: SNSW-001X16EU
+        Hardware:
+            DEFAULT: Shelly
+        DriveData:
+            time: 300
+            format: json
+            infoURL: settings
+            modul: SHPLG2-1
+            retry: 3
+
 ShellyPlus1-E465B8F0F750:
     Hardware: Shelly
     Type: SNSW-001X16EU

@@ -1,6 +1,8 @@
 import time
 import logging 
 import threading
+import requests
+import json
 from bs4 import BeautifulSoup
 
 logger = logging.getLogger(__name__)
@@ -22,7 +24,7 @@ class driver:
             if res == True:
                 ison = True
                 htmlDict = self.getHTML_Keys(html)
-                logger.info(f"got htmlKey from {self.iBlock['name']}: {htmlDict['uptime']}")
+                logger.info(f"got Solar-Power from {self.iBlock['name']}: {htmlDict['power']}")
             else:
                 if ison:
                     logger.error(f"{self.iBlock['name']}: is offline!!! counter: {i}")
@@ -33,6 +35,11 @@ class driver:
     def getHTML_Keys(self, html: str) -> dict:
         logger.debug(html)
         data = {}
+        try:
+            res = requests.get (f"http://{self.mBlock['ip']}/meter/0.local")
+        except Exception as e:
+            logger.error(f"cant get the data  from {self.iBlock['name']}: {e}")        
+        data = json.loads(res.text)
         data['uptime'] = 22222
         return data
 

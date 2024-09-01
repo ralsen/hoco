@@ -4,6 +4,8 @@ import logging
 import yaml
 import os
 
+import DataStore as ds
+
 logger = logging.getLogger(__name__)
 
 def init(ProgName):
@@ -11,8 +13,8 @@ def init(ProgName):
 
     ini = {}
     current_dir = os.getcwd()
-    print(current_dir)
-    current_dir += ''
+    print(f"---> {current_dir}")
+    current_dir += '/..'
     with open(f'{current_dir}/yml/config.yml', 'r') as ymlfile:
         yml = yaml.safe_load(ymlfile)
 
@@ -31,4 +33,5 @@ def init(ProgName):
     ini['humanTimestamp'] = yml['debug']['humanTimestamp']
     ini['Mailing'] = yml['debug']['Mailing']
 
+    ini['Dstore'] = ds.DS(f"{ini['YMLPath']}/{yml['files']['DATASTORE_YML']}") ######
 #    ini['Dstore'] = ds.DS(f"{ini['YMLPath']}/{yml['files']['DATASTORE_YML']}") ######
