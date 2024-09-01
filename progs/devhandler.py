@@ -36,6 +36,7 @@ class DevHandler:
         self.mBlock['isonline'] = False
         try:
             self.mBlock['ip'] = socket.gethostbyname(hostname)
+            self.mBlock['isonline'] = True
             logger.debug(f"IP-Address for {hostname} is {self.mBlock['ip']}")
         except socket.gaierror as e:
             self.mBlock['ip'] = None
