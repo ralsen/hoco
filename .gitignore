@@ -1,6 +1,7 @@
 png/
 docs/
 log/
+data/
 node_modules/
 __pycache__/
 *.log
