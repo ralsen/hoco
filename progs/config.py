@@ -11,7 +11,8 @@ def init(ProgName):
 
     ini = {}
     current_dir = os.getcwd()
-    current_dir += '/..'
+    print(current_dir)
+    current_dir += ''
     with open(f'{current_dir}/yml/config.yml', 'r') as ymlfile:
         yml = yaml.safe_load(ymlfile)
 
