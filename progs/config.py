@@ -16,22 +16,22 @@ def init(ProgName):
     print(f"---> {current_dir}")
     current_dir += '/..'
     with open(f'{current_dir}/yml/config.yml', 'r') as ymlfile:
-        yml = yaml.safe_load(ymlfile)
+        ini['yml'] = yaml.safe_load(ymlfile)
 
     RootPath = current_dir #yml['ROOT_PATH']
-    ini['LogPath'] = RootPath + yml['pathes']['LOG']
-    ini['DataPath'] = RootPath + yml['pathes']['DATA']
-    ini['RRDPath'] = RootPath + yml['pathes']['RRD']
-    ini['YMLPath'] = RootPath + yml['pathes']['YML']
-    ini['PNGPath'] = RootPath + yml['pathes']['PNG']
-    ini['DaboServerName'] = yml['Communication']['DaboServerName']
-    ini['DaboServerPort'] = yml['Communication']['DaboServerPort']
-    ini['debugdatefmt'] = yml['debug']['datefmt']
-    ini['logSuffix'] = yml['suffixes']['log']
-    ini['dataSuffix'] = yml['suffixes']['data']
-    ini['hirestime'] = yml['debug']['hirestime']
-    ini['humanTimestamp'] = yml['debug']['humanTimestamp']
-    ini['Mailing'] = yml['debug']['Mailing']
+    ini['LogPath'] = RootPath + ini['yml']['pathes']['LOG']
+    ini['DataPath'] = RootPath + ini['yml']['pathes']['DATA']
+    ini['RRDPath'] = RootPath + ini['yml']['pathes']['RRD']
+    ini['YMLPath'] = RootPath + ini['yml']['pathes']['YML']
+    ini['PNGPath'] = RootPath + ini['yml']['pathes']['PNG']
+    ini['DaboServerName'] = ini['yml']['Communication']['DaboServerName']
+    ini['DaboServerPort'] = ini['yml']['Communication']['DaboServerPort']
+    ini['debugdatefmt'] = ini['yml']['debug']['datefmt']
+    ini['logSuffix'] = ini['yml']['suffixes']['log']
+    ini['dataSuffix'] = ini['yml']['suffixes']['data']
+    ini['hirestime'] = ini['yml']['debug']['hirestime']
+    ini['humanTimestamp'] = ini['yml']['debug']['humanTimestamp']
+    ini['Mailing'] = ini['yml']['debug']['Mailing']
 
-    ini['Dstore'] = ds.DS(f"{ini['YMLPath']}/{yml['files']['DATASTORE_YML']}") ######
-#    ini['Dstore'] = ds.DS(f"{ini['YMLPath']}/{yml['files']['DATASTORE_YML']}") ######
+    #ini['Dstore'] = ds.DS(f"{ini['YMLPath']}/{ini['yml']['files']['DATASTORE_YML']}") ######
+#    ini['Dstore'] = ds.DS(f"{ini['YMLPath']}/{ini['yml']['files']['DATASTORE_YML']}") ######
