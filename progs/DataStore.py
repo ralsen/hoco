@@ -49,7 +49,11 @@ class DS():
         template
         :type templateName: str
         """
-        template = self.Stores['DataStores'][templateName]
+        try:
+            template = self.Stores['DataStores'][templateName]
+        except Exception as err:
+            logger.error(f"Template {err} not definied for device {Store}.")
+            return
         logger.info(f'Building Store for: {Store} with template: {templateName}')
         self.ds[Store] = dict()
         for ShelfTag, x in template.items():
