@@ -11,6 +11,7 @@ import time
 
 import config as cfg
 import devhandler as dh
+import DataStore as ds
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +24,7 @@ if __name__ == '__main__':
     x = datetime.datetime.now()
 
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.DEBUG,
         format='%(asctime)s :: %(levelname)-7s :: [%(name)+16s] [%(lineno)+3s] :: %(message)s',
         datefmt=cfg.ini['debugdatefmt'],
         handlers=[
@@ -38,6 +39,9 @@ if __name__ == '__main__':
     ServerPort = cfg.ini['DaboServerPort']
     #server = HTTPServer((ServerName, ServerPort), webserverHandler)
     logger.info(f"Device server started on {socket.getfqdn()}")
+    
+    cfg.ini['Dstore'] = ds.DS(f"{cfg.ini['YMLPath']}/{cfg.ini['yml']['files']['DATASTORE_YML']}") ######
+    #    ini['Dstore'] = ds.DS(f"{ini['YMLPath']}/{yml['files']['DATASTORE_YML']}") ######
     
     with open(f"{cfg.ini['YMLPath']}/devdata.yml", 'r') as ymlfile:
         DevList = yaml.safe_load(ymlfile)
