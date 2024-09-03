@@ -76,7 +76,7 @@ class DS():
                 except Exception:
                     pass
         self.ds[Store]['Commons']['Service'] = Service(Store) # start store handling
-        
+        logger.debug(self.ds[Store])
 
 # The `Service` class is responsible for handling data, monitoring for timeouts, merging data from
 # different sources, and writing data to a CSV file or a database.
