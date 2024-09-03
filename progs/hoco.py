@@ -24,7 +24,7 @@ if __name__ == '__main__':
     x = datetime.datetime.now()
 
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         format='%(asctime)s :: %(levelname)-7s :: [%(name)+16s] [%(lineno)+3s] :: %(message)s',
         datefmt=cfg.ini['debugdatefmt'],
         handlers=[
@@ -45,27 +45,24 @@ if __name__ == '__main__':
     
     with open(f"{cfg.ini['YMLPath']}/devdata.yml", 'r') as ymlfile:
         DevList = yaml.safe_load(ymlfile)
-    logger.debug(DevList)
+    #logger.debug(DevList)
     
     reachable = 0
     unreachable = 0
-    
-    for netname in DevList:
-        logger.info(f"processing: {netname}")
+
+    for device in ds.DS.ds.items():
+        hostname = device[0]
+        devdata = device[1]['Commons']['devdata']
+        logger.info(f"processing device: {hostname}")    
+        print(devdata)
         try:
-            DevList[netname]['infoURL']
-            DevList[netname]['format']
+            devdata['InfoURL']
+            devdata['Format']
         except KeyError as err:
-            logger.error(f"{err} not specified for {netname}")
+            logger.error(f"{err} not specified for {hostname}")
             continue
-        DevList[netname]['devhandler'] = dh.DevHandler(f"{netname}.local", DevList[netname])
-        if DevList[netname]['devhandler'].mBlock['isonline']:
-            #DevList[netname]['info'] = DevList[netname]['devhandler'].read(DevList[netname]['infoURL'])
-            logger.debug(f"Device: {DevList[netname]['name']} Infos: {DevList[netname]['devhandler'].mBlock}")
-            DevList[netname]['devhandler'].mBlock['driver'].test()
-            reachable += 1
-        else:
-            unreachable += 1
+        devdata['devhandler'] = dh.DevHandler(hostname)
+        logger.debug(ds.DS.ds)
             
     logger.info(f"got {reachable} devices and {unreachable} unreachable device(s)")
     while True:
