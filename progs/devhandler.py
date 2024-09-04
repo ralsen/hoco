@@ -75,7 +75,7 @@ class DevHandler:
                     raise ValueError(f"endpoint was '{endpoint}'")
             except Exception as e:
                 if attempt == max_retries - 1:
-                    logger.warning(f"Attempt {attempt + 1} failed: {e}")
+                    logger.warning(f"Attempt {attempt + 1} failed on device {self.hostname}: {e}")
                     logger.error(result)
         logger.debug(f"needed {attempt+1} of {max_retries} retries.")
         return success, result
