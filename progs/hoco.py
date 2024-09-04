@@ -67,3 +67,55 @@ if __name__ == '__main__':
     logger.info(f"got {reachable} devices and {unreachable} unreachable device(s)")
     while True:
         time.sleep(10)
+    """
+    DataStore-Dump: {
+    'Shellyplug-083A8DF437C7':     {'Commons': {
+                                        'CURRENT_DATA': 0, 
+                                        'lastUPD': datetime.datetime(2024, 9, 4, 18, 0, 23, 899967), 
+                                        'TIMEOUT': 0, 
+                                        'RELOAD_TIMEOUT': 0, 
+                                        'CSV_FORMAT': 'MULTI', 
+                                        'YML_FORMAT': 'SINGLE', 
+                                        'devdata': {
+                                            'Type': 'SHPLG2-1', 
+                                            'Hardware': 'Shelly', 
+                                            'Modul': 'SHPLG2-1', 
+                                            'Time': 5, 'Format': 'json', 
+                                            'InfoURL': 'settings', 
+                                            'Retry': 3, 
+                                            'IP': '192.168.2.136', 
+                                            'name': 'None', 
+                                            'hostname': 'None', 
+                                            'dBlock': {
+                                                'modul': <module 'SHPLG2-1' from '/Users/ralphfollrichs/Projects/hoco/progs/SHPLG2-1.py'>, 
+                                                'driver': <SHPLG2-1.driver object at 0x10628d850>}, 
+                                                'devhandler': <devhandler.DevHandler object at 0x10628dd90>}, 
+                                        'WEB': [
+                                            ['ESP Infos', 'Devider', 'DIV_DATA'], 
+                                            ['Name', 'name', 'CURRENT_DATA'], 
+                                            ['Hostname', 'hostname', 'CURRENT_DATA'], 
+                                            ['IP', 'IP', 'CURRENT_DATA']], 
+                                        'RRD_DB': [[
+                                            ['OUTFILE', 'CONST', 'Shellyplug-083A8DF437C7'], 
+                                            ['SELF', '§Power', 'CURRENT_DATA']]], 
+                                        'header': 'time', 
+                                        'Active': True, 
+                                        'Flag': False, 
+                                        'Counter': 8, 
+                                        'initTime': datetime.datetime(2024, 9, 4, 18, 0, 18, 189573), 
+                                        'Service': <DataStore.Service object at 0x106256f40>}, 
+                                    'Devider': {
+                                        'CURRENT_DATA': 0, 
+                                        'lastUPD': None, 
+                                        'DIV_DATA': '- - - - >'}, 
+                                    'Power': {
+                                        'CURRENT_DATA': 11.56, 
+                                        'lastUPD': None}, 
+                                    'name': {
+                                        'CURRENT_DATA': 0, 'lastUPD': None}, 
+                                    'hostname': {
+                                        'CURRENT_DATA': 0, 'lastUPD': None}, 
+                                    'IP': {
+                                        'CURRENT_DATA': 0, 'lastUPD': None}}, 
+
+    """
