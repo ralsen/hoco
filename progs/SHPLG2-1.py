@@ -27,6 +27,10 @@ class driver:
                 ison = True
                 htmlDict = self.getHTML_Keys(html)
                 logger.info(f"got Solar-Power from {self.hostname}: {htmlDict['power']}")
+                data = {self.hostname: {}}
+                data[self.hostname]['Power'] = htmlDict['power']
+                ds.handle_DataSet(data)
+                
             else:
                 if ison:
                     logger.error(f"{self.hostname}: is offline!!! counter: {i}")
