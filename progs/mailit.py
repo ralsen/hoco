@@ -19,7 +19,11 @@ def mailit(text: str):
     contain any text or HTML content that you want to include in the email
     :type text: str
     """
-    subject = f"message from: {ds.DS.ds['System']['ProgName']['CURRENT_DATA']} running on: {ds.DS.ds['System']['MyName']['CURRENT_DATA']}"
+    try:
+        subject = f"message from: {ds.DS.ds['System']['ProgName']['CURRENT_DATA']} running on: {ds.DS.ds['System']['MyName']['CURRENT_DATA']}"
+    except:
+        subject = ("message from: unknown System")
+    
     if cfg.ini['Mailing']:
         threading.Thread(target=_mailit_thread, args=(subject, text), daemon=True).start()
 
