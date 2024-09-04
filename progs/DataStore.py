@@ -94,7 +94,6 @@ class Service():
         class. It represents the name of the store
         """
         self.dabodict = {'__DaBo': {}}
-
         self.MyName = StoreName
         try:
             for index, mergeStr in enumerate(DS.ds[self.MyName]['Commons']['MERGE']):
@@ -192,9 +191,12 @@ class Service():
             pass
         DS.ds[self.MyName]['Commons']['Flag'] = True
         
-        if self.MyName != '__DaBo': # dont count yourself
-          self.dabodict['__DaBo']['updated DataSets'] = DS.ds['__DaBo']['updated DataSets']['CURRENT_DATA'] + 1
-          handle_DataSet(self.dabodict)
+        try:
+            if self.MyName != '__DaBo': # dont count yourself
+                self.dabodict['__DaBo']['updated DataSets'] = DS.ds['__DaBo']['updated DataSets']['CURRENT_DATA'] + 1
+                handle_DataSet(self.dabodict)
+        except: pass
+        
         if DS.ds[self.MyName]['Commons']['TIMEOUT'] == 0 and DS.ds[self.MyName]['Commons']['RELOAD_TIMEOUT'] != 0:
             logger.info(f'Message send resume: {self.MyName}')
             mi.mailit(f'Message send resume: {self.MyName}')
@@ -284,13 +286,15 @@ class Service():
         except Exception as err:
             logger.error(f'{type(err).__name__} in: {self.MyName} - {DataShelf}')
             return None
-        if self.MyName != '__DaBo': # dont count yourself
-            self.dabodict['__DaBo']['updated Data'] = DS.ds['__DaBo']['updated Data']['CURRENT_DATA'] + 1
-            self.dabodict['__DaBo']['last sender'] = self.MyName
-            if oldDataBoxValue != DataBoxValue:
-                self.dabodict['__DaBo']['changed Data'] = DS.ds['__DaBo']['changed Data']['CURRENT_DATA'] + 1
-            #handle_DataSet(self.dabodict)
-            
+        try:
+            if self.MyName != '__DaBo': # dont count yourself
+                self.dabodict['__DaBo']['updated Data'] = DS.ds['__DaBo']['updated Data']['CURRENT_DATA'] + 1
+                self.dabodict['__DaBo']['last sender'] = self.MyName
+                if oldDataBoxValue != DataBoxValue:
+                    self.dabodict['__DaBo']['changed Data'] = DS.ds['__DaBo']['changed Data']['CURRENT_DATA'] + 1
+                #handle_DataSet(self.dabodict)
+        except: pass
+                    
         try: # values can be omitted in the *.signals.yml
             DS.ds[self.MyName][DataShelf]['CURRENT_IN_RANGE'] = DS.ds[self.MyName][DataShelf]['CURRENT_DATA'] >= \
                                                                 DS.ds[self.MyName][DataShelf]['MIN'] and \
