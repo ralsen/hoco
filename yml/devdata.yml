@@ -6,8 +6,8 @@ generate_stores:
 DataStores:
   ShellyPlus1:
         Commons:                 # these are Values for the messages/Datasets, they are mandatory and must have always the same names
-            TIMEOUT: 700         # time in units defined in config.yml, set both to 0 if no timeout check is needed
-            RELOAD_TIMEOUT: 700  # default time ro reload TIME counter
+            TIMEOUT: 0         # time in units defined in config.yml, set both to 0 if no timeout check is needed
+            RELOAD_TIMEOUT: 0  # default time ro reload TIME counter
             CSV_FORMAT: MULTI
             YML_FORMAT: SINGLE
             devdata:
@@ -41,8 +41,8 @@ DataStores:
 
   Shellyplug:
         Commons:                 # these are Values for the messages/Datasets, they are mandatory and must have always the same names
-            TIMEOUT: 700         # time in units defined in config.yml, set both to 0 if no timeout check is needed
-            RELOAD_TIMEOUT: 700  # default time ro reload TIME counter
+            TIMEOUT: 0         # time in units defined in config.yml, set both to 0 if no timeout check is needed
+            RELOAD_TIMEOUT: 0  # default time ro reload TIME counter
             CSV_FORMAT: MULTI
             YML_FORMAT: SINGLE
             devdata:
@@ -62,20 +62,20 @@ DataStores:
                 - [Hostname, hostname, CURRENT_DATA]
                 - [IP, IP, CURRENT_DATA]
             RRD_DB:
-                - [ [OUTFILE, CONST, 'cpu'],
-                    [SELF, '§coretemp', CURRENT_DATA],
-                    [SELF, '§CPU_load_15m', CURRENT_DATA] ]
+                - [ [OUTFILE, CONST, 'Shellyplug-083A8DF437C7'],
+                    [SELF, '§Power', CURRENT_DATA]]
             
         Devider:
             DIV_DATA: "- - - - >"
+        Power:
         name:                   # this is the Devicename only, given by user 
         hostname:               # this is the full name "Devicename+MAC"   
         IP: 
 
   ShellyPMMiniG3:
         Commons:                 # these are Values for the messages/Datasets, they are mandatory and must have always the same names
-            TIMEOUT: 700         # time in units defined in config.yml, set both to 0 if no timeout check is needed
-            RELOAD_TIMEOUT: 700  # default time ro reload TIME counter
+            TIMEOUT: 0         # time in units defined in config.yml, set both to 0 if no timeout check is needed
+            RELOAD_TIMEOUT: 0  # default time ro reload TIME counter
             CSV_FORMAT: MULTI
             YML_FORMAT: SINGLE
             Format: json
