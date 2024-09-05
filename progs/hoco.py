@@ -54,18 +54,18 @@ if __name__ == '__main__':
         hostname = device[0]
         devdata = device[1]['Commons']['devdata']
         logger.info(f"processing device: {hostname}")    
-        print(devdata)
         try:
             devdata['InfoURL']
             devdata['Format']
         except KeyError as err:
             logger.error(f"{err} not specified for {hostname}")
             continue
-        devdata['devhandler'] = dh.DevHandler(hostname)
-        logger.debug(ds.DS.ds)
+        dh.DevHandler(hostname)
+        logger.info(ds.DS.ds)
             
     logger.info(f"got {reachable} devices and {unreachable} unreachable device(s)")
     while True:
+        print("sleeping")
         time.sleep(10)
     """
     DataStore-Dump: {

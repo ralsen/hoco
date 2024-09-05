@@ -22,7 +22,7 @@ class driver:
         i = 0
         ison = False
         while True:
-            res, html = self.drv.read(self.hostname, self.devdata['InfoURL']) 
+            res, html = self.drv.read(self.devdata['InfoURL']) 
             if res == True:
                 ison = True
                 htmlDict = self.getHTML_Keys(html)

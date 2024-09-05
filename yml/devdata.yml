@@ -18,9 +18,6 @@ DataStores:
                 Format: json
                 InfoURL: rpc/Shelly.GetDeviceInfo
                 Retry: 3
-                IP: None
-                name: None                  # this is the Devicename only, given by user 
-                hostname: None              # this is the full name "Devicename+MAC"   
             WEB:
                 - [ESP Infos, Devider, DIV_DATA]
                 - [Name, name, CURRENT_DATA]
@@ -53,9 +50,6 @@ DataStores:
                 Format: json
                 InfoURL: settings
                 Retry: 3
-                IP: None
-                name: None                  # this is the Devicename only, given by user 
-                hostname: None              # this is the full name "Devicename+MAC"   
             WEB:
                 - [ESP Infos, Devider, DIV_DATA]
                 - [Name, name, CURRENT_DATA]
@@ -87,9 +81,6 @@ DataStores:
                 Format: json
                 InfoURL: rpc/Shelly.GetDeviceInfo
                 Retry: 3
-                name: None                  # this is the Devicename only, given by user 
-                hostname: None              # this is the full name "Devicename+MAC"   
-                IP: None
             WEB:
                 - [ESP Infos, Devider, DIV_DATA]
                 - [Name, name, CURRENT_DATA]

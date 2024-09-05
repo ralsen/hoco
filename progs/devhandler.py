@@ -17,43 +17,39 @@ logging.getLogger('urllib3').setLevel(logging.WARNING)
 
 class DevHandler:
     def __init__(self, hostname: str):
-        print(ds.DS.ds[hostname])
+        #print(ds.DS.ds[hostname])
         self.hostname = hostname
-        self.devdata = ds.DS.ds[hostname]['Commons']['devdata']
-        self.devcoms = ds.DS.ds[hostname]['Commons']
-        self.devdata['dBlock'] = {}
+        self.devdata = ds.DS.ds[self.hostname]['Commons']['devdata']
+        self.devcoms = ds.DS.ds[self.hostname]['Commons'] # for debug watching
+        self.devroot = ds.DS.ds[self.hostname]
+        self.devdata['hostname'] = hostname
+        self.devcoms['Active'] = False
+        self.regDevice()
+        self.devdata['modul'] = importlib.import_module(self.devdata['Modul'])
+        self.devdata['driver'] = self.devdata['modul'].driver(self, self.hostname)
+        self.devdata['handler'] = DevHandler
+        print("fertich")
+        
+    def regDevice (self):
         self.devcoms['Active'] = False
         try:
-            self.devdata['IP'] = self.regDevice(hostname)
-        except socket.gaierror as e:
-            self.dBlock['ip]'] = None
-            self.dBlock['isonline']= False            
-            logger.error(f"{hostname}: {self.dBlock['ip']} - {e}")
-        finally:
-            self.devdata['dBlock']['modul'] = importlib.import_module(self.devdata['Modul'])
-            self.devdata['dBlock']['driver'] = self.devdata['dBlock']['modul'].driver(self, hostname)
-
-    def regDevice (self, hostname):
-        self.devcoms['Active'] = False
-        try:
-            self.devdata['IP'] = socket.gethostbyname(hostname)
+            self.devdata['IP'] = socket.gethostbyname(self.hostname)
             self.devcoms['Active'] = True
-            logger.debug(f"IP-Address for {hostname} is {self.devdata['IP']}")
+            logger.debug(f"IP-Address for {self.hostname} is {self.devdata['IP']}")
         except socket.gaierror as e:
             self.devdata['IP'] = None
             self.devcoms['Active']= False            
-            logger.error(f"{hostname}: {self.devdata['IP']} - {e}")
-        return self.devdata['IP']
+            logger.error(f"{self.hostname}: {self.devdata['IP']} - {e}")
+        return 
     
-    def read(self, hostname: str, endpoint: str):
-        logger.debug(f"START: Device: on http://{hostname}/{endpoint}: --------------------->")
-        
+    def read(self, endpoint: str):
+        logger.debug(f"START: Device: on http://{self.hostname}/{endpoint}: --------------------->")
         success = False
         result = None
         max_retries = self.devdata.get('Retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
         if self.devdata['IP'] == None:
-            self.regDevice(self.hostname)
-            if self.dBlock['ip'] == None:
+            self.regDevice()
+            if self.devdata['IP'] == None:
                 return success, result        
         
         for attempt in range(max_retries):
