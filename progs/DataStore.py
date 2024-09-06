@@ -11,7 +11,6 @@ import threading
 import os
 import yaml
 import mailit as mi
-import inspect
 
 logger = logging.getLogger(__name__)
 
@@ -495,7 +494,7 @@ class Service():
         :type line: str
         """
         if (cfg.ini['humanTimestamp']) or cfg.ini['hirestime']:
-            ext = 'log'
+            ext = 'csv'
         else:
             ext = 'txt'
         if DS.ds[self.MyName]['Commons']['CSV_FORMAT'] == 'SINGLE':
