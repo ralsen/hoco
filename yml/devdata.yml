@@ -62,6 +62,7 @@ DataStores:
         Devider:
             DIV_DATA: "- - - - >"
         Power:
+            CSV_MODE: 'CHANGE'
         name:                   # this is the Devicename only, given by user 
         hostname:               # this is the full name "Devicename+MAC"   
         IP: 
