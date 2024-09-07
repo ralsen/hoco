@@ -10,73 +10,75 @@ import requests
 import importlib
 
 import config as cfg
-import DataStore as ds
 
 logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
 class DevHandler:
-    def __init__(self, hostname: str):
-        #print(ds.DS.ds[hostname])
-        self.hostname = hostname
-        self.devdata = ds.DS.ds[self.hostname]['Commons']['devdata']
-        self.devcoms = ds.DS.ds[self.hostname]['Commons'] # for debug watching
-        self.devroot = ds.DS.ds[self.hostname]
-        self.devdata['hostname'] = hostname
-        self.devcoms['Active'] = False
-        self.regDevice()
-        self.devdata['modul'] = importlib.import_module(self.devdata['Modul'])
-        self.devdata['driver'] = self.devdata['modul'].driver(self, self.hostname)
-        self.devdata['handler'] = DevHandler
-        print("fertich")
-        
-    def regDevice (self):
-        self.devcoms['Active'] = False
+    def __init__(self, name: str, dl: dict):
+        self.my = dl
+        self.my['hostname'] = name
+        self.my['ip'] = None
+        self.my['isonline'] = False
         try:
-            self.devdata['IP'] = socket.gethostbyname(self.hostname)
-            self.devcoms['Active'] = True
-            logger.debug(f"IP-Address for {self.hostname} is {self.devdata['IP']}")
+            self.my['ip'] = self.regDevice(name)
         except socket.gaierror as e:
-            self.devdata['IP'] = None
-            self.devcoms['Active']= False            
-            logger.error(f"{self.hostname}: {self.devdata['IP']} - {e}")
-        return 
+            self.my['ip]'] = None
+            self.my['isonline']= False            
+            logger.error(f"{hostname}: {self.my['ip']} - {e}")
+        finally:
+            self.my['modul'] = importlib.import_module(self.my['modul'])
+            self.my['driver'] = self.my['modul'].driver(self.my)
+
+    def regDevice (self, hostname):
+        self.my['ip'] = None
+        self.my['isonline'] = False
+        try:
+            self.my['ip'] = socket.gethostbyname(f"{hostname}.local")
+            self.my['isonline'] = True
+            logger.debug(f"IP-Address for {hostname} is {self.my['ip']}")
+        except socket.gaierror as e:
+            self.my['ip'] = None
+            self.my['isonline']= False            
+            logger.error(f"{hostname}: {self.my['ip']} - {e}")
+        return self.my['ip']
     
     def read(self, endpoint: str):
-        logger.debug(f"START: Device: on http://{self.hostname}/{endpoint}: --------------------->")
+        logger.debug(f"START: Device: {self.iBlock['name']} on http://{self.mBlock['ip']}/{endpoint}: --------------------->")
+        
         success = False
         result = None
-        max_retries = self.devdata.get('Retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
-        if self.devdata['IP'] == None:
-            self.regDevice()
-            if self.devdata['IP'] == None:
+        max_retries = self.iBlock.get('retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
+        if self.mBlock['ip'] == None:
+            self.regDevice(self.iBlock['hostname'])
+            if self.mBlock['ip'] == None:
                 return success, result        
         
         for attempt in range(max_retries):
-            logger.debug(f"request info from http://{self.devdata['IP']}/{endpoint}")
             try:
-                res = requests.get(f"http://{self.devdata['IP']}/{endpoint}")
+                res = requests.get(f"http://{self.mBlock['ip']}/{endpoint}")
                 if res.ok:
-                    if self.devdata['Format'] == "json":
+                    if self.iBlock['format'] == "json":
                         result = json.loads(res.text)
                         success = True
-                    elif self.devdata['Format'] == 'text':
+                    elif self.iBlock['format'] == 'text':
                         result = res.text
                         success = True
                     else:
-                        result = f"wrong response format for {self.hostname}"
+                        result = f"wrong response format for {self.iBlock['hostname']}"
                         logger.error(result)
                     break  # Erfolgreiche Anfrage, Schleife verlassen
                 else:
                     raise ValueError(f"endpoint was '{endpoint}'")
             except Exception as e:
                 if attempt == max_retries - 1:
-                    logger.warning(f"Attempt {attempt + 1} failed on device {self.hostname}: {e}")
+                    logger.warning(f"Attempt {attempt + 1} failed: {e}")
+                    result = f"cant get data from device '{self.iBlock['name']}' with {self.mBlock['ip']} ({e})"
                     logger.error(result)
         logger.debug(f"needed {attempt+1} of {max_retries} retries.")
         return success, result
             
     def isDeviceOnline(self, dev: str) -> bool:
         response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")
-        self.dBlock['isonline'] = response == 0
+        self.mBlock['isonline'] = response == 0
         return response == 0

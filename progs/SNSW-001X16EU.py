@@ -5,24 +5,21 @@ import requests
 import json
 from bs4 import BeautifulSoup
 
-import DataStore as ds
-
 logger = logging.getLogger(__name__)
 
 class driver:
-    def __init__(self, driver, hostname: str):
-        self.hostname = hostname
-        self.devdata = ds.DS.ds[hostname]['Commons']['devdata']        
-        self.drv = driver
+    def __init__(self, my: dict):
+        self.my = my
+        self.my['drv'] = driver
         threading.Thread(target=self._monitoring_thread, daemon=True).start()    
-        logger.info(f"driver '{self.devdata['Modul']}' installed for {hostname}")        
+        logger.info(f"driver '{self.my['Modul']}' installed for {self.my['hostname']}")        
         self.test()
         
     def _monitoring_thread(self):
         i = 0
         ison = False
         while True:
-            res, html = self.drv.read(self.devdata['InfoURL']) 
+            res, html = self.my['drv'].read(self.devdata['InfoURL']) 
             if res == True:
                 ison = True
                 htmlDict = self.getHTML_Keys(html)
