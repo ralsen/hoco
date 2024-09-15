@@ -2,6 +2,7 @@ png/
 docs/
 log/
 data/
+venv/
 node_modules/
 __pycache__/
 *.log
