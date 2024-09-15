@@ -15,21 +15,20 @@ logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
 class DevHandler:
-    def __init__(self, name: str, dl: dict):
-        self.my = dl
+    def __init__(self, name: str, DeviceSet: dict):
+        self.my = DeviceSet
         self.my['hostname'] = name
-        self.my['ip'] = None
-        self.my['isonline'] = False
         try:
             self.my['ip'] = self.regDevice(name)
         except socket.gaierror as e:
             self.my['ip]'] = None
             self.my['isonline']= False            
-            logger.error(f"{hostname}: {self.my['ip']} - {e}")
+            logger.error(f"{name}: {self.my['ip']} - {e}")
         finally:
             self.my['modul'] = importlib.import_module(self.my['modul'])
+            self.my['devhd'] = self
             self.my['driver'] = self.my['modul'].driver(self.my)
-
+            
     def regDevice (self, hostname):
         self.my['ip'] = None
         self.my['isonline'] = False
@@ -44,24 +43,24 @@ class DevHandler:
         return self.my['ip']
     
     def read(self, endpoint: str):
-        logger.debug(f"START: Device: {self.iBlock['name']} on http://{self.mBlock['ip']}/{endpoint}: --------------------->")
+        logger.debug(f"Request from: {self.my['name']} on http://{self.my['ip']}/{endpoint}")
         
         success = False
         result = None
-        max_retries = self.iBlock.get('retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
-        if self.mBlock['ip'] == None:
-            self.regDevice(self.iBlock['hostname'])
-            if self.mBlock['ip'] == None:
+        max_retries = self.my.get('retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
+        if self.my['ip'] == None:
+            self.regDevice(self.my['hostname'])
+            if self.my['ip'] == None:
                 return success, result        
         
         for attempt in range(max_retries):
             try:
-                res = requests.get(f"http://{self.mBlock['ip']}/{endpoint}")
+                res = requests.get(f"http://{self.my['ip']}/{endpoint}")
                 if res.ok:
-                    if self.iBlock['format'] == "json":
+                    if self.my['format'] == "json":
                         result = json.loads(res.text)
                         success = True
-                    elif self.iBlock['format'] == 'text':
+                    elif self.my['format'] == 'text':
                         result = res.text
                         success = True
                     else:
@@ -80,5 +79,5 @@ class DevHandler:
             
     def isDeviceOnline(self, dev: str) -> bool:
         response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")
-        self.mBlock['isonline'] = response == 0
+        self.my['isonline'] = response == 0
         return response == 0

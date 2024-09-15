@@ -3,7 +3,7 @@ import logging
 import threading
 import requests
 import json
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 
 logger = logging.getLogger(__name__)
 
@@ -11,8 +11,8 @@ class driver:
     def __init__(self, my: dict):
         self.my = my
         self.my['drv'] = driver
-        threading.Thread(target=self._monitoring_thread, daemon=True).start()    
-        logger.info(f"driver '{self.my['Modul']}' installed for {self.my['hostname']}")        
+        #threading.Thread(target=self._monitoring_thread, daemon=True).start()    
+        logger.debug(f"driver '{self.my['modul']}' installed for {self.my['hostname']}")        
         self.test()
         
     def _monitoring_thread(self):
@@ -23,7 +23,7 @@ class driver:
             if res == True:
                 ison = True
                 htmlDict = self.getHTML_Keys(html)
-                logger.info(f"got uptime from {self.hostname}: {htmlDict['uptime']}")
+                logger.debug(f"got uptime from {self.hostname}: {htmlDict['uptime']}")
             else:
                 if ison:
                     logger.error(f"{self.hostname}: is offline!!! counter: {i}")
@@ -34,7 +34,7 @@ class driver:
     def getHTML_Keys(self, html: str) -> dict:
         logger.debug(html)
         data = {}
-        data['uptime'] = 33333
+        data['uptime'] = 54321
         return data
 
     def test(self):

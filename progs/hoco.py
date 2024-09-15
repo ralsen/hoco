@@ -23,7 +23,7 @@ if __name__ == '__main__':
     x = datetime.datetime.now()
 
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.DEBUG,
         format='%(asctime)s :: %(levelname)-7s :: [%(name)+16s] [%(lineno)+3s] :: %(message)s',
         datefmt=cfg.ini['debugdatefmt'],
         handlers=[
@@ -55,14 +55,15 @@ if __name__ == '__main__':
             logger.error(f"{err} not specified for {netname}")
             continue
         dh.DevHandler(netname, DevList[netname])
-        if DevList[netname]['devhandler'].mBlock['isonline']:
+        if DevList[netname]['isonline']:
             #DevList[netname]['info'] = DevList[netname]['devhandler'].read(DevList[netname]['infoURL'])
-            logger.debug(f"Device: {DevList[netname]['name']} Infos: {DevList[netname]['devhandler'].mBlock}")
-            DevList[netname]['devhandler'].mBlock['driver'].test()
+            logger.debug(f"Device: {DevList[netname]['hostname']} Infos: {DevList[netname]['modul']}")
+            DevList[netname]['driver'].test()
             reachable += 1
         else:
             unreachable += 1
             
-    logger.info(f"got {reachable} devices and {unreachable} unreachable device(s)")
+    logger.info(f"got {reachable} of {reachable+unreachable} devices.")
     while True:
+        print("sleeping")
         time.sleep(10)
