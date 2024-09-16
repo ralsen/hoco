@@ -6,6 +6,8 @@ ShellyPlus1-E465B8F0F750:
     format: json
     infoURL: rpc/Shelly.GetDeviceInfo
     retry: 3
+    ServerName: Testpi
+    ServerPort: 8080
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: SNSW-001X16EU
@@ -18,6 +20,8 @@ shellyplug-083A8DF437C7:
     format: json
     infoURL: settings
     retry: 3
+    ServerName: Testpi
+    ServerPort: 8080
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: SHPLG2-1
@@ -30,6 +34,8 @@ ShellyPMMiniG3-DCDA0CB60CD0:
     format: json
     infoURL: rpc/Shelly.GetDeviceInfo
     retry: 3
+    ServerName: Testpi
+    ServerPort: 8080
     rrd: rrd-file.rrd           # if omitted rrd = devicename.rrd
     Diagram: some_definitons    # tbd, if omitted no diagrams will be done
     modul: S3PM-001PCEU16
