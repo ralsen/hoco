@@ -23,7 +23,7 @@ if __name__ == '__main__':
     x = datetime.datetime.now()
 
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         format='%(asctime)s :: %(levelname)-7s :: [%(name)+16s] [%(lineno)+3s] :: %(message)s',
         datefmt=cfg.ini['debugdatefmt'],
         handlers=[
@@ -50,7 +50,6 @@ if __name__ == '__main__':
         logger.info(f"processing: {netname}")
         try:
             DevList[netname]['infoURL']
-            DevList[netname]['format']
         except KeyError as err:
             logger.error(f"{err} not specified for {netname}")
             continue
@@ -65,5 +64,5 @@ if __name__ == '__main__':
             
     logger.info(f"got {reachable} of {reachable+unreachable} devices.")
     while True:
-        print("sleeping")
+        logger.debug("sleeping")
         time.sleep(10)
