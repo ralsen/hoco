@@ -42,40 +42,32 @@ class DevHandler:
             logger.error(f"{hostname}: {self.my['ip']} - {e}")
         return self.my['ip']
     
-    def read(self, endpoint: str):
-        logger.debug(f"Request from: {self.my['name']} on http://{self.my['ip']}/{endpoint}")
-        
-        success = False
-        result = None
+    def read(self):
+        logger.debug(f"start reading from {self.my['name']}")
+        result = []
         max_retries = self.my.get('retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
         if self.my['ip'] == None:
             self.regDevice(self.my['hostname'])
             if self.my['ip'] == None:
-                return success, result        
+                return None       
         
-        for attempt in range(max_retries):
-            try:
-                res = requests.get(f"http://{self.my['ip']}/{endpoint}")
-                if res.ok:
-                    if self.my['format'] == "json":
-                        result = json.loads(res.text)
-                        success = True
-                    elif self.my['format'] == 'text':
-                        result = res.text
-                        success = True
+        for endpoint in self.my['infoURL']:
+            logger.debug(f"Request from: {self.my['name']} on http://{self.my['ip']}/{endpoint}")
+            for attempt in range(max_retries):
+                try:
+                    res = requests.get(f"http://{self.my['ip']}/{endpoint}")
+                    if res.ok:
+                        result.append(res.text)                    
+                        break  # Erfolgreiche Anfrage, Schleife verlassen
                     else:
-                        result = f"wrong response format for {self.iBlock['hostname']}"
+                        raise ValueError(f"endpoint was '{endpoint}'")
+                except Exception as e:
+                    if attempt == max_retries - 1:
+                        logger.warning(f"Attempt {attempt + 1} failed: {e}")
+                        result = f"cant get data from device '{self.my['name']}' with {self.my['ip']} ({e})"
                         logger.error(result)
-                    break  # Erfolgreiche Anfrage, Schleife verlassen
-                else:
-                    raise ValueError(f"endpoint was '{endpoint}'")
-            except Exception as e:
-                if attempt == max_retries - 1:
-                    logger.warning(f"Attempt {attempt + 1} failed: {e}")
-                    result = f"cant get data from device '{self.iBlock['name']}' with {self.mBlock['ip']} ({e})"
-                    logger.error(result)
-        logger.debug(f"needed {attempt+1} of {max_retries} retries.")
-        return success, result
+            logger.debug(f"needed {attempt+1} of {max_retries} retries.")
+        return result
             
     def isDeviceOnline(self, dev: str) -> bool:
         response = os.system(f"ping -c 1 -W 1 {dev} > /dev/null 2>&1")

@@ -3,8 +3,7 @@ ShellyPlus1-E465B8F0F750:
     Type: SNSW-001X16EU
     name: Gartenlampe
     time: 300
-    format: json
-    infoURL: rpc/Shelly.GetDeviceInfo
+    infoURL: ['rpc/Shelly.GetDeviceInfo']
     retry: 3
     ServerName: Testpi
     ServerPort: 8080
@@ -17,8 +16,7 @@ shellyplug-083A8DF437C7:
     Type: SHPLG2-1
     name: Solar
     time: 5
-    format: json
-    infoURL: settings
+    infoURL: ['meter/0', 'settings']
     retry: 3
     ServerName: Testpi
     ServerPort: 8080
@@ -31,8 +29,7 @@ ShellyPMMiniG3-DCDA0CB60CD0:
     Type: S3PM-001PCEU16
     name: Solar-Power
     time: 300
-    format: json
-    infoURL: rpc/Shelly.GetDeviceInfo
+    infoURL: ['rpc/Shelly.GetDeviceInfo']
     retry: 3
     ServerName: Testpi
     ServerPort: 8080
