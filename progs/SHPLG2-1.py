@@ -18,10 +18,10 @@ class driver:
         i = 0
         ison = False
         while True:
-            res, html = self.my['devhd'].read(self.my['infoURL']) 
-            if res == True:
+            res = self.my['devhd'].read() 
+            if res != None:
                 ison = True
-                htmlDict = self.getHTML_Keys(html)
+                htmlDict = self.getHTML_Keys(res)
                 logger.debug(f"got Solar-Power from {self.my['hostname']}: {htmlDict['power']}")
                 data = {
                     'name': self.my['hostname'],
@@ -32,7 +32,17 @@ class driver:
                 }
                 logger.debug(f"Sending: {data}")
                 #requests evtl. in eigenen Thread packen
-                response = requests.post(f"http://{self.my['ServerName']}.local:{self.my['ServerPort']}", json=data)
+                attempt = 0
+                max_retries = self.my.get('retry', 1)
+                while attempt < max_retries:
+                    try:
+                        logger.debug(f"try to reach server: {attempt}")
+                        response = requests.post(f"http://{self.my['ServerName']}.local:{self.my['ServerPort']}", json=data)
+                        break
+                    except Exception as e:
+                        attempt += 1
+                        if attempt == max_retries:
+                            logger.error(f"could not send to server http://{self.my['ServerName']}.local:{self.my['ServerPort']} (after {max_retries} retries)")
                 logger.debug(f"Answer: {response.text}")                
             else:
                 if ison:
@@ -41,14 +51,10 @@ class driver:
             i+=1
             time.sleep(self.my['time'])
     
-    def getHTML_Keys(self, html: str) -> dict:
+    def getHTML_Keys(self, keys: str) -> dict:
         #logger.debug(html)
         data = {}
-        try:
-            res = requests.get (f"http://{self.my['ip']}/meter/0.local")
-        except Exception as e:
-            logger.error(f"cant get the data  from {self.my['hostname']}: {e}")        
-        data = json.loads(res.text)
+        data = json.loads(keys[0])
         data['uptime'] = 22222
         return data
 

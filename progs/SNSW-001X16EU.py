@@ -10,28 +10,20 @@ logger = logging.getLogger(__name__)
 class driver:
     def __init__(self, my: dict):
         self.my = my
-        self.hostname = self.my['hostname']
-        self.info_url = self.my['infoURL']
-        self.devhd = self.my['devhd']  # Die Referenz auf den DevHandler
-
-        logger.debug(f"devhd instance: {self.my['devhd']}")
-        #self.my['drv'] = driver
+        self.my['drv'] = driver
         threading.Thread(target=self._monitoring_thread, daemon=True).start()    
-        #logger.info(f"driver '{self.my['modul']}' installed for {self.my['hostname']}")        
+        logger.info(f"driver '{self.my['modul']}' installed for {self.my['hostname']}")        
         self.test()
         
     def _monitoring_thread(self):
         i = 0
         ison = False
         while True:
-            res, html = self.devhd.read(self.info_url) 
-            if res == True:
+            res = self.my['devhd'].read()
+            if res != None:
                 ison = True
-                htmlDict = self.getHTML_Keys(html)
-                logger.debug(f"got uptime from {self.hostname}: {htmlDict['uptime']}")
-                data = {self.hostname: {}}
-                data[self.hostname]['Power'] = htmlDict['uptime']
-                
+                htmlDict = self.getHTML_Keys(res)
+                logger.debug(f"got uptime from {self.my['hostname']}: {htmlDict['uptime']}")
             else:
                 if ison:
                     logger.error(f"{self.hostname}: is offline!!! counter: {i}")
