@@ -36,14 +36,10 @@ if __name__ == "__main__":
     ServerPort = cfg.ini['DaboServerPort']
     logger.info(f"Geräteserver gestartet auf {socket.getfqdn()}")
     
-    with open(f"{cfg.ini['YMLPath']}/devs.yml", 'r') as ymlfile:
-        DevList = yaml.safe_load(ymlfile)
-    logger.debug(DevList)
-        
     logger.debug("Searching Shelly-Devices ...")
     dh = sh.ShellyHandler()
-    devices = dh.discover_shelly_devices(DevList)
-
+    devices = dh.discover_shelly_devices(cfg.ini['DevList'])
+    print("fertich")
     while True:
-        logger.debug("Warten...")
+        logger.debug("sleeping...")
         time.sleep(10)
