@@ -47,22 +47,21 @@ class ShellyHandler:
                 this['ip'] = ip
                 this['devdef'] = self.DevList.get(this['hostname'], None)
                 if this['devdef'] is not None:
-                    logger.debug(f"checking device protocol: {this['devdef']['name']} (IP: {ip})")
                     this['protocol'] = self.check_protocol(ip, this['devdef']['name'])
-                    logger.debug(f"Protocol for {this['devdef']['name']} is {this['protocol']}")
+                    logger.debug(f"{this['devdef']['name']}: Protocol is {this['protocol']}")
                     knownDevices += 1
+                    this['service'] = Service(this)
                 else:
                     logger.error(f"unknown entry for {this['hostname']}")
                     this['protocol'] = "unknown"
                     unknownDevices += 1
-                this['service'] = Service(this)
         
         logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {cfg.ini['YMLPath']}/devs.yml")
         return allDevice, knownDevices, unknownDevices
 
     def check_protocol(self, device_ip, device_name):
         """Ermittelt, welches Protokoll das Shelly-Gerät verwendet."""
-        logger.debug(f"Prüfe das Protokoll für Gerät: {device_name} (IP: {device_ip})")
+        logger.debug(f"{device_name}: check protocol of device: (IP: {device_ip})")
         
         http_url = f"http://{device_ip}/status"
         rpc_url = f"http://{device_ip}/rpc/Shelly.GetStatus"
@@ -71,7 +70,7 @@ class ShellyHandler:
             # Teste HTTP/CoAP (Gen 1)
             http_response = requests.get(http_url, timeout=5)
             if http_response.status_code == 200:
-                return "HTTP/CoAP (Gen 1)"
+                return "Gen 1"
         except requests.exceptions.RequestException:
             pass
 
@@ -79,11 +78,11 @@ class ShellyHandler:
             # Teste RPC (Gen 2)
             rpc_response = requests.get(rpc_url, timeout=5)
             if rpc_response.status_code == 200:
-                return "RPC (Gen 2)"
+                return "Gen 2"
         except requests.exceptions.RequestException:
             pass
         
-        return "Unbekanntes Protokoll"
+        return "unknown"
 
 class ShellyListener:
     """Listener für Shelly-Geräte, um IP-Adressen zu sammeln."""
@@ -105,40 +104,41 @@ class ShellyListener:
 class Service:
     def __init__(self, this):
         self.my = this
+        self.name = self.my['devdef']['name']
         threading.Thread(target=self._monitoring_thread, daemon=True).start()
         pass
     
     def _monitoring_thread(self):
         while True:
             if self.my['protocol'] != 'unknown' and self.my['devdef'] != None:
-                logger.debug(self.read())
+                logger.debug(f"{self.name}: {self.read()}")
                 time.sleep(self.my['devdef']['time'])
             else:
+                logger.debug(f"{self.name}: Monitor sleeps")
                 time.sleep(10)
 
     def read(self):
-        logger.debug(f"---> reading from device {self.my['devdef']['name']} ###{self.my['devdef']['infoURL']} ")
+        logger.debug(f"---> {self.name}: reading from device URLs: {self.my['devdef']['infoURL']})")
         max_retries = self.my['devdef'].get('retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
         result = {}
         if self.my['ip'] == None:
             return result        
         for endpoint in self.my['devdef']['infoURL']:
             for retry in range(max_retries):
-                logger.debug(f"retry {retry + 1} for device {self.my['devdef']['name']}")
                 try:
-                    logger.debug(f"Request from: {self.my['devdef']['name']} on http://{self.my['ip']}/{endpoint}")
+                    logger.debug(f"{self.name}: {retry + 1}. request on http://{self.my['ip']}/{endpoint}")
                     res = requests.get(f"http://{self.my['ip']}/{endpoint}")
-                    logger.debug(f"OJE --- {res}")
+                    logger.debug(f"{self.name}: {res}")
                     if res.ok:
                         result[endpoint] = res.text                    
                         break  # Erfolgreiche Anfrage, Schleife verlassen
                     else:
                         raise ValueError(f"endpoint was '{endpoint}'")
                 except Exception as e:
-                    logger.warning(f"Retry {retry + 1} failed: {e}")
-                    result = f"cant get data from device '{self.my['devdef']['name']}' with {self.my['ip']} ({e})"
+                    logger.warning(f"{self.name}:Retry {retry + 1} failed: {e}")
+                    result = f"{self.name}: cant get data from device with {self.my['ip']} ({e})"
                     logger.error(result)
-            logger.debug(f"needed {retry + 1} of {max_retries} retries.")
-        logger.debug(f"---> reading done from device {self.my['devdef']['name']}")
+            logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
+        logger.debug(f"---> {self.name}: reading done")
         return result
             
