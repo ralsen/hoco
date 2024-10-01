@@ -1,34 +1,15 @@
 # https://shelly-api-docs.shelly.cloud
-ShellyPlus1-E465B8F0F750:
-    Hardware: Shelly
-    Type: SNSW-001X16EU
-    name: Gartenlampe
-    time: 300
-    infoURL: ['rpc/Shelly.GetDeviceInfo']
-    retry: 3
-    ServerName: Testpi
-    ServerPort: 8080
-    modul: SNSW-001X16EU
 
 shellyplug-083A8DF437C7:
     Hardware: Shelly
-    Type: SHPLG2-1
+    Type: SNSW-001X16EU
     name: Solar
-    time: 300
+    time: 3
     infoURL: ['meter/0', 'settings']
     retry: 3
     ServerName: Testpi
     ServerPort: 8080
-    modul: SHPLG2-1
 
-# rpc/Shelly.GetDeviceInfo:
-# {"name":null,"id":"shellyplusplugs-d48afc7bb89c","mac":"D48AFC7BB89C","slot":1,"model":"SNPL-00112EU","gen":2,"fw_id":"20240819-074351/1.4.2-gc2639da","ver":"1.4.2","app":"PlusPlugS","auth_en":false,"auth_domain":null}   
-
-# rpc/Sys.GetStatus
-# {"mac":"D48AFC7BB89C","restart_required":false,"time":"21:33","unixtime":1726947220,"uptime":23455,"ram_size":253880,"ram_free":137016,"fs_size":393216,"fs_free":102400,"cfg_rev":19,"kvs_rev":0,"schedule_rev":3,"webhook_rev":0,"available_updates":{},"reset_reason":1}
-
-# rpc/Sys.GetConfig
-# {"device":{"name":null,"mac":"D48AFC7BB89C","fw_id":"20240819-074351/1.4.2-gc2639da","discoverable":true,"eco_mode":false},"location":{"tz":"Europe/Berlin","lat":52.477100,"lon":9.531200},"debug":{"level":2,"file_level":null,"mqtt":{"enable":false},"websocket":{"enable":false},"udp":{"addr":null}},"ui_data":{},"rpc_udp":{"dst_addr":null,"listen_port":null},"sntp":{"server":"time.google.com"},"cfg_rev":19}
 shellypmminig3-dcda0cb60cd0:
     Hardware: Shelly
     Type: S3PM-001PCEU16
@@ -38,18 +19,44 @@ shellypmminig3-dcda0cb60cd0:
     retry: 3
     ServerName: Testpi
     ServerPort: 8080
-    modul: S3PM-001PCEU16
+
+shellyplus1-e465b8f0f750:
+    Hardware: Shelly
+    Type: SNSW-001X16EU
+    name: Gartenlampe
+    time: 6
+    infoURL: ['rpc/Shelly.GetDeviceInfo']
+    retry: 3
+    ServerName: Testpi
+    ServerPort: 8080
+
+shellyplus1-d0ef76d9aaac:
+    Hardware: Shelly
+    Type: SNSW-001X16EU
+    name: Schuppen
+    time: 7
+    infoURL: ['rpc/Shelly.GetDeviceInfo']
+    retry: 3
+    ServerName: Testpi
+    ServerPort: 8080
 
 shellyplusplugs-d48afc7bb89c:
     Hardware: Shelly
     Type: S3PM-001PCEU16
     name: Schuppen
-    time: 300
+    time: 8
     infoURL: ['rpc/Shelly.GetDeviceInfo']
     retry: 3
     ServerName: Testpi
     ServerPort: 8080
-    modul: S3PM-001PCEU16
 
+shellyplus1-b0a7324cbbd4:
+    Hardware: Shelly
+    Type: SNSW-001X16EU
+    name: Treppe
+    time: 9
+    infoURL: ['rpc/Shelly.GetDeviceInfo']
+    retry: 3
+    ServerName: Testpi
+    ServerPort: 8080
 
-#'rpc/Shelly.GetDeviceInfo': {'name': None, 'id': 'shellypmminig3-dcda0cb60cd0', 'mac': 'DCDA0CB60CD0', 'slot': 0, 'model': 'S3PM-001PCEU16', 'gen': 3, 'fw_id': '20240625-122557/1.3.3-gbdfd9b3', 'ver': '1.3.3', 'app': 'MiniPMG3', 'auth_en': False, 'auth_domain': None}, 'rpc/Sys.GetConfig': {'device': {'name': None, 'mac': 'DCDA0CB60CD0', 'fw_id': '20240625-122557/1.3.3-gbdfd9b3', 'discoverable': True, 'eco_mode': False}, 'location': {'tz': 'Europe/Berlin', 'lat': 52.311, 'lon': 9.6105}, 'debug': {'level': 2, 'file_level': None, 'mqtt': {'enable': False}, 'websocket': {'enable': False}, 'udp': {'addr': None}}, 'ui_data': {}, 'rpc_udp': {'dst_addr': None, 'listen_port': None}, 'sntp': {'server': 'time.google.com'}, 'cfg_rev': 16}, 'rpc/Sys.GetStatus': {'mac': 'DCDA0CB60CD0', 'restart_required': False, 'time': '16:20', 'unixtime': 1727274000, 'uptime': 357322, 'ram_size': 261628, 'ram_free': 152068, 'fs_size': 1048576, 'fs_free': 708608, 'cfg_rev': 16, 'kvs_rev': 7, 'schedule_rev': 0, 'webhook_rev': 0, 'available_updates': {'stable': {'version': '1.4.2'}}, 'reset_reason': 3}, 'rpc/PM1.GetStatus?id=0': {'id': 0, 'voltage': 231.6, 'current': 0.0, 'apower': 0.0, 'freq': 50.1, 'aenergy': {'total': 0.0, 'by_minute': [0.0, 0.0, 0.0], 'minute_ts': 1727274000}, 'ret_aenergy': {'total': 0.0, 'by_minute': [0.0, 0.0, 0.0], 'minute_ts': 1727274000}}}
