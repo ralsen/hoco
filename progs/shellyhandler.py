@@ -7,6 +7,7 @@ import requests
 import time
 import yaml
 import threading
+import json
 from zeroconf import ServiceBrowser, Zeroconf
 
 import config as cfg
@@ -111,11 +112,49 @@ class Service:
     def _monitoring_thread(self):
         while True:
             if self.my['protocol'] != 'unknown' and self.my['devdef'] != None:
-                logger.debug(f"{self.name}: {self.read()}")
+                devrsp = self.read()
+                logger.debug(f"{self.name}: {devrsp}")
+                self.sendServer(devrsp)
                 time.sleep(self.my['devdef']['time'])
             else:
                 logger.debug(f"{self.name}: Monitor sleeps")
                 time.sleep(10)
+
+    def sendServer(self, infos):
+        print()
+        print((infos))
+        if self.my['protocol'] == 'unknown':
+            return None
+        if self.my['protocol'] == 'Gen 1':
+            test = json.loads(infos['meter/0'])
+            power = test['power']
+            test = json.loads(infos['settings'])
+            Type = test['device']['type']
+        if self.my['protocol'] == 'Gen 2':
+            return None
+
+        data = {
+            'name': self.my['hostname'],
+            'Type': Type,
+            'IP': self.my['ip'],
+            'Hardware': self.my['devdef']['Hardware'],
+            'Power': power
+        }    
+        logger.debug(f"Sending: {data}")
+        #requests evtl. in eigenen Thread packen
+        attempt = 0
+        max_retries = self.my.get('retry', 1)
+        while attempt < max_retries:
+            try:
+                logger.debug(f"try to reach server: {attempt}")
+                response = requests.post(f"http://{self.my['devdef']['ServerName']}.local:{self.my['devdef']['ServerPort']}", json=data)
+                break
+            except Exception as e:
+                attempt += 1
+                if attempt == max_retries:
+                    logger.error(f"could not send to server http://{self.my['ServerName']}.local:{self.my['ServerPort']} (after {max_retries} retries)")
+        logger.debug(f"Answer: {response.text}")                
+            
 
     def read(self):
         logger.debug(f"---> {self.name}: reading from device URLs: {self.my['devdef']['infoURL']})")
