@@ -9,7 +9,7 @@ import logging
 import os
 
 import config as cfg
-import shellyhandler as sh
+import progs.hocohandler as sh
 
 logger = logging.getLogger(__name__)
 
