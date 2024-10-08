@@ -9,7 +9,7 @@ import logging
 import os
 
 import config as cfg
-import progs.hocohandler as sh
+import hocohandler as sh
 
 logger = logging.getLogger(__name__)
 
