@@ -30,3 +30,4 @@ def init(ProgName):
     ini['hirestime'] = ini['yml']['debug']['hirestime']
     ini['humanTimestamp'] = ini['yml']['debug']['humanTimestamp']
     ini['Mailing'] = ini['yml']['debug']['Mailing']
+
