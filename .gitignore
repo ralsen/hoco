@@ -3,6 +3,7 @@ docs/
 log/
 data/
 venv/
+env/
 node_modules/
 __pycache__/
 *.log
