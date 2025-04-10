@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ###############################################################
@@ -19,15 +20,13 @@ class ShellyHandler:
     def __init__(self):
         with open(f"{cfg.ini['YMLPath']}/devs.yml", 'r') as ymlfile:
             self.DevList = yaml.safe_load(ymlfile)
-        cfg.ini['DevList'] = self.DevList
-        logger.debug(cfg.ini['DevList'])
+        logger.debug(self.DevList)
         
-    def discover_shelly_devices(self, DevList, timeout=5):
+    def discover_shelly_devices(self, timeout=5):
         """Durchsucht das lokale Netzwerk nach Shelly-Geräten."""
         zeroconf = Zeroconf()
-        listener = ShellyListener()
+        listener = ShellyListener(self.DevList)
         browser = ServiceBrowser(zeroconf, "_http._tcp.local.", listener)
-        
         # Warte einige Sekunden, um Geräte zu finden
         time.sleep(timeout)
         zeroconf.close()
@@ -44,50 +43,30 @@ class ShellyHandler:
             for full_name, ip in listener.devices.items():
                 allDevice[full_name] = {}
                 this = allDevice[full_name]
-                this['hostname'] = full_name.split('.')[0]
-                this['ip'] = ip
-                this['devdef'] = self.DevList.get(this['hostname'], None)
-                if this['devdef'] is not None:
-                    this['protocol'] = self.check_protocol(ip, this['devdef']['name'])
-                    logger.debug(f"{this['devdef']['name']}: Protocol is {this['protocol']}")
-                    knownDevices += 1
-                    this['service'] = Service(this)
-                else:
-                    logger.error(f"unknown entry for {this['hostname']}")
-                    this['protocol'] = "unknown"
-                    unknownDevices += 1
+                this['FullName'] = full_name
+                this['Hostname'] = full_name.split('.')[0]
+                device = self.DevList[this['Hostname']]
+                this['IP'] = ip
+                this['Type'] = self.DevList[device['Type']]
+                
+                this['Protocol'] = this['Type']['Protocol']
+                this['Cycle'] = device['Cycle']
+                this['Hardware'] = this['Type']['Hardware']
+                this['InfoURL'] = this['Type']['InfoURL']
+                this['ServerPort'] = device['ServerPort']
+                this['ServerName'] = device['ServerName']
+                this['Retry'] = device['Retry']
+                logger.debug(f"Protocol is {this['Protocol']}")
+                knownDevices += 1
+                this['service'] = Service(this)
         
         logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {cfg.ini['YMLPath']}/devs.yml")
         return allDevice, knownDevices, unknownDevices
 
-    def check_protocol(self, device_ip, device_name):
-        """Ermittelt, welches Protokoll das Shelly-Gerät verwendet."""
-        logger.debug(f"{device_name}: check protocol of device: (IP: {device_ip})")
-        
-        http_url = f"http://{device_ip}/status"
-        rpc_url = f"http://{device_ip}/rpc/Shelly.GetStatus"
-
-        try:
-            # Teste HTTP/CoAP (Gen 1)
-            http_response = requests.get(http_url, timeout=5)
-            if http_response.status_code == 200:
-                return "Gen 1"
-        except requests.exceptions.RequestException:
-            pass
-
-        try:
-            # Teste RPC (Gen 2)
-            rpc_response = requests.get(rpc_url, timeout=5)
-            if rpc_response.status_code == 200:
-                return "Gen 2"
-        except requests.exceptions.RequestException:
-            pass
-        
-        return "unknown"
-
 class ShellyListener:
     """Listener für Shelly-Geräte, um IP-Adressen zu sammeln."""
-    def __init__(self):
+    def __init__(self, DevList):
+        self.DevList = DevList
         self.devices = {}
 
     def remove_service(self, zeroconf, type, name):
@@ -104,18 +83,24 @@ class ShellyListener:
             
 class Service:
     def __init__(self, this):
-        self.my = this
-        self.name = self.my['devdef']['name']
+        self.this = this
+        self.name = self.this['Hostname']
         threading.Thread(target=self._monitoring_thread, daemon=True).start()
         pass
     
     def _monitoring_thread(self):
         while True:
-            if self.my['protocol'] != 'unknown' and self.my['devdef'] != None:
-                devrsp = self.read()
-                logger.debug(f"{self.name}: {devrsp}")
-                self.sendServer(devrsp)
-                time.sleep(self.my['devdef']['time'])
+            
+            print(f"{self.this['Protocol']} mit {self.name}")
+            if self.this['Protocol'] != 'unknown':
+                print("eigentlich gehts")
+                try:
+                    devrsp = self.read()
+                    logger.debug(f"{self.name}: {devrsp}")
+                    self.sendServer(devrsp)
+                except:
+                    pass
+                time.sleep(self.this['Cycle'])
             else:
                 logger.debug(f"{self.name}: Monitor sleeps")
                 time.sleep(10)
@@ -123,62 +108,62 @@ class Service:
     def sendServer(self, infos):
         print()
         print((infos))
-        if self.my['protocol'] == 'unknown':
+        if self.this['Protocol'] == 'unknown':
             return None
-        if self.my['protocol'] == 'Gen 1':
+        if self.this['Protocol'] == 'Gen 1':
             test = json.loads(infos['meter/0'])
             power = test['power']
             test = json.loads(infos['settings'])
             Type = test['device']['type']
-        if self.my['protocol'] == 'Gen 2':
+        if self.this['Protocol'] == 'Gen 2':
             return None
 
         data = {
-            'name': self.my['hostname'],
+            'name': self.this['Hostname'],
             'Type': Type,
-            'IP': self.my['ip'],
-            'Hardware': self.my['devdef']['Hardware'],
+            'IP': self.this['ip'],
+            'Hardware': self.this['Hardware'],
             'Power': power
         }    
         logger.debug(f"Sending: {data}")
         #requests evtl. in eigenen Thread packen
         attempt = 0
-        max_retries = self.my.get('retry', 1)
+        max_retries = self.this.get('retry', 1)
         while attempt < max_retries:
             try:
                 logger.debug(f"try to reach server: {attempt}")
-                response = requests.post(f"http://{self.my['devdef']['ServerName']}.local:{self.my['devdef']['ServerPort']}", json=data)
+                response = requests.post(f"http://{self.this['ServerName']}.local:{self.this['ServerPort']}", json=data)
                 break
             except Exception as e:
                 attempt += 1
                 if attempt == max_retries:
-                    logger.error(f"could not send to server http://{self.my['ServerName']}.local:{self.my['ServerPort']} (after {max_retries} retries)")
+                    logger.error(f"could not send to server http://{self.this['ServerName']}.local:{self.this['ServerPort']} (after {max_retries} retries)")
         logger.debug(f"Answer: {response.text}")                
             
 
     def read(self):
-        logger.debug(f"---> {self.name}: reading from device URLs: {self.my['devdef']['infoURL']})")
-        max_retries = self.my['devdef'].get('retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
+        logger.debug(f"---> {self.name}: reading from device URLs: {self.this['InfoURL']})")
+        max_retries = self.this.get('Retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
         result = {}
-        if self.my['ip'] == None:
+        if self.this['IP'] is None:
             return result        
-        for endpoint in self.my['devdef']['infoURL']:
-            for retry in range(max_retries):
-                try:
-                    logger.debug(f"{self.name}: {retry + 1}. request on http://{self.my['ip']}/{endpoint}")
-                    res = requests.get(f"http://{self.my['ip']}/{endpoint}")
-                    logger.debug(f"{self.name}: {res}")
-                    if res.ok:
-                        result[endpoint] = res.text                    
-                        break  # Erfolgreiche Anfrage, Schleife verlassen
-                    else:
-                        raise ValueError(f"endpoint was '{endpoint}'")
-                except Exception as e:
-                    logger.warning(f"{self.name}:Retry {retry + 1} failed: {e}")
-                    result = f"{self.name}: cant get data from device with {self.my['ip']} ({e})"
-                    logger.error(result)
-            logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
+        for retry in range(max_retries):
+            print(self.this['InfoURL']['power'])
+            try:
+                logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL']['power']}") 
+                res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL']['power']}") 
+                logger.debug(f"{self.name}: {res}")
+                if res.ok:
+                    data = json.loads(res.text)
+                    result = data['power']                    
+                    break  # Erfolgreiche Anfrage, Schleife verlassen
+                else:
+                    raise ValueError(f"endpoint was we have no endpoint anymore")
+            except Exception as e:
+                logger.warning(f"{self.name}:Retry {retry + 1} failed: {e}")
+                result = f"{self.name}: cant get data from device with {self.this['IP']} ({e})"
+                logger.error(result)
+        logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
         logger.debug(f"---> {self.name}: reading done")
         return result
-            
             
