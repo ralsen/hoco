@@ -4,6 +4,7 @@ log/
 data/
 venv/
 env/
+.vscode
 node_modules/
 __pycache__/
 *.log
