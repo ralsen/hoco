@@ -9,7 +9,7 @@ pathes:
     HTML: '/html'
     
 Communication:
-    DaboServerName: 'family.local'    
+    DaboServerName: 'Server64.local'    
     DaboServerPort: 8088
 
 

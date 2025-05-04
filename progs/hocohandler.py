@@ -47,18 +47,19 @@ class ShellyHandler:
                 this['Hostname'] = full_name.split('.')[0]
                 device = self.DevList[this['Hostname']]
                 this['IP'] = ip
-                this['Type'] = self.DevList[device['Type']]
-                
-                this['Protocol'] = this['Type']['Protocol']
+                this['Type'] = device['Type']
+                this['Template'] = self.DevList[device['Type']]
+                this['Protocol'] = this['Template']['Protocol']
                 this['Cycle'] = device['Cycle']
-                this['Hardware'] = this['Type']['Hardware']
-                this['InfoURL'] = this['Type']['InfoURL']
+                this['Hardware'] = this['Template']['Hardware']
+                this['InfoURL'] = this['Template']['InfoURL']
                 this['ServerPort'] = device['ServerPort']
                 this['ServerName'] = device['ServerName']
                 this['Retry'] = device['Retry']
                 logger.debug(f"Protocol is {this['Protocol']}")
                 knownDevices += 1
                 this['service'] = Service(this)
+                logger.debug(f"device: {this} is defined")
         
         logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {cfg.ini['YMLPath']}/devs.yml")
         return allDevice, knownDevices, unknownDevices
@@ -96,9 +97,9 @@ class Service:
                 print("eigentlich gehts")
                 try:
                     devrsp = self.read()
-                    logger.debug(f"{self.name}: {devrsp}")
                     self.sendServer(devrsp)
-                except:
+                except Exception as e:
+                    logger.error(f"{self.name}: {e}")
                     pass
                 time.sleep(self.this['Cycle'])
             else:
@@ -106,22 +107,21 @@ class Service:
                 time.sleep(10)
 
     def sendServer(self, infos):
-        print()
-        print((infos))
+        logger.info((infos))
         if self.this['Protocol'] == 'unknown':
+            logger.error("unknown Protocal")
             return None
         if self.this['Protocol'] == 'Gen 1':
-            test = json.loads(infos['meter/0'])
-            power = test['power']
-            test = json.loads(infos['settings'])
-            Type = test['device']['type']
+            logger.debug("Gen 1 protocol")
+            power = infos['power']
         if self.this['Protocol'] == 'Gen 2':
+            logger.debug("Gen 2 protocol")
             return None
 
         data = {
             'name': self.this['Hostname'],
-            'Type': Type,
-            'IP': self.this['ip'],
+            'Type': self.this['Type'],
+            'IP': self.this['IP'],
             'Hardware': self.this['Hardware'],
             'Power': power
         }    
@@ -132,7 +132,9 @@ class Service:
         while attempt < max_retries:
             try:
                 logger.debug(f"try to reach server: {attempt}")
+                logger.debug(f"posting to: http://{self.this['ServerName']}.local:{self.this['ServerPort']} data: {data}")
                 response = requests.post(f"http://{self.this['ServerName']}.local:{self.this['ServerPort']}", json=data)
+                logger.debug(f"getting: {response}")
                 break
             except Exception as e:
                 attempt += 1
@@ -142,7 +144,7 @@ class Service:
             
 
     def read(self):
-        logger.debug(f"---> {self.name}: reading from device URLs: {self.this['InfoURL']})")
+        logger.debug(f"reading from device: {self.name} --- URL: {self.this['InfoURL']})")
         max_retries = self.this.get('Retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
         result = {}
         if self.this['IP'] is None:
@@ -155,7 +157,7 @@ class Service:
                 logger.debug(f"{self.name}: {res}")
                 if res.ok:
                     data = json.loads(res.text)
-                    result = data['power']                    
+                    result = data                  
                     break  # Erfolgreiche Anfrage, Schleife verlassen
                 else:
                     raise ValueError(f"endpoint was we have no endpoint anymore")
@@ -164,6 +166,6 @@ class Service:
                 result = f"{self.name}: cant get data from device with {self.this['IP']} ({e})"
                 logger.error(result)
         logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
-        logger.debug(f"---> {self.name}: reading done")
+        logger.debug(f"---> {self.name}: reading done: {result}")
         return result
             
