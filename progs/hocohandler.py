@@ -92,14 +92,14 @@ class Service:
     def _monitoring_thread(self):
         while True:
             
-            print(f"{self.this['Protocol']} mit {self.name}")
+            #print(f"{self.this['Protocol']} mit {self.name}")
             if self.this['Protocol'] != 'unknown':
-                print("eigentlich gehts")
+                #print("eigentlich gehts")
                 try:
                     devrsp = self.read()
                     self.sendServer(devrsp)
                 except Exception as e:
-                    logger.error(f"{self.name}: {e}")
+                    #logger.error(f"{self.name}: {e}")
                     pass
                 time.sleep(self.this['Cycle'])
             else:
