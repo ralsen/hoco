@@ -109,13 +109,19 @@ class Service:
     def sendServer(self, infos):
         logger.info((infos))
         if self.this['Protocol'] == 'unknown':
-            logger.error("unknown Protocal")
+            logger.error("unknown Protocol")
             return None
         if self.this['Protocol'] == 'Gen 1':
             logger.debug("Gen 1 protocol")
             power = infos['power']
-        if self.this['Protocol'] == 'Gen 2':
+        elif self.this['Protocol'] == 'Gen 2':
             logger.debug("Gen 2 protocol")
+            return None
+        elif self.this['Protocol'] == 'Gen 4':
+            logger.debug("Gen 4 protocol")
+            return None
+        else:
+            logger.error("wrong Protocol")
             return None
 
         data = {

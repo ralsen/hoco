@@ -57,9 +57,24 @@ shellyplus1-b0a7324cbbd4:
     ServerName: Testpi
     ServerPort: 8080
 
+shellypstripg4-98a3167b61a0:
+    Type:       S4PL-00416EU
+    name:       Aquarium
+    Cycle:      10
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+    
+
 # -----------------------------------------------
 # new device definitions as prototypes
 # -----------------------------------------------
+S4PL-00416EU:
+    Hardware: Shelly
+    Protocol: 'Gen 4'
+    InfoURL: ['rpc/Shelly.GetDeviceInfo']   
+
 SNSW-001X16EU:
     Hardware: Shelly
     Protocol: 'Gen 2'
