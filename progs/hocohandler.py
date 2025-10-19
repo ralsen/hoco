@@ -99,7 +99,7 @@ class Service:
                     devrsp = self.read()
                     self.sendServer(devrsp)
                 except Exception as e:
-                    #logger.error(f"{self.name}: {e}")
+                    logger.error(f"error response from: {self.name}: ")#{e}")
                     pass
                 time.sleep(self.this['Cycle'])
             else:
@@ -154,9 +154,11 @@ class Service:
         max_retries = self.this.get('Retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
         result = {}
         if self.this['IP'] is None:
-            return result        
+            logger.error(f"{self.name}: no IP address found")
+            return result   
+        logger.debug(f"{self.name}: starting read with max_retries={max_retries}")     
         for retry in range(max_retries):
-            print(self.this['InfoURL']['power'])
+            logger.debug(f"{self.name}: {self.this['InfoURL']['power']}")
             try:
                 logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL']['power']}") 
                 res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL']['power']}") 
@@ -168,7 +170,7 @@ class Service:
                 else:
                     raise ValueError(f"endpoint was we have no endpoint anymore")
             except Exception as e:
-                logger.warning(f"{self.name}:Retry {retry + 1} failed: {e}")
+                logger.warning(f"{self.name}: Retry {retry + 1} failed: {e}")
                 result = f"{self.name}: cant get data from device with {self.this['IP']} ({e})"
                 logger.error(result)
         logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
