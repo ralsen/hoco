@@ -72,15 +72,12 @@ shellypstripg4-98a3167b61a0:
 # -----------------------------------------------
 S4PL-00416EU:
     Hardware: Shelly
-    Protocol: 'Gen 4'
-    InfoURL:    
-        power: meter/0
-        counters: meter/0
-        total: meter/0
-        device:
-            type: settings
-            hostname: settings
-            mac: settings
+    Protocol: 'Gen 2'
+    InfoURL:
+        power_0: /rpc/Switch.GetStatus?id=0
+        power_1: /rpc/Switch.GetStatus?id=1
+        power_2: /rpc/Switch.GetStatus?id=2
+        power_3: /rpc/Switch.GetStatus?id=3
 
 SNSW-001X16EU:
     Hardware: Shelly
