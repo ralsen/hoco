@@ -96,8 +96,10 @@ class Service:
             if self.this['Protocol'] != 'unknown':
                 #print("eigentlich gehts")
                 try:
-                    devrsp = self.read()
-                    self.sendServer(devrsp)
+                    if self.name == "shellypstripg4-98a3167b61a0":
+                        logger.debug(f"Monitor active: {self.name}")
+                        devrsp = self.read()
+                        self.sendServer(devrsp)
                 except Exception as e:
                     logger.error(f"error response from: {self.name}: ")#{e}")
                     pass
@@ -158,10 +160,10 @@ class Service:
             return result   
         logger.debug(f"{self.name}: starting read with max_retries={max_retries}")     
         for retry in range(max_retries):
-            logger.debug(f"{self.name}: {self.this['InfoURL']['power']}")
+            logger.debug(f"{self.name}: {self.this['InfoURL'][0]}")
             try:
-                logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL']['power']}") 
-                res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL']['power']}") 
+                logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL'][0]}") 
+                res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL'][1][0]}") 
                 logger.debug(f"{self.name}: {res}")
                 if res.ok:
                     data = json.loads(res.text)

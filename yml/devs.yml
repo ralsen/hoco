@@ -74,10 +74,11 @@ S4PL-00416EU:
     Hardware: Shelly
     Protocol: 'Gen 2'
     InfoURL:
-        power_0: /rpc/Switch.GetStatus?id=0
-        power_1: /rpc/Switch.GetStatus?id=1
-        power_2: /rpc/Switch.GetStatus?id=2
-        power_3: /rpc/Switch.GetStatus?id=3
+        - ["/rpc/Switch.GetStatus?id=0", "noch wat"]
+        - ["/rpc/Switch.GetStatus?id=1", "noch wat"]
+        - ["/rpc/Switch.GetStatus?id=2", "noch wat"]
+        - ["/rpc/Switch.GetStatus?id=3", "noch wat"]
+
 
 SNSW-001X16EU:
     Hardware: Shelly
