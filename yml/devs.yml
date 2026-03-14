@@ -65,7 +65,150 @@ shellypstripg4-98a3167b61a0:
     ServerName: Testpi
     ServerPort: 8080
 
-    
+Buero_68_C6_3A_87_FA_CE:
+    Type:       DS1820
+    Name:       Buero
+    Hostname:   hostname
+    Cycle:      100
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080        
+
+Wintergarten_40_91_51_4E_B4_5D:
+    Type:       DS1820
+    Name:       Wintergarten
+    Hostname:   hostname
+    Cycle:      110
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+Lars-Zimmer_CC_50_E3_5D_A8_F3:
+    Type:       DS1820
+    Name:       Lars-Zimmer
+    Hostname:   hostname
+    Cycle:      120
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+Schuppen_44_17_93_1B_FF_55:
+    Type:       DS1820
+    Name:       Schuppen
+    Hostname:   hostname
+    Cycle:      130
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+Heizung_CC_50_E3_3B_F6_4D:
+    Type:       DS1820
+    Name:       Heizung
+    Hostname:   hostname
+    Cycle:      140
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+ToF_Sensor_BC_DD_C2_24_3B_F4:
+    Type:       ToF
+    Name:       ToF-Sensor
+    Hostname:   hostname
+    Cycle:      140
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+Schuppen-Steckdose_EC_FA_BC_9B_CC_1D:
+    Type:       Switch
+    Name:       Schuppen-Steckdose
+    Hostname:   hostname
+    Cycle:      150
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+No-Name_8C_CE_4E_DE_B2_F0:
+    Type:       DS1820
+    Name:       No-Name
+    Hostname:   hostname
+    Cycle:      160
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+Langsam_CC_50_E3_3C_17_68:
+    Type:       DS1820
+    Name:       Langsam
+    Hostname:   hostname
+    Cycle:      170
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+No-Name_7C_87_CE_BE_3D_A8:
+    Type:       DS1820
+    Name:       No-Name
+    Hostname:   hostname
+    Cycle:      180
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+Schnell_AC_0B_FB_D6_41_74:
+    Type:       DS1820
+    Name:       Schnell
+    Hostname:   hostname
+    Cycle:      190
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+Keller_CC_50_E3_3C_13_D3:
+    Type:       DS1820
+    Name:       Keller
+    Hostname:   hostname
+    Cycle:      200
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080    
+
+Schlafzimmer_DC_4F_22_10_C6_0E:
+    Type:       DS1820
+    Name:       Schlafzimmer
+    Hostname:   hostname
+    Cycle:      210
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080    
+
+Lars-Dach_CC_50_E3_3C_06_71:
+    Type:       DS1820
+    Name:       Lars-Dach
+    Hostname:   hostname
+    Cycle:      220
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080    
+
+Jan_CC_50_E3_5D_A7_A5:
+    Type:       DS1820
+    Name:       an
+    Hostname:   hostname
+    Cycle:      230
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080    
+
+Wohnzimmer_44_17_93_1C_1A_E0:
+    Type:       DS1820
+    Name:       Wohnzimmer
+    Hostname:   hostname
+    Cycle:      240
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080    
+
 
 # -----------------------------------------------
 # new device definitions as prototypes
@@ -106,3 +249,19 @@ SNPL-00112EU:
     Hardware: Shelly
     Protocol: 'Gen 2'
     InfoURL: ['rpc/Shelly.GetDeviceInfo']
+
+
+DS1820:
+    Hardware: DS1820
+    Protocol: '1-Wire'
+    InfoURL: ['info']
+
+ToF:
+    Hardware: ToF
+    Protocol: 'I2C'
+    InfoURL: ['info']
+
+Switch:
+    Hardware: Switch
+    Protocol: 'Generic'
+    InfoURL: ['info']

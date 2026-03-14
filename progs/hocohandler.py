@@ -25,8 +25,9 @@ class ShellyHandler:
     def discover_shelly_devices(self, timeout=5):
         """Durchsucht das lokale Netzwerk nach Shelly-Geräten."""
         zeroconf = Zeroconf()
-        listener = ShellyListener(self.DevList)
+        listener = DeviceListener(self.DevList)
         browser = ServiceBrowser(zeroconf, "_http._tcp.local.", listener)
+        print(browser)
         # Warte einige Sekunden, um Geräte zu finden
         time.sleep(timeout)
         zeroconf.close()
@@ -45,7 +46,12 @@ class ShellyHandler:
                 this = allDevice[full_name]
                 this['FullName'] = full_name
                 this['Hostname'] = full_name.split('.')[0]
-                device = self.DevList[this['Hostname']]
+                try:
+                    device = self.DevList[this['Hostname']]
+                except KeyError:
+                    logger.warning(f"Device {this['Hostname']} not found in devs.yml. Please add it to the yml file.")
+                    unknownDevices += 1
+                    continue
                 this['IP'] = ip
                 this['Type'] = device['Type']
                 this['Template'] = self.DevList[device['Type']]
@@ -64,7 +70,7 @@ class ShellyHandler:
         logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {cfg.ini['YMLPath']}/devs.yml")
         return allDevice, knownDevices, unknownDevices
 
-class ShellyListener:
+class DeviceListener:
     """Listener für Shelly-Geräte, um IP-Adressen zu sammeln."""
     def __init__(self, DevList):
         self.DevList = DevList
@@ -77,10 +83,10 @@ class ShellyListener:
     def add_service(self, zeroconf, type, name):
         # Hinzufügen von Diensten
         info = zeroconf.get_service_info(type, name)
-        if info and "shelly" in name.lower():
-            ip_address = socket.inet_ntoa(info.addresses[0])
-            self.devices[name] = ip_address
-            logger.info(f"Gefundenes Shelly-Gerät: {name} mit IP {ip_address}")
+        #if info and "shelly" in name.lower():
+        ip_address = socket.inet_ntoa(info.addresses[0])
+        self.devices[name] = ip_address
+        logger.info(f"found device: {name} with IP {ip_address}")
             
 class Service:
     def __init__(self, this):
@@ -96,12 +102,12 @@ class Service:
             if self.this['Protocol'] != 'unknown':
                 #print("eigentlich gehts")
                 try:
-                    if self.name == "shellypstripg4-98a3167b61a0":
+                    if self.name == "shellyplug-083A8DF437C7":
                         logger.debug(f"Monitor active: {self.name}")
                         devrsp = self.read()
                         self.sendServer(devrsp)
                 except Exception as e:
-                    logger.error(f"error response from: {self.name}: ")#{e}")
+                    logger.error(f"error response from: {self.name}: {e}")
                     pass
                 time.sleep(self.this['Cycle'])
             else:
@@ -162,7 +168,7 @@ class Service:
         for retry in range(max_retries):
             logger.debug(f"{self.name}: {self.this['InfoURL'][0]}")
             try:
-                logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL'][0]}") 
+                #logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL'][0]}") 
                 res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL'][1][0]}") 
                 logger.debug(f"{self.name}: {res}")
                 if res.ok:
