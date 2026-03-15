@@ -9,8 +9,8 @@ import logging
 import os
 import json
 
-import config as cfg
-import hocohandler as sh
+import config as config
+import hocohandler as dh
 
 logger = logging.getLogger(__name__)
 
@@ -22,29 +22,42 @@ if __name__ == "__main__":
     current_file_path = os.path.realpath(__file__)
     current_file_name = os.path.basename(current_file_path)
 
-    cfg.init(current_file_name)
-    x = datetime.datetime.now()
-
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s :: %(levelname)-7s :: [%(name)+16s] [%(lineno)+3s] :: %(message)s',
-        datefmt=cfg.ini['debugdatefmt'],
-        handlers=[
-            logging.FileHandler(f"{cfg.ini['LogPath']}/{current_file_name[:-3]}_{socket.gethostname()+x.strftime(cfg.ini['logSuffix'])}.log"),
-            logging.StreamHandler()
-        ])
+    cfg = config.InitManager(current_file_name).ini
 
     logger.info("")
     logger.info(f'---------- Starte {current_file_path} ----------') 
 
-    ServerName = cfg.ini['DaboServerName']
-    ServerPort = cfg.ini['DaboServerPort']
-    logger.info(f"Geräteserver gestartet auf {socket.getfqdn()}")
-    
-    logger.debug("Searching Shelly-Devices ...")
-    dh = sh.ShellyHandler()
-    devices = dh.discover_shelly_devices()
-    print("fertich")
-    while True:
-        logger.debug("sleeping...")
-        time.sleep(10)
+    logger.debug("Searching Devices ...")
+    devhandler = dh.DeviceHandler(cfg)
+    devices = devhandler.discover_devices()
+
+
+    old_x = []
+    i = 0
+
+    try:
+        while True:
+            logger.info(f"Mainloop iteration: {i}")
+            i += 1
+            x = cfg['ThreadManager'].get_all()
+            if x == old_x:
+                logger.info(f"{len(x)} active threads. No changes.")
+            else:
+                new_threads = set(x) - set(old_x)   # neu dazugekommen
+                mis_threads = set(old_x) - set(x)    # weggefallen
+                logger.info(f"{len(x)} active Threads:")
+                logger.info(f"New thread(s):     {new_threads}")
+                if mis_threads:
+                    logger.info(f"Removed thread(s): {mis_threads}")
+                logger.info(f"all thread(s):     {x}")
+                old_x = x
+            #if i == 5:
+                #logger.info("terminating")
+                #cfg['ThreadManager'].stop_all()
+                #os._exit(0)
+            time.sleep(cfg['mainloop_sleep'])
+            logger.info("Mainloop cycle done.")
+    except KeyboardInterrupt:
+        logging.info("CTRL+C pressed – terminate Threads…")
+        cfg['ThreadManager'].stop_all()
+

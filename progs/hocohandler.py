@@ -16,14 +16,15 @@ import config as cfg
 logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
-class ShellyHandler:
-    def __init__(self):
-        with open(f"{cfg.ini['YMLPath']}/devs.yml", 'r') as ymlfile:
+class DeviceHandler:
+    def __init__(self, cfg):
+        self.cfg = cfg
+        with open(f"{self.cfg['YMLPath']}/devs.yml", 'r') as ymlfile:
             self.DevList = yaml.safe_load(ymlfile)
         logger.debug(self.DevList)
         
-    def discover_shelly_devices(self, timeout=5):
-        """Durchsucht das lokale Netzwerk nach Shelly-Geräten."""
+    def discover_devices(self, timeout=5):
+        """Durchsucht das lokale Netzwerk nach Geräten."""
         zeroconf = Zeroconf()
         listener = DeviceListener(self.DevList)
         browser = ServiceBrowser(zeroconf, "_http._tcp.local.", listener)
@@ -36,14 +37,14 @@ class ShellyHandler:
     def initDevices(self, listener):
         knownDevices = 0
         unknownDevices = 0
-        allDevice = {}
+        allDevices = {}
         
         if not listener.devices:
             logger.error("No Shelly Devices found.")
         else:
             for full_name, ip in listener.devices.items():
-                allDevice[full_name] = {}
-                this = allDevice[full_name]
+                allDevices[full_name] = {}
+                this = allDevices[full_name]
                 this['FullName'] = full_name
                 this['Hostname'] = full_name.split('.')[0]
                 try:
@@ -64,11 +65,11 @@ class ShellyHandler:
                 this['Retry'] = device['Retry']
                 logger.debug(f"Protocol is {this['Protocol']}")
                 knownDevices += 1
-                this['service'] = Service(this)
-                logger.debug(f"device: {this} is defined")
+                this['service'] = Service(self.cfg, this)
+                logger.debug(f"device: '{this['Hostname']}' is defined")
         
-        logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {cfg.ini['YMLPath']}/devs.yml")
-        return allDevice, knownDevices, unknownDevices
+        logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {self.cfg['YMLPath']}/devs.yml")
+        return allDevices, knownDevices, unknownDevices
 
 class DeviceListener:
     """Listener für Shelly-Geräte, um IP-Adressen zu sammeln."""
@@ -87,18 +88,25 @@ class DeviceListener:
         ip_address = socket.inet_ntoa(info.addresses[0])
         self.devices[name] = ip_address
         logger.info(f"found device: {name} with IP {ip_address}")
-            
+
+    def update_service(self, zeroconf, service_type, name):
+        logger.info("### mDNS service updated: ### %s", name)
+        pass
+           
 class Service:
-    def __init__(self, this):
+    def __init__(self, cfg, this):
         self.this = this
         self.name = self.this['Hostname']
-        threading.Thread(target=self._monitoring_thread, daemon=True).start()
+        self.cfg = cfg
+        #threading.Thread(target=self._monitoring_thread, daemon=True).start()
+        self.cfg['ThreadManager'].start(f"monitoring for {self.name}", target=self.__monitoring_thread__, args=())
         pass
     
-    def _monitoring_thread(self):
+    def __monitoring_thread__(self, stop_event: threading.Event):
+        logger.debug(f"starting monitoring thread for {self.name}")
         while True:
             
-            #print(f"{self.this['Protocol']} mit {self.name}")
+            logger.debug(f"{self.this['Protocol']} mit {self.name}")
             if self.this['Protocol'] != 'unknown':
                 #print("eigentlich gehts")
                 try:
