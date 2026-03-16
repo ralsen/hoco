@@ -104,9 +104,9 @@ class Service:
     
     def __monitoring_thread__(self, stop_event: threading.Event):
         logger.debug(f"starting monitoring thread for {self.name}")
-        while True:
-            
-            logger.debug(f"{self.this['Protocol']} mit {self.name}")
+        
+        while not stop_event.is_set():            
+            logger.debug(f"calling {self.name} with protocol: {self.this['Protocol']}")
             if self.this['Protocol'] != 'unknown':
                 #print("eigentlich gehts")
                 try:
@@ -117,11 +117,12 @@ class Service:
                 except Exception as e:
                     logger.error(f"error response from: {self.name}: {e}")
                     pass
-                time.sleep(self.this['Cycle'])
             else:
-                logger.debug(f"{self.name}: Monitor sleeps")
-                time.sleep(10)
-
+                logger.error(f"unknown protocol for device {self.name}")
+                stop_event.wait(120)
+            if stop_event.wait(self.this['Cycle']):
+                break            
+        
     def sendServer(self, infos):
         logger.info((infos))
         if self.this['Protocol'] == 'unknown':
