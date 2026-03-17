@@ -7,7 +7,7 @@ shellyplug-083A8DF437C7:
     Type:       SHPLG2-1
     Name:       Solar
     Hostname:   hostname
-    Cycle:      1000
+    Cycle:      10
     Retry:      3
     ServerName: Server64
     ServerPort: 8080

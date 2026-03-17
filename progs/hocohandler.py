@@ -40,7 +40,7 @@ class DeviceHandler:
         allDevices = {}
         
         if not listener.devices:
-            logger.error("No Shelly Devices found.")
+            logger.error("No devices found.")
         else:
             for full_name, ip in listener.devices.items():
                 allDevices[full_name] = {}
@@ -113,6 +113,7 @@ class Service:
                     if self.name == "shellyplug-083A8DF437C7":
                         logger.debug(f"Monitor active: {self.name}")
                         devrsp = self.read()
+                        self.this['last_response'] = time.time()
                         self.sendServer(devrsp)
                 except Exception as e:
                     logger.error(f"error response from: {self.name}: {e}")

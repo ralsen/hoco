@@ -11,6 +11,8 @@ import json
 
 import config as config
 import hocohandler as dh
+from registry import registry
+
 
 logger = logging.getLogger(__name__)
 
@@ -30,8 +32,8 @@ if __name__ == "__main__":
     logger.debug("Searching Devices ...")
     devhandler = dh.DeviceHandler(cfg)
     devices = devhandler.discover_devices()
-
-
+    reg = registry(cfg)
+    
     old_x = []
     i = 0
 
@@ -58,6 +60,7 @@ if __name__ == "__main__":
             time.sleep(cfg['mainloop_sleep'])
             logger.info("Mainloop cycle done.")
     except KeyboardInterrupt:
+        reg.save_registry(devices[0])
         logging.info("CTRL+C pressed – terminate Threads…")
         cfg['ThreadManager'].stop_all()
 
