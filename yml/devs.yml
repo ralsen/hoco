@@ -12,6 +12,67 @@ shellyplug-083A8DF437C7:
     ServerName: Server64
     ServerPort: 8080
 
+shellypmminig3-dcda0cb60cd0:
+    Type:       S3PM-001PCEU16
+    Name:       Solar-Power
+    Hostname:   hostname
+    Cycle:      50
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+shellyplus1-e465b8f0f750:
+    Type:       SNSW-001X16EU
+    Name:       Gartenlampe
+    Hostname:   hostname
+    Cycle:      60
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+shellyplus1-d0ef76d9aaac:
+    Type:       SNSW-001X16EU
+    Name:       Schuppen
+    Hostname:   hostname
+    Cycle:      70
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+shellyplusplugs-d48afc7bb89c:
+    Type:       S3PM-001PCEU16
+    Name:       Schuppen
+    Hostname:   hostname
+    Cycle:      80
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+shellyplus1-b0a7324cbbd4:
+    Type:       SNSW-001X16EU
+    Name:       name
+    Hostname:   hostname
+    Cycle:      90
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+shellypstripg4-98a3167b61a0:
+    Type:       S4PL-00416EU
+    name:       Aquarium
+    Cycle:      30
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080
+
+Buero_68_C6_3A_87_FA_CE:
+    Type:       DS1820
+    Name:       Buero
+    Hostname:   hostname
+    Cycle:      300
+    Retry:      3
+    ServerName: Testpi
+    ServerPort: 8080        
 
 Wintergarten_40_91_51_4E_B4_5D:
     Type:       DS1820
