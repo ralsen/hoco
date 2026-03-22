@@ -10,6 +10,7 @@ import yaml
 import threading
 import json
 from zeroconf import ServiceBrowser, Zeroconf
+from dispatcher import Dispatcher
 
 import config as cfg
 
@@ -108,7 +109,7 @@ class Service:
         while not stop_event.is_set():            
             logger.debug(f"calling {self.name} with protocol: {self.this['Protocol']}")
             if self.this['Protocol'] != 'unknown':
-                #print("eigentlich gehts")
+                self.read()
                 try:
                     if self.name == "shellyplug-083A8DF437C7":
                         logger.debug(f"Monitor active: {self.name}")
@@ -171,6 +172,11 @@ class Service:
         logger.debug(f"reading from device: {self.name} --- URL: {self.this['InfoURL']})")
         max_retries = self.this.get('Retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
         result = {}
+        
+        #Dispatcher.handle()
+        #data = {"Type": f"{self.this['Type']}"+"2"}
+        #d = Dispatcher(data)
+        
         if self.this['IP'] is None:
             logger.error(f"{self.name}: no IP address found")
             return result   
@@ -178,12 +184,18 @@ class Service:
         for retry in range(max_retries):
             #logger.debug(f"{self.name}: {self.this['InfoURL'][0]}")
             try:
-                logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL']['power']}") 
-                res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL']['power']}") 
+                logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL']}") 
+                res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL']}")
                 logger.debug(f"{self.name}: {res}")
                 if res.ok:
-                    data = json.loads(res.text)
-                    result = data                  
+                    dispatch_data = {
+                        "Type": self.this['Type'],
+                        "device": self.this,
+                        "response": res,
+                    }
+                    data = Dispatcher(dispatch_data).handle()
+                    logger.debug(f"{self.name}: dispatcher returned: {data}")
+                    result = data
                     break  # Erfolgreiche Anfrage, Schleife verlassen
                 else:
                     raise ValueError(f"endpoint was we have no endpoint anymore")

@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ###############################################################
-import socket
 import time
-import yaml
-import datetime
 import logging 
 import os
 import json
@@ -12,7 +9,7 @@ import json
 import config as config
 import hocohandler as dh
 from registry import registry
-
+from dispatcher import Dispatcher, load_handlers
 
 logger = logging.getLogger(__name__)
 
@@ -29,11 +26,19 @@ if __name__ == "__main__":
     logger.info("")
     logger.info(f'---------- Starte {current_file_path} ----------') 
 
+    load_handlers()
+
     logger.debug("Searching Devices ...")
     devhandler = dh.DeviceHandler(cfg)
     devices = devhandler.discover_devices()
     reg = registry(cfg)
     
+    # ganz wichtig: einmal aufrufen
+    #data = {"Type": "SNSW-001X16EU"}
+    #d = Dispatcher(data)
+    #cfg['dispatchers'] = d
+    #logger.debug(f"Handling device: {d.handle()}")
+
     old_x = []
     i = 0
 

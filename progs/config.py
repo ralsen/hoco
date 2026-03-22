@@ -69,7 +69,7 @@ class InitManager:
         
         logging.basicConfig(
             level=getattr(logging, confyml['misc']["loglevel"].upper(), logging.INFO), # INFO is default  
-            format='%(asctime)s :: %(levelname)-7s :: [%(name)+16s] [%(lineno)+3s] :: %(message)s',
+            format='%(asctime)s :: %(levelname)-7s :: [%(name)+24s] [%(lineno)+3s] :: %(message)s',
             datefmt=ini['debugdatefmt'],
             handlers=[
                 logging.FileHandler(f"{ini['LogPath']}/{self.progname[:-3]}_{socket.gethostname()+ini['StartTime'].strftime(ini['logSuffix'])}.log"),
