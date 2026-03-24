@@ -1,0 +1,57 @@
+# https://shelly-api-docs.shelly.cloud
+
+# -----------------------------------------------
+# new device definitions
+# -----------------------------------------------
+
+Steckdose_EC_FA_BC_12_F4_31:
+    Type:       Switch
+    Name:       Steckdose
+    Hostname:   hostname
+    Cycle:      5
+    Retry:      3
+    ServerName: Server64
+    ServerPort: 8080
+    
+# -----------------------------------------------
+# new device definitions as prototypes
+# -----------------------------------------------
+S4PL-00416EU:
+    Hardware: Shelly
+    Protocol: 'Gen 2'
+    InfoURL: /rpc/Switch.GetStatus?id=0
+
+SNSW-001X16EU:
+    Hardware: Shelly
+    Protocol: 'Gen 2'
+    InfoURL: rpc/Shelly.GetDeviceInfo
+
+S3PM-001PCEU16:
+    Hardware: Shelly
+    Protocol: 'Gen 2'
+    InfoURL: rpc/Shelly.GetDeviceInfo
+
+SHPLG2-1:
+    Hardware: Shelly
+    Protocol: 'Gen 1'
+    InfoURL: meter/0
+ 
+SNPL-00112EU:
+    Hardware: Shelly
+    Protocol: 'Gen 2'
+    InfoURL: rpc/Shelly.GetDeviceInfo
+
+DS1820:
+    Hardware: DS1820
+    Protocol: 'ESP'
+    InfoURL: info
+
+ToF:
+    Hardware: ToF
+    Protocol: 'ESP'
+    InfoURL: info
+
+Switch:
+    Hardware: Switch
+    Protocol: 'ESP'
+    InfoURL: info

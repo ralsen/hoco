@@ -52,9 +52,10 @@ DevServer:
     Timers:
         MonitoringSleep: 1
 
-files:
+Files:
     DATASTORE_YML: 'datastore.yml'
     DIAGRAMS_YML: 'diagrams.yml'
+    DEVICES_YML: 'devs.yml'
 
 suffixes:
     log: # '-%Y_%m_%d__%H-%M-%S'     #date and time

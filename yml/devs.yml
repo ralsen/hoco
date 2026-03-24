@@ -18,7 +18,7 @@ shellypmminig3-dcda0cb60cd0:
     Hostname:   hostname
     Cycle:      50
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 shellyplus1-e465b8f0f750:
@@ -27,7 +27,7 @@ shellyplus1-e465b8f0f750:
     Hostname:   hostname
     Cycle:      60
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 shellyplus1-d0ef76d9aaac:
@@ -36,7 +36,7 @@ shellyplus1-d0ef76d9aaac:
     Hostname:   hostname
     Cycle:      70
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 shellyplusplugs-d48afc7bb89c:
@@ -45,7 +45,7 @@ shellyplusplugs-d48afc7bb89c:
     Hostname:   hostname
     Cycle:      80
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 shellyplus1-b0a7324cbbd4:
@@ -54,7 +54,7 @@ shellyplus1-b0a7324cbbd4:
     Hostname:   hostname
     Cycle:      90
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 shellypstripg4-98a3167b61a0:
@@ -62,7 +62,7 @@ shellypstripg4-98a3167b61a0:
     name:       Aquarium
     Cycle:      30
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 Buero_68_C6_3A_87_FA_CE:
@@ -71,7 +71,7 @@ Buero_68_C6_3A_87_FA_CE:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080        
 
 Wintergarten_40_91_51_4E_B4_5D:
@@ -80,7 +80,7 @@ Wintergarten_40_91_51_4E_B4_5D:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 Lars-Zimmer_CC_50_E3_5D_A8_F3:
@@ -89,7 +89,7 @@ Lars-Zimmer_CC_50_E3_5D_A8_F3:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 Schuppen_44_17_93_1B_FF_55:
@@ -98,7 +98,7 @@ Schuppen_44_17_93_1B_FF_55:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 Heizung_CC_50_E3_3B_F6_4D:
@@ -107,7 +107,7 @@ Heizung_CC_50_E3_3B_F6_4D:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 ToF_Sensor_BC_DD_C2_24_3B_F4:
@@ -116,7 +116,7 @@ ToF_Sensor_BC_DD_C2_24_3B_F4:
     Hostname:   hostname
     Cycle:      60
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 Schuppen-Steckdose_EC_FA_BC_9B_CC_1D:
@@ -125,7 +125,7 @@ Schuppen-Steckdose_EC_FA_BC_9B_CC_1D:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 No-Name_8C_CE_4E_DE_B2_F0:
@@ -134,7 +134,7 @@ No-Name_8C_CE_4E_DE_B2_F0:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 Langsam_CC_50_E3_3C_17_68:
@@ -143,7 +143,7 @@ Langsam_CC_50_E3_3C_17_68:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 No-Name_7C_87_CE_BE_3D_A8:
@@ -152,7 +152,7 @@ No-Name_7C_87_CE_BE_3D_A8:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 Schnell_AC_0B_FB_D6_41_74:
@@ -161,7 +161,7 @@ Schnell_AC_0B_FB_D6_41_74:
     Hostname:   hostname
     Cycle:      150
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
 
 Keller_CC_50_E3_3C_13_D3:
@@ -170,7 +170,7 @@ Keller_CC_50_E3_3C_13_D3:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080    
 
 Schlafzimmer_DC_4F_22_10_C6_0E:
@@ -179,7 +179,7 @@ Schlafzimmer_DC_4F_22_10_C6_0E:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080    
 
 Lars-Dach_CC_50_E3_3C_06_71:
@@ -188,7 +188,7 @@ Lars-Dach_CC_50_E3_3C_06_71:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080    
 
 Jan_CC_50_E3_5D_A7_A5:
@@ -197,7 +197,7 @@ Jan_CC_50_E3_5D_A7_A5:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080    
 
 Wohnzimmer_44_17_93_1C_1A_E0:
@@ -206,7 +206,7 @@ Wohnzimmer_44_17_93_1C_1A_E0:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080    
 
 Steckdose_EC_FA_BC_12_F4_31:
@@ -215,7 +215,7 @@ Steckdose_EC_FA_BC_12_F4_31:
     Hostname:   hostname
     Cycle:      300
     Retry:      3
-    ServerName: Testpi
+    ServerName: Server64
     ServerPort: 8080
     
 # -----------------------------------------------
@@ -248,15 +248,15 @@ SNPL-00112EU:
 
 DS1820:
     Hardware: DS1820
-    Protocol: '1-Wire'
+    Protocol: 'ESP'
     InfoURL: info
 
 ToF:
     Hardware: ToF
-    Protocol: 'I2C'
+    Protocol: 'ESP'
     InfoURL: info
 
 Switch:
     Hardware: Switch
-    Protocol: 'Generic'
+    Protocol: 'ESP'
     InfoURL: info

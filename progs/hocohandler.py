@@ -20,7 +20,7 @@ logging.getLogger('urllib3').setLevel(logging.WARNING)
 class DeviceHandler:
     def __init__(self, cfg):
         self.cfg = cfg
-        with open(f"{self.cfg['YMLPath']}/devs.yml", 'r') as ymlfile:
+        with open(f"{self.cfg['YMLPath']}/{self.cfg['Devices']}", 'r') as ymlfile:
             self.DevList = yaml.safe_load(ymlfile)
         logger.debug(self.DevList)
         
@@ -109,15 +109,17 @@ class Service:
         while not stop_event.is_set():            
             logger.debug(f"calling {self.name} with protocol: {self.this['Protocol']}")
             if self.this['Protocol'] != 'unknown':
-                self.read()
                 try:
-                    if self.name == "shellyplug-083A8DF437C7":
-                        logger.debug(f"Monitor active: {self.name}")
-                        devrsp = self.read()
-                        self.this['last_response'] = time.time()
-                        self.sendServer(devrsp)
+                    logger.debug(f"Monitor active: {self.name}")
+                    devrsp = self.read()
+                    self.this['last_response'] = time.time()
                 except Exception as e:
                     logger.error(f"error response from: {self.name}: {e}")
+                    pass
+                try:
+                    self.sendServer(devrsp)
+                except Exception as e:
+                    logger.error(f"error sending to server: {self.name}: {e}")
                     pass
             else:
                 logger.error(f"unknown protocol for device {self.name}")
@@ -126,50 +128,39 @@ class Service:
                 break            
         
     def sendServer(self, infos):
-        logger.info((infos))
+        #logger.info((infos))
         if self.this['Protocol'] == 'unknown':
             logger.error("unknown Protocol")
             return None
         if self.this['Protocol'] == 'Gen 1':
             logger.debug("Gen 1 protocol")
-            power = infos['power']
         elif self.this['Protocol'] == 'Gen 2':
             logger.debug("Gen 2 protocol")
-            return None
-        elif self.this['Protocol'] == 'Gen 4':
-            logger.debug("Gen 4 protocol")
-            return None
+        elif self.this['Protocol'] == 'ESP':
+            logger.debug("ESP protocol")
         else:
             logger.error("wrong Protocol")
             return None
 
-        data = {
-            'name': self.this['Hostname'],
-            'Type': self.this['Type'],
-            'IP': self.this['IP'],
-            'Hardware': self.this['Hardware'],
-            'Power': power
-        }    
-        logger.debug(f"Sending: {data}")
-        #requests evtl. in eigenen Thread packen
+        #logger.debug(f"Sending: {infos}")
         attempt = 0
         max_retries = self.this.get('retry', 1)
         while attempt < max_retries:
             try:
                 logger.debug(f"try to reach server: {attempt}")
-                logger.debug(f"posting to: http://{self.this['ServerName']}.local:{self.this['ServerPort']} data: {data}")
-                response = requests.post(f"http://{self.this['ServerName']}.local:{self.this['ServerPort']}", json=data)
+                #logger.debug(f"posting to: http://{self.this['ServerName']}.local:{self.this['ServerPort']} data: {json.dumps(infos)}")
+                response = requests.post(f"http://{self.this['ServerName']}.local:{self.this['ServerPort']}", json=infos)
                 logger.debug(f"getting: {response}")
                 break
             except Exception as e:
                 attempt += 1
                 if attempt == max_retries:
                     logger.error(f"could not send to server http://{self.this['ServerName']}.local:{self.this['ServerPort']} (after {max_retries} retries)")
-        logger.debug(f"Answer: {response.text}")                
+        logger.debug(f"Answer: {response.text}, {self.this['Hostname']}")                
             
 
     def read(self):
-        logger.debug(f"reading from device: {self.name} --- URL: {self.this['InfoURL']})")
+        logger.debug(f"reading from device: {self.name} --- URL: {self.this['InfoURL']}")
         max_retries = self.this.get('Retry', 1)  # Standardmäßig 1 Versuch, falls 'retry' nicht gesetzt ist
         result = {}
         
@@ -207,3 +198,6 @@ class Service:
         logger.debug(f"---> {self.name}: reading done: {result}")
         return result
             
+"""
+posting to: http://Server64.local:8080 data: {"Version": "V5.0f", "Hostname": "Buero-68C63A87FACE", "Type": "DS1820", "Hardw": "NODEMCU", "Chip-ID": "0x87face", "MAC-Address": "68:C6:3A:87:FA:CE", "Network": "janzneu", "Network-IP": "192.168.2.38", "Devicename": "Buero", "AP-Name": "ESPnet", "cfg-Size": "0x14c", "Hash": "0x8ffc96", "Display": "False", "uptime": "65 days - 4 hours - 1 minutes - 4 seconds", "Measuring cycle": "150 s (remainig: 24 s)", "Transmit cycle": "300 s (remaining: 20 s)", "PageReload cycle": "10 s", "Server": "192.168.2.5", "Port": "8080", "LED": "on", "Signal strength": "-77", "good Transmissions": "18761", "bad Transmissions": "7", "Pages delivered": "617", "Measurements": "37288"}
+"""

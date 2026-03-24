@@ -6,7 +6,7 @@ import os
 
 logger = logging.getLogger(__name__)
 
-def parse_ESP(text):    
+def parse_ESP_main(text):    
     # Extrahiere nur den Inhalt zwischen <div1> und </div1>
     div1_content = re.search(r'<div1>(.*?)</div1>', text, re.DOTALL).group(1)
 
@@ -28,3 +28,56 @@ def parse_ESP(text):
     except KeyError:
         data_dict["Hostname"] = "ESP_Device ohne Hostname"
     return data_dict
+
+def parse_ESP_table(html: str) -> list[dict]:
+    """
+    Extrahiert Tabellenwerte ohne BeautifulSoup.
+    Erwartet eine Tabelle mit:
+    - Header in erster Zeile
+    - Danach <tr><td>channel</td><td>Temperatur</td></tr>
+    """
+
+    result = []
+
+    # Tabelle isolieren
+    table_start = html.find("<table")
+    table_end = html.find("</table>")
+
+    if table_start == -1 or table_end == -1:
+        return result  # sollte laut Vorgabe nicht passieren
+
+    table_html = html[table_start:table_end]
+
+    # Alle Zeilen holen
+    rows = table_html.split("<tr>")
+
+    # Erste Zeile ist Header → überspringen
+    for row in rows[2:]:
+        cols = row.split("<td>")
+
+        if len(cols) >= 3:
+            # Inhalt extrahieren (bis </td>)
+            channel = cols[1].split("</td>")[0].strip()
+            temp = cols[2].split("</td>")[0].strip()
+
+            result.append({
+                "channel": channel,
+                "Temperatur": temp
+            })
+    return result
+
+def parse_ESP_switch(html: str) -> list[dict]:
+    match = re.search(r'Schalter ist:\s*([^<]+)', html, re.IGNORECASE)
+    if match:
+        value = match.group(1)
+        print(value)    
+        return value
+
+def parse_ESP_tof(html: str) -> str:
+    match = re.search(r'<h1[^>]*font-size:128px[^>]*>(\d+)</h1>', html)
+
+    if match:
+        value = int(match.group(1))
+        print(value)    
+        return value
+
