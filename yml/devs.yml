@@ -65,16 +65,16 @@ shellypstripg4-98a3167b61a0:
     ServerName: Server64
     ServerPort: 8080
 
-Buero_68_C6_3A_87_FA_CE:
+Buero-68C63A87FACE:
     Type:       DS1820
     Name:       Buero
     Hostname:   hostname
-    Cycle:      300
+    Cycle:      5
     Retry:      3
     ServerName: Server64
     ServerPort: 8080        
 
-Wintergarten_40_91_51_4E_B4_5D:
+Wintergarten-4091514EB45D:
     Type:       DS1820
     Name:       Wintergarten
     Hostname:   hostname
@@ -83,7 +83,7 @@ Wintergarten_40_91_51_4E_B4_5D:
     ServerName: Server64
     ServerPort: 8080
 
-Lars-Zimmer_CC_50_E3_5D_A8_F3:
+Lars-Zimmer-CC50E35DA8F3:
     Type:       DS1820
     Name:       Lars-Zimmer
     Hostname:   hostname
@@ -92,7 +92,7 @@ Lars-Zimmer_CC_50_E3_5D_A8_F3:
     ServerName: Server64
     ServerPort: 8080
 
-Schuppen_44_17_93_1B_FF_55:
+Schuppen-4417931BFF55:
     Type:       DS1820
     Name:       Schuppen
     Hostname:   hostname
@@ -101,7 +101,7 @@ Schuppen_44_17_93_1B_FF_55:
     ServerName: Server64
     ServerPort: 8080
 
-Heizung_CC_50_E3_3B_F6_4D:
+Heizung-CC50E33BF64D:
     Type:       DS1820
     Name:       Heizung
     Hostname:   hostname
@@ -110,7 +110,7 @@ Heizung_CC_50_E3_3B_F6_4D:
     ServerName: Server64
     ServerPort: 8080
 
-ToF_Sensor_BC_DD_C2_24_3B_F4:
+ToF_Sensor-BCDDC2243BF4:
     Type:       ToF
     Name:       ToF-Sensor
     Hostname:   hostname
@@ -119,7 +119,7 @@ ToF_Sensor_BC_DD_C2_24_3B_F4:
     ServerName: Server64
     ServerPort: 8080
 
-Schuppen-Steckdose_EC_FA_BC_9B_CC_1D:
+Schuppen-Steckdose-ECFABC9BCC1D:
     Type:       Switch
     Name:       Schuppen-Steckdose
     Hostname:   hostname
@@ -128,7 +128,7 @@ Schuppen-Steckdose_EC_FA_BC_9B_CC_1D:
     ServerName: Server64
     ServerPort: 8080
 
-No-Name_8C_CE_4E_DE_B2_F0:
+No-Name-8CCE4EDEB2F0:
     Type:       DS1820
     Name:       No-Name
     Hostname:   hostname
@@ -137,7 +137,7 @@ No-Name_8C_CE_4E_DE_B2_F0:
     ServerName: Server64
     ServerPort: 8080
 
-Langsam_CC_50_E3_3C_17_68:
+Langsam-CC50E33C1768:
     Type:       DS1820
     Name:       Langsam
     Hostname:   hostname
@@ -146,7 +146,7 @@ Langsam_CC_50_E3_3C_17_68:
     ServerName: Server64
     ServerPort: 8080
 
-No-Name_7C_87_CE_BE_3D_A8:
+No-Name-7C87CEBE3DA8:
     Type:       DS1820
     Name:       No-Name
     Hostname:   hostname
@@ -155,7 +155,7 @@ No-Name_7C_87_CE_BE_3D_A8:
     ServerName: Server64
     ServerPort: 8080
 
-Schnell_AC_0B_FB_D6_41_74:
+Schnell-AC0BFBD64174:
     Type:       DS1820
     Name:       Schnell
     Hostname:   hostname
@@ -164,7 +164,7 @@ Schnell_AC_0B_FB_D6_41_74:
     ServerName: Server64
     ServerPort: 8080
 
-Keller_CC_50_E3_3C_13_D3:
+Keller-CC50E33C13D3:
     Type:       DS1820
     Name:       Keller
     Hostname:   hostname
@@ -173,7 +173,7 @@ Keller_CC_50_E3_3C_13_D3:
     ServerName: Server64
     ServerPort: 8080    
 
-Schlafzimmer_DC_4F_22_10_C6_0E:
+Schlafzimmer-DC4F2210C60E:
     Type:       DS1820
     Name:       Schlafzimmer
     Hostname:   hostname
@@ -182,7 +182,7 @@ Schlafzimmer_DC_4F_22_10_C6_0E:
     ServerName: Server64
     ServerPort: 8080    
 
-Lars-Dach_CC_50_E3_3C_06_71:
+Lars-Dach-CC50E33C0671:
     Type:       DS1820
     Name:       Lars-Dach
     Hostname:   hostname
@@ -191,7 +191,7 @@ Lars-Dach_CC_50_E3_3C_06_71:
     ServerName: Server64
     ServerPort: 8080    
 
-Jan_CC_50_E3_5D_A7_A5:
+Jan-CC50E35DA7A5:
     Type:       DS1820
     Name:       an
     Hostname:   hostname
@@ -200,7 +200,7 @@ Jan_CC_50_E3_5D_A7_A5:
     ServerName: Server64
     ServerPort: 8080    
 
-Wohnzimmer_44_17_93_1C_1A_E0:
+Wohnzimmer-4417931C1AE0:
     Type:       DS1820
     Name:       Wohnzimmer
     Hostname:   hostname

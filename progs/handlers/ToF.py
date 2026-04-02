@@ -11,7 +11,7 @@ def handle_tof(self):
     logger.debug("Handling: ToF")
     text = self.this['response'].text
     data = ESP_parser.parse_ESP_main(text)
-    data['name'] = self.this['device']['Hostname'][:-18] + '-' + self.this['device']['Hostname'][-17:]
+    data['name'] = self.this['device']['Hostname']
     data['Type'] = self.this['device']['Type']
     data['IP'] = self.this['device']['IP']  
     data.pop('Network-IP', None)  # entfernen, da nicht relevant

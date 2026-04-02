@@ -14,7 +14,6 @@ class registry():
     def __init__(self, cfg):
         self.cfg = cfg  
         self.regfile = Path(os.path.join(self.cfg['REGPath'], "regfile.yml"))
-        print(f"Registry file path: {self.regfile}") 
     def update_registry(self, devs, service) -> dict:
         previous = self.load_registry()
         current = devs

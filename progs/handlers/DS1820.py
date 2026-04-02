@@ -11,15 +11,13 @@ def handle_DS1820(self):
     logger.debug("Handling DS1820")
     text = self.this['response'].text
     data = ESP_parser.parse_ESP_main(text)
-    data['name'] = self.this['device']['Hostname'][:-18] + '-' + self.this['device']['Hostname'][-17:]
-    data['Type'] = self.this['device']['Type']
+    data['name'] = self.this['device']['Hostname']
     data['IP'] = self.this['device']['IP']  
     data.pop('Network-IP', None)  # entfernen, da nicht relevant
     res = requests.get(f"http://{self.this['device']['IP']}/status") #{self.this['InfoURL']}")
     y = ESP_parser.parse_ESP_table(res.text)
     data['Type'] = data['Type'] + '-' + str (len(y))
     for count, i in enumerate(y):
-        print(count)
         channel = i.get('channel')
         temp = i.get('Temperatur')
         if channel and temp:

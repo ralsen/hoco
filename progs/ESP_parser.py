@@ -70,7 +70,6 @@ def parse_ESP_switch(html: str) -> list[dict]:
     match = re.search(r'Schalter ist:\s*([^<]+)', html, re.IGNORECASE)
     if match:
         value = match.group(1)
-        print(value)    
         return value
 
 def parse_ESP_tof(html: str) -> str:
@@ -78,6 +77,5 @@ def parse_ESP_tof(html: str) -> str:
 
     if match:
         value = int(match.group(1))
-        print(value)    
         return value
 

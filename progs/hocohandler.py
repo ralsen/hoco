@@ -29,7 +29,6 @@ class DeviceHandler:
         zeroconf = Zeroconf()
         listener = DeviceListener(self.DevList)
         browser = ServiceBrowser(zeroconf, "_http._tcp.local.", listener)
-        print(browser)
         # Warte einige Sekunden, um Geräte zu finden
         time.sleep(timeout)
         zeroconf.close()
@@ -43,18 +42,19 @@ class DeviceHandler:
         if not listener.devices:
             logger.error("No devices found.")
         else:
-            for full_name, ip in listener.devices.items():
+            for full_name in listener.devices:
+                logger.debug(f"Processing device: {full_name}")
                 allDevices[full_name] = {}
                 this = allDevices[full_name]
                 this['FullName'] = full_name
-                this['Hostname'] = full_name.split('.')[0]
+                this['Hostname'] = listener.devices[full_name]['info'].server.split('.')[0]  # Hostname extrahieren
                 try:
                     device = self.DevList[this['Hostname']]
                 except KeyError:
                     logger.warning(f"Device {this['Hostname']} not found in devs.yml. Please add it to the yml file.")
                     unknownDevices += 1
                     continue
-                this['IP'] = ip
+                this['IP'] = listener.devices[full_name]['IP']
                 this['Type'] = device['Type']
                 this['Template'] = self.DevList[device['Type']]
                 this['Protocol'] = this['Template']['Protocol']
@@ -68,7 +68,7 @@ class DeviceHandler:
                 knownDevices += 1
                 this['service'] = Service(self.cfg, this)
                 logger.debug(f"device: '{this['Hostname']}' is defined")
-        
+                
         logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {self.cfg['YMLPath']}/devs.yml")
         return allDevices, knownDevices, unknownDevices
 
@@ -85,9 +85,12 @@ class DeviceListener:
     def add_service(self, zeroconf, type, name):
         # Hinzufügen von Diensten
         info = zeroconf.get_service_info(type, name)
-        #if info and "shelly" in name.lower():
         ip_address = socket.inet_ntoa(info.addresses[0])
         self.devices[name] = ip_address
+        self.devices[name] = {}
+        self.devices[name]['IP'] = ip_address
+        self.devices[name]['info'] = info
+        self.devices[name]['zeroconf'] = zeroconf
         logger.info(f"found device: {name} with IP {ip_address}")
 
     def update_service(self, zeroconf, service_type, name):
@@ -147,6 +150,7 @@ class Service:
         max_retries = self.this.get('retry', 1)
         while attempt < max_retries:
             try:
+                #infos.pop('name', None)  # entfernen, da nicht relevant
                 logger.debug(f"try to reach server: {attempt}")
                 #logger.debug(f"posting to: http://{self.this['ServerName']}.local:{self.this['ServerPort']} data: {json.dumps(infos)}")
                 response = requests.post(f"http://{self.this['ServerName']}.local:{self.this['ServerPort']}", json=infos)
@@ -157,7 +161,7 @@ class Service:
                 if attempt == max_retries:
                     logger.error(f"could not send to server http://{self.this['ServerName']}.local:{self.this['ServerPort']} (after {max_retries} retries)")
         logger.debug(f"Answer: {response.text}, {self.this['Hostname']}")                
-            
+        pass    
 
     def read(self):
         logger.debug(f"reading from device: {self.name} --- URL: {self.this['InfoURL']}")
