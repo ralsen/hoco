@@ -57,7 +57,7 @@ shellyplus1-b0a7324cbbd4:
     ServerName: Server64
     ServerPort: 8080
 
-shellypstripg4-98a3167b61a0:
+ShellyPStripG4-98A3167B61A0:
     Type:       S4PL-00416EU
     name:       Aquarium
     Cycle:      30
@@ -69,7 +69,7 @@ Buero-68C63A87FACE:
     Type:       DS1820
     Name:       Buero
     Hostname:   hostname
-    Cycle:      5
+    Cycle:      300
     Retry:      3
     ServerName: Server64
     ServerPort: 8080        
@@ -193,7 +193,7 @@ Lars-Dach-CC50E33C0671:
 
 Jan-CC50E35DA7A5:
     Type:       DS1820
-    Name:       an
+    Name:       Jan
     Hostname:   hostname
     Cycle:      300
     Retry:      3
@@ -218,6 +218,14 @@ Steckdose_EC_FA_BC_12_F4_31:
     ServerName: Server64
     ServerPort: 8080
     
+Aqua-1-CC50E3531E58:
+    Type:       Switch
+    Name:       Kugellampe
+    Hostname:   hostname
+    Cycle:      300
+    Retry:      3
+    ServerName: Server64
+    ServerPort: 8080
 # -----------------------------------------------
 # new device definitions as prototypes
 # -----------------------------------------------
