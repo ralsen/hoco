@@ -11,7 +11,15 @@ shellyplug-083A8DF437C7:
     Retry:      3
     ServerName: Server64
     ServerPort: 8080
-    
+
+ShellyPStripG4-98A3167B61A0:
+    Type:       S4PL-00416EU
+    name:       Aquarium
+    Cycle:      10
+    Retry:      3
+    ServerName: Server64
+    ServerPort: 8080
+
 # -----------------------------------------------
 # new device definitions as prototypes
 # -----------------------------------------------
