@@ -189,7 +189,6 @@ class Service:
                         "response": res,
                     }
                     data = Dispatcher(dispatch_data).handle()
-                    logger.debug(f"{self.name}: dispatcher returned: {data}")
                     result = data
                     break  # Erfolgreiche Anfrage, Schleife verlassen
                 else:
