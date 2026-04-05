@@ -10,7 +10,9 @@ class Dispatcher:
 
     @classmethod
     def register(cls, device_type):
+        logger.debug(f"Registering handler for device type: {device_type}")
         def decorator(func):
+            logger.debug(f"Registering function '{func.__name__}' for device type '{device_type}'")
             cls.handlers[device_type] = func
             return func
         return decorator
