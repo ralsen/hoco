@@ -3,15 +3,14 @@
 # -----------------------------------------------
 # new device definitions
 # -----------------------------------------------
-
-Buero_68C63A87FACE:
-    Type:       DS1820
-    Name:       Buero
-    Hostname:   hostname
-    Cycle:      5
+ShellyPStripG4-98A3167B61A0:
+    Type:       S4PL-00416EU
+    name:       Aquarium
+    Cycle:      10
     Retry:      3
     ServerName: Server64
-    ServerPort: 8080        
+    ServerPort: 8080
+
     
 # -----------------------------------------------
 # new device definitions as prototypes
@@ -19,7 +18,7 @@ Buero_68C63A87FACE:
 S4PL-00416EU:
     Hardware: Shelly
     Protocol: 'Gen 2'
-    InfoURL: /rpc/Switch.GetStatus?id=0
+    InfoURL: /rpc/Shelly.GetStatus?id=0
 
 SNSW-001X16EU:
     Hardware: Shelly

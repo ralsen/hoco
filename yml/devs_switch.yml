@@ -4,7 +4,7 @@
 # new device definitions
 # -----------------------------------------------
 
-Steckdose_EC_FA_BC_12_F4_31:
+Steckdose_ECFABC12F431:
     Type:       Switch
     Name:       Steckdose
     Hostname:   hostname

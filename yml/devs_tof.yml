@@ -4,7 +4,7 @@
 # new device definitions
 # -----------------------------------------------
 
-ToF_Sensor_BC_DD_C2_24_3B_F4:
+ToF_Sensor-BCDDC2243BF4:
     Type:       ToF
     Name:       ToF-Sensor
     Hostname:   hostname
