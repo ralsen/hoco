@@ -11,6 +11,14 @@ ShellyPStripG4-98A3167B61A0:
     ServerName: Server64
     ServerPort: 8080
 
+shellyplug-083A8DF437C7:
+    Type:       SHPLG2-1
+    Name:       Solar
+    Hostname:   hostname
+    Cycle:      10
+    Retry:      3
+    ServerName: Server64
+    ServerPort: 8080
     
 # -----------------------------------------------
 # new device definitions as prototypes
