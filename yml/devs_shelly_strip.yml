@@ -20,6 +20,15 @@ shellyplug-083A8DF437C7:
     ServerName: Server64
     ServerPort: 8080
     
+ShellyPro3EM-ECE334F6A15C:
+    Type:       S3PM-001PCEU16
+    Name:       ShellyPro3EM
+    Hostname:   Energymeter
+    Cycle:      10
+    Retry:      3
+    ServerName: Server64
+    ServerPort: 8080    
+
 # -----------------------------------------------
 # new device definitions as prototypes
 # -----------------------------------------------
