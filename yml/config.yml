@@ -55,7 +55,7 @@ DevServer:
 Files:
     DATASTORE_YML: 'datastore.yml'
     DIAGRAMS_YML: 'diagrams.yml'
-    DEVICES_YML: 'devs.yml'
+    DEVICES_YML: 'devs_shelly_strip.yml'
 
 suffixes:
     log: # '-%Y_%m_%d__%H-%M-%S'     #date and time
