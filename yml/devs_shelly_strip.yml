@@ -3,46 +3,46 @@
 # -----------------------------------------------
 # new device definitions
 # -----------------------------------------------
-ShellyPStripG4-98A3167B61A0:
+ShellyPStripG4-98A3167B61A0x:
     Type:       S4PL-00416EU
     name:       Aquarium
     Cycle:      10
     Retry:      3
-    ServerName: Server64
+    ServerName: TestPi
     ServerPort: 8080
 
-shellyplug-083A8DF437C7:
+shellyplug-083A8DF437C7x:
     Type:       SHPLG2-1
     Name:       Solar
     Hostname:   hostname
     Cycle:      10
     Retry:      3
-    ServerName: Server64
+    ServerName: TestPi
     ServerPort: 8080
     
 ShellyPro3EM-ECE334F6A15C:
     Type:       S3PM-001PCEU16
     Name:       ShellyPro3EM
     Hostname:   Energymeter
-    Cycle:      10
+    Cycle:      3
     Retry:      3
-    ServerName: Server64
+    ServerName: TestPi
     ServerPort: 8080    
 
 # -----------------------------------------------
 # new device definitions as prototypes
 # -----------------------------------------------
+S3PM-001PCEU16:
+    Hardware: Shelly
+    Protocol: 'Gen 2'
+    InfoURL: /rpc/Shelly.GetStatus
+
 S4PL-00416EU:
     Hardware: Shelly
     Protocol: 'Gen 2'
     InfoURL: /rpc/Shelly.GetStatus?id=0
 
 SNSW-001X16EU:
-    Hardware: Shelly
-    Protocol: 'Gen 2'
-    InfoURL: rpc/Shelly.GetDeviceInfo
-
-S3PM-001PCEU16:
     Hardware: Shelly
     Protocol: 'Gen 2'
     InfoURL: rpc/Shelly.GetDeviceInfo
