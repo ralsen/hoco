@@ -180,7 +180,7 @@ class Service:
             #logger.debug(f"{self.name}: {self.this['InfoURL'][0]}")
             try:
                 logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL']}") 
-                res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL']}")
+                res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL']}", timeout=5)
                 logger.debug(f"{self.name}: {res}")
                 if res.ok:
                     dispatch_data = {
