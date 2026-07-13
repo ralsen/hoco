@@ -27,7 +27,7 @@ def handle_Pro3EM(self):
         data[f"{prefix}current"] = str(em.get(f"{prefix}current"))
         data[f"{prefix}freq"] = str(em.get(f"{prefix}freq"))    
         data[f"{prefix}act_power"] = str(em.get(f"{prefix}act_power"))
-        data[f"{prefix}aprt_power_va"] = str(em.get(f"{prefix}aprt_power_va"))
+        data[f"{prefix}aprt_power_va"] = str(em.get(f"{prefix}aprt_power"))
         data[f"{prefix}pf"] = str(em.get(f"{prefix}pf"))
         data[f"{prefix}total_act_energy_wh"] = str(emdata.get(f"{prefix}total_act_energy"))
         data[f"{prefix}total_act_ret_energy_wh"] = str(emdata.get(f"{prefix}total_act_ret_energy"))
