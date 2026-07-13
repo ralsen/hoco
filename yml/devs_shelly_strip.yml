@@ -24,7 +24,7 @@ ShellyPro3EM-ECE334F6A15C:
     Type:       S3PM-001PCEU16
     Name:       ShellyPro3EM
     Hostname:   Energymeter
-    Cycle:      3
+    Cycle:      10
     Retry:      3
     ServerName: TestPi
     ServerPort: 8080    
@@ -35,12 +35,12 @@ ShellyPro3EM-ECE334F6A15C:
 S3PM-001PCEU16:
     Hardware: Shelly
     Protocol: 'Gen 2'
-    InfoURL: /rpc/Shelly.GetStatus
+    InfoURL: rpc/Shelly.GetStatus
 
 S4PL-00416EU:
     Hardware: Shelly
     Protocol: 'Gen 2'
-    InfoURL: /rpc/Shelly.GetStatus?id=0
+    InfoURL: rpc/Shelly.GetStatus?id=0
 
 SNSW-001X16EU:
     Hardware: Shelly
