@@ -5,8 +5,6 @@ import yaml
 import socket
 import datetime
 import os
-import time
-from pathlib import Path
 import platform
 
 from threadmanager import ThreadManager
@@ -76,6 +74,12 @@ class InitManager:
                 logging.FileHandler(f"{ini['LogPath']}/{self.progname[:-3]}_{socket.gethostname()+ini['StartTime'].strftime(ini['logSuffix'])}.log"),
                 logging.StreamHandler()
             ])
+
+        if "module_loglevels" in confyml:
+            for module_name, level_str in confyml["module_loglevels"].items():
+                level = getattr(logging, level_str.upper(), None)
+                if isinstance(level, int):
+                    logging.getLogger(module_name).setLevel(level)
 
         logger.info("")
         logger.info(f"---------- starting {self.progname} at {ini['StartTime']} ----------")
