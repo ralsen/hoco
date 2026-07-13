@@ -2,8 +2,25 @@ misc:
     humanTimestamp: True
     test_webserver: False
     do_graphics: True
-    loglevel: 'DEBUG'  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+    loglevel: 'INFO'  # DEBUG, INFO, WARNING, ERROR, CRITICAL
     
+module_loglevels:
+    DS1820: "INFO"
+    S3PM-0011PCEU16: "INFO"
+    config: "DEBUG"
+    S4PL-00416EU: "INFO"
+    ShellyPro3EM: "DEBUG"
+    SHPLG2-1: "INFO"
+    SNPL-00112EU: "INFO"
+    SNSW-001X16EU: "INFO"
+    Switch: "INFO"
+    ToF: "INFO"
+    threadmanager: "INFO"
+    threadtools: "INFO"
+    ESP_parser: "INFO"
+    dispatcher: "INFO"
+    hocohandler: "INFO"
+
 Timers:
     SystemMonitorSleep: 10
     _ETH_MonitorSleep: 10
