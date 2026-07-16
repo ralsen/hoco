@@ -5,6 +5,7 @@ misc:
     loglevel: 'INFO'  # DEBUG, INFO, WARNING, ERROR, CRITICAL
     
 module_loglevels:
+    hoco: "INFO"
     DS1820: "INFO"
     S3PM-0011PCEU16: "INFO"
     config: "DEBUG"
@@ -30,17 +31,17 @@ Timers:
     mainloop_sleep: 150
 
 pathes:
-    DATA: '/data'                 # not used yet
-    LOG: '/log'
-    RRD: '/rrd'
-    YML: '/yml'
-    PNG: '/png'
-    ARCH: '/archiv'
-    SCENE: '/Scenes'
-    PROG: '/prog'
-    HTML: '/html'
-    IPAdr: '/IPAdr'
-    REG: '/reg'
+    DATA: 'data'                 # not used yet
+    LOG: 'log'
+    RRD: 'rrd'
+    YML: 'yml'
+    PNG: 'png'
+    ARCH: 'archiv'
+    SCENE: 'Scenes'
+    PROG: 'prog'
+    HTML: 'html'
+    IPAdr: 'IPAdr'
+    REG: 'reg'
 
 DeSeTask:
     Linux:
