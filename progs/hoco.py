@@ -37,15 +37,11 @@ if __name__ == "__main__":
     #logger.debug(f"Handling device: {d.handle()}")
 
     old_x = []
-    i = 0
+
     try:
         while True:
-            logger.info(f"Mainloop iteration: {i}")
-            i += 1
             x = cfg['ThreadManager'].get_all()
-            if x == old_x:
-                logger.info(f"{len(x)} active threads. No changes.")
-            else:
+            if x != old_x:
                 new_threads = set(x) - set(old_x)   # neu dazugekommen
                 mis_threads = set(old_x) - set(x)    # weggefallen
                 logger.info(f"{len(x)} active Threads:")
@@ -54,12 +50,7 @@ if __name__ == "__main__":
                     logger.info(f"Removed thread(s): {mis_threads}")
                 logger.info(f"all thread(s):     {x}")
                 old_x = x
-            #if i == 5:
-                #logger.info("terminating")
-                #cfg['ThreadManager'].stop_all()
-                #os._exit(0)
             time.sleep(cfg['mainloop_sleep'])
-            logger.info("Mainloop cycle done.")
     except KeyboardInterrupt:
         reg.save_registry(devices[0])
         logging.info("CTRL+C pressed – terminate Threads…")
