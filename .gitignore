@@ -3,9 +3,9 @@ docs/
 log/
 data/
 venv/
-env/
+.env/
 reg/
-.vscode
+.vscode/
 node_modules/
 __pycache__/
 *.log
