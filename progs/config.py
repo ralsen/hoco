@@ -6,6 +6,7 @@ import socket
 import datetime
 import os
 import platform
+from pathlib import Path
 
 from threadmanager import ThreadManager
 
@@ -30,22 +31,22 @@ class InitManager:
             return f"Fehler: {e}"
 
     def load_init(self):
-        current_dir = os.getcwd()
-        current_dir += '/..'
-        with open(f'{current_dir}/yml/config.yml', 'r') as ymlfile:
+        ini = self.ini
+        current_dir = Path.cwd()
+        self.ini['wd'] = current_dir
+        config_path = os.path.join(current_dir, 'yml', 'config.yml')
+        
+        with open(config_path, 'r') as ymlfile:
             confyml = yaml.safe_load(ymlfile)
 
-        RootPath = current_dir #confyml['ROOT_PATH']
-        ini = self.ini
         ini['StartTime'] = datetime.datetime.now()
         ini['confyml'] = confyml
-        ini['LogPath'] = RootPath + confyml['pathes']['LOG']
-        ini['DataPath'] = RootPath + confyml['pathes']['DATA']
-        ini['RRDPath'] = RootPath + confyml['pathes']['RRD']
-        ini['YMLPath'] = RootPath + confyml['pathes']['YML']
-        ini['PNGPath'] = RootPath + confyml['pathes']['PNG']
-        ini['REGPath'] = RootPath + confyml['pathes']['REG']
-        #ini['REGFile'] = Path(RootPath + confyml['pathes']['REG'])
+        ini['LogPath'] = current_dir / confyml['pathes']['LOG']
+        ini['DataPath'] = current_dir  / confyml['pathes']['DATA']
+        ini['RRDPath'] = current_dir / confyml['pathes']['RRD']
+        ini['YMLPath'] = current_dir / confyml['pathes']['YML']
+        ini['PNGPath'] = current_dir / confyml['pathes']['PNG']
+        ini['REGPath'] = current_dir / confyml['pathes']['REG']
         ini['DeSePort'] = confyml['Communication']['DevServerPort']
         ini['DeSeName'] = confyml['Communication']['DevServerName']
         ini['debugdatefmt'] = confyml['debug']['datefmt']
