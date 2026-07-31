@@ -3,7 +3,7 @@
 # -----------------------------------------------
 # new device definitions
 # -----------------------------------------------
-ShellyPStripG4-98A3167B61A0x:
+ShellyPStripG4-98A3167B61A0:
     Type:       S4PL-00416EU
     name:       Aquarium
     Cycle:      10
@@ -11,7 +11,7 @@ ShellyPStripG4-98A3167B61A0x:
     ServerName: TestPi
     ServerPort: 8080
 
-shellyplug-083A8DF437C7x:
+shellyplug-083A8DF437C7:
     Type:       SHPLG2-1
     Name:       Solar
     Hostname:   hostname
