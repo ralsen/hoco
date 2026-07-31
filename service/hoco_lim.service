@@ -1,0 +1,19 @@
+[Unit]
+Description=device Server
+After=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/projects/hoco
+
+ExecStartPre=/bin/sleep 5
+ExecStart=/home/pi/projects/hoco/.env/bin/python progs/hoco.py
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
