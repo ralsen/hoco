@@ -36,6 +36,7 @@ if __name__ == "__main__":
     #cfg['dispatchers'] = d
     #logger.debug(f"Handling device: {d.handle()}")
 
+    reg.save_registry(devices[0])
     old_x = []
 
     try:

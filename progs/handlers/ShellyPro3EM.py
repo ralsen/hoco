@@ -78,21 +78,3 @@ def handle_Pro3EM(self):
     }
 
     return data
-"""
-{
-    "ble":{},
-    "bthome":{"errors":["bluetooth_disabled"]},
-    "cloud":{"connected":true},
-    "em:0":{"id":0,"a_current":0.028,"a_voltage":0.0,"a_act_power":0.0,"a_aprt_power":0.0,"a_pf":0.00,"a_freq":0.0,"b_current":0.027,"b_voltage":0.0,"b_act_power":0.0,"b_aprt_power":0.0,"b_pf":0.00,"b_freq":0.0,"c_current":1.137,"c_voltage":233.1,"c_act_power":142.6,"c_aprt_power":265.0,"c_pf":0.54,"c_freq":50.0,"n_current":null,"total_current":1.192,"total_act_power":142.605,"total_aprt_power":264.956, "user_calibrated_phase":[]},
-    "emdata:0":{"id":0,"a_total_act_energy":0.03,"a_total_act_ret_energy":0.00,"b_total_act_energy":0.03,"b_total_act_ret_energy":0.00,"c_total_act_energy":95884.06,"c_total_act_ret_energy":5123.04,"total_act":95884.11, "total_act_ret":5123.04},
-    "eth":{"ip":null,"ip6":null
-    "modbus":{},
-    "mqtt":{"connected":false},
-    "sys":{"mac":"ECE334F6A15C","restart_required":false,"time":"14:01","unixtime":1782475286,"last_sync_ts":1782473602,"uptime":1540733,"ram_size":244376,"ram_free":103304,"ram_min_free":81808,"fs_size":524288,"fs_free":192512,"cfg_rev":12,"kvs_rev":0,"schedule_rev":0,"webhook_rev":0,"btrelay_rev":0,"available_updates":{"beta":{"version":"2.0.0-beta2"}},
-           "reset_reason":3,"utc_offset":7200},
-    "temperature:0":{"id": 0,"tC":45.5, "tF":113.9},
-    "wifi":{"sta_ip":"192.168.2.123","status":"got ip","ssid":"janzneu","bssid":"08:b6:57:c5:84:96","rssi":-63,"sta_ip6":["fe80::eee3:34ff:fef6:a15c","2a02:3100:8792:aa00:eee3:34ff:fef6:a15c","fd37:996c:b6d2:0:eee3:34ff:fef6:a15c"]},
-    "ws":{"connected":false}
-}
-"""
-{'online': True, 'device_info': {'mac': 'ECE334F6A15C', 'uptime_seconds': 1541022, 'temperature_c': None}, 'total_current_metrics': {'total_act_power_w': 209.98, 'total_apower_va': None, 'total_rpower_var': None}, 'total_energy_counters': {'total_act_energy_wh': None, 'total_act_ret_energy_wh': None}, 'phases': {'A': {...}, 'B': {...}, 'C': {...}}, 'saldated_metrics': {'current_saldated_power_w': 210.0, 'total_saldated_energy_wh': 0}, 'raw_status': {'ble': {}, 'bthome': {...}, 'cloud': {...}, 'em:0': {...}, 'emdata:0': {...}, 'eth': {...}, 'modbus': {}, 'mqtt': {...}, 'sys': {...}, 'temperature:0': {...}, 'wifi': {...}, 'ws': {...}}}

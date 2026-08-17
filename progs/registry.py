@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class registry():
     def __init__(self, cfg):
         self.cfg = cfg  
-        self.regfile = Path(os.path.join(self.cfg['REGPath'], "regfile.yml"))
+        self.regfile = Path(os.path.join(self.cfg['REGPath'], "regfile.txt"))
     def update_registry(self, devs, service) -> dict:
         previous = self.load_registry()
         current = devs

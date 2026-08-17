@@ -4,6 +4,7 @@ log/
 data/
 venv/
 .env/
+.venv
 reg/
 .vscode/
 node_modules/
