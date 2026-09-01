@@ -1,14 +1,33 @@
 # https://shelly-api-docs.shelly.cloud
 
 # -----------------------------------------------
-# new device definitions
+# ESP device definitions
+# -----------------------------------------------
+Buero-68C63A87FACE:
+    Type:       DS1820
+    name:       Buero
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080        
+
+Schlafzimmer-DC4F2210C60E:
+    Type:       DS1820
+    name:       Schlafzimmer
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080        
+
+# -----------------------------------------------
+# shelly device definitions
 # -----------------------------------------------
 ShellyPStripG4-98A3167B61A0:
     Type:       S4PL-00416EU
     name:       Aquarium
     Cycle:      10
     Retry:      3
-    ServerName: TestPi
+    ServerName: Serv64
     ServerPort: 8080
 
 shellyplug-083A8DF437C7:
@@ -17,7 +36,7 @@ shellyplug-083A8DF437C7:
     Hostname:   hostname
     Cycle:      10
     Retry:      3
-    ServerName: TestPi
+    ServerName: Serv64
     ServerPort: 8080
     
 ShellyPro3EM-ECE334F6A15C:
@@ -26,7 +45,7 @@ ShellyPro3EM-ECE334F6A15C:
     Hostname:   Energymeter
     Cycle:      10
     Retry:      3
-    ServerName: TestPi
+    ServerName: Serv64
     ServerPort: 8080    
 
 # -----------------------------------------------
