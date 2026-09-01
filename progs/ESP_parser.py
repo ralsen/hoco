@@ -6,6 +6,35 @@ import os
 
 logger = logging.getLogger(__name__)
 
+ESP_Trans = {
+    'Hostname': 'name',
+    'IP': 'IP',
+    'Type': 'Type',
+    'Version': 'Version',
+    'Hardw': 'Hardware',
+    'Network': 'Network',
+    'Chip-ID': None,  
+    'MAC-Address': 'MAC',
+    'Network-IP': 'IP',
+    'Devicename': 'hostname',
+    'AP-Name': 'APName',
+    'cfg-Size': 'Size',
+    'Hash': 'Hash',
+    'Display': None,
+    'uptime': 'uptime',
+    'Measuring cycle': 'MeasuringCycle',
+    'Transmit cycle': 'TransmitCycle',
+    'PageReload cycle': 'PageReload',
+    'Signal strength': 'WiFi',
+    'Server': 'Server',
+    'Port': 'Port',
+    'LED': 'LED',
+    'Measurements': None,
+    'good Transmissions': 'goodTrans',
+    'bad Transmissions': 'badTrans',
+    'Pages delivered': 'delivPages'
+    }
+     
 def parse_ESP_main(text):    
     # Extrahiere nur den Inhalt zwischen <div1> und </div1>
     div1_content = re.search(r'<div1>(.*?)</div1>', text, re.DOTALL).group(1)
@@ -21,12 +50,18 @@ def parse_ESP_main(text):
             version = cleaned_key.split(" ", 1)[0]
             data_dict["Version"] = f"V{version}"
         else:
-            data_dict[key.split(">")[-1]] = value.strip()
-
+            keysplit = key.split(">")[-1]
+            keytrans = ESP_Trans.get(keysplit, 'NoTranslation')
+            logger.debug(f"Parsing key: {key}, Translation: {keytrans}")
+            if keytrans is not None:
+                data_dict[keytrans] = value.strip()
+            elif keytrans == 'NoTranslation':
+                logger.warning(f"Key '{keysplit}' has no translation and will be ignored.")
+                
     try:
-        data_dict["Hostname"]
+        data_dict["hostname"]
     except KeyError:
-        data_dict["Hostname"] = "ESP_Device ohne Hostname"
+        data_dict["hostname"] = "ESP_Device ohne Hostname"
     return data_dict
 
 def parse_ESP_table(html: str) -> list[dict]:
