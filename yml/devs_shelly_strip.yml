@@ -19,6 +19,14 @@ Schlafzimmer-DC4F2210C60E:
     ServerName: Serv64
     ServerPort: 8080        
 
+ToF_Sensor-BCDDC2243BF4:
+    Type:       ToF
+    name:       ToF_Sensor
+    Cycle:      30
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
 # -----------------------------------------------
 # shelly device definitions
 # -----------------------------------------------
