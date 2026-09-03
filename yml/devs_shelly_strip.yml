@@ -27,6 +27,119 @@ ToF_Sensor-BCDDC2243BF4:
     ServerName: Serv64
     ServerPort: 8080
 
+Heizung-CC50E33BF64D:
+    Type:       DS1820
+    name:       Heizung
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080        
+
+Jan-CC50E35DA7A5:
+    Type:       DS1820
+    name:       Jan
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Keller-CC50E33C13D3:
+    Type:       DS1820
+    name:       Keller
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Lars-Dach-CC50E33C0671:
+    Type:       DS1820
+    name:       Lars-Dach
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Lars-Zimmer-CC50E35DA8F3:
+    Type:       DS1820
+    name:       Lars-Zimmer
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+No-Name-7C87CEBE3DA8:
+    Type:       DS1820
+    name:       No-Name
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Schuppen-4417931BFF55:
+    Type:       DS1820
+    name:       Schuppen
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Wintergarten-4091514EB45D:
+    Type:       DS1820
+    name:       Wintergarten
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Wohnzimmer-4417931C1AE0:
+    Type:       DS1820
+    name:       Wohnzimmer
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Aqua-1-CC50E3531E58:
+    Type:       Switch
+    name:       Aqua-1
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Langsam-CC50E33C1768:
+    Type:       DS1820
+    name:       Langsam
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+No-Name-8CCE4EDEB2F0:
+    Type:       DS1820
+    name:       No-Name
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Schnell-AC0BFBD64174:
+    Type:       DS1820
+    name:       Schnell
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+
+Schuppen-Steckdose-ECFABC9BCC1D:
+    Type:       Switch
+    name:       Schuppen-Steckdose
+    Cycle:      300
+    Retry:      3
+    ServerName: Serv64
+    ServerPort: 8080
+            
+
 # -----------------------------------------------
 # shelly device definitions
 # -----------------------------------------------
