@@ -194,9 +194,8 @@ class Service:
                 else:
                     raise ValueError(f"endpoint was we have no endpoint anymore")
             except Exception as e:
-                logger.warning(f"{self.name}: Retry {retry + 1} failed: {e}")
                 result = f"{self.name}: cant get data from device with {self.this['IP']} ({e})"
-                logger.error(result)
+                logger.error(f"{self.name}: Retry {retry + 1} failed with: {result}")
         logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
         logger.debug(f"---> {self.name}: reading done: {result}")
         return result
