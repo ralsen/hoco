@@ -8,7 +8,7 @@ import requests
 import time
 import yaml
 import threading
-import json
+import random
 from zeroconf import ServiceBrowser, Zeroconf
 from dispatcher import Dispatcher
 
@@ -108,7 +108,7 @@ class Service:
     
     def __monitoring_thread__(self, stop_event: threading.Event):
         logger.debug(f"starting monitoring thread for {self.name}")
-        
+        time.sleep(random.randint(1, 300))  #prevent that all device are asking at the same time
         while not stop_event.is_set():            
             logger.debug(f"calling {self.name} with protocol: {self.this['Protocol']}")
             if self.this['Protocol'] != 'unknown':
