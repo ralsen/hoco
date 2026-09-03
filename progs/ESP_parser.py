@@ -35,6 +35,11 @@ ESP_Trans = {
     'Pages delivered': 'delivPages'
     }
      
+Switch_Trans = {
+    'ontime': 'ontime',
+    'offtime': 'offtime',
+    'Cycles': 'cycles',
+    }
 def parse_ESP_main(text):    
     # Extrahiere nur den Inhalt zwischen <div1> und </div1>
     div1_content = re.search(r'<div1>(.*?)</div1>', text, re.DOTALL).group(1)
@@ -52,11 +57,13 @@ def parse_ESP_main(text):
         else:
             keysplit = key.split(">")[-1]
             keytrans = ESP_Trans.get(keysplit, 'NoTranslation')
+            if keytrans == 'NoTranslation':
+                keytrans = Switch_Trans.get(keysplit, 'NoTranslation')
             logger.debug(f"Parsing key: {key}, Translation: {keytrans}")
-            if keytrans is not None:
-                data_dict[keytrans] = value.strip()
-            elif keytrans == 'NoTranslation':
+            if keytrans == 'NoTranslation':
                 logger.warning(f"Key '{keysplit}' has no translation and will be ignored.")
+            elif keytrans is not None:
+                data_dict[keytrans] = value.strip()
                 
     try:
         data_dict["hostname"]
