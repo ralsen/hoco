@@ -17,5 +17,5 @@ def handle_switch(self):
     data.pop('Network-IP', None)  # entfernen, da nicht relevant
     res = requests.get(f"http://{self.this['device']['IP']}/status") #{self.this['InfoURL']}")
     y = ESP_parser.parse_ESP_switch(res.text)
-    data['distance'] = y
+    data['status'] = y
     return data
