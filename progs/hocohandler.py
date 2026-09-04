@@ -107,8 +107,9 @@ class Service:
         pass
     
     def __monitoring_thread__(self, stop_event: threading.Event):
-        logger.debug(f"starting monitoring thread for {self.name}")
-        time.sleep(random.randint(1, 300))  #prevent that all device are asking at the same time
+        delay = random.randint(1, 300)  # prevent that all devices are asking at the same time
+        logger.info(f"starting monitoring thread for {self.name} with initial delay of {delay} s")
+        time.sleep(delay)
         while not stop_event.is_set():            
             logger.debug(f"calling {self.name} with protocol: {self.this['Protocol']}")
             if self.this['Protocol'] != 'unknown':
