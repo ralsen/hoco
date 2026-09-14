@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
 class DeviceHandler:
+    allDevices = {}
     def __init__(self, cfg):
         self.cfg = cfg
         with open(f"{self.cfg['YMLPath']}/{self.cfg['Devices']}", 'r') as ymlfile:
@@ -37,15 +38,18 @@ class DeviceHandler:
     def initDevices(self, listener):
         knownDevices = 0
         unknownDevices = 0
-        allDevices = {}
+        #allDevices = {}
         
         if not listener.devices:
             logger.error("No devices found.")
         else:
             for full_name in listener.devices:
                 logger.debug(f"Processing device: {full_name}")
-                allDevices[full_name] = {}
-                this = allDevices[full_name]
+                if full_name in self.allDevices:
+                    logger.warning(f"Device {full_name} already processed. Skipping.")
+                    continue
+                self.allDevices[full_name] = {}
+                this = self.allDevices[full_name]
                 this['FullName'] = full_name
                 this['Hostname'] = listener.devices[full_name]['info'].server.split('.')[0]  # Hostname extrahieren
                 try:
@@ -53,6 +57,7 @@ class DeviceHandler:
                 except KeyError:
                     logger.warning(f"Device {this['Hostname']} not found in devs.yml. Please add it to the yml file.")
                     unknownDevices += 1
+                    this['isknown'] = False
                     continue
                 this['IP'] = listener.devices[full_name]['IP']
                 this['Type'] = device['Type']
@@ -64,13 +69,14 @@ class DeviceHandler:
                 this['ServerPort'] = device['ServerPort']
                 this['ServerName'] = device['ServerName']
                 this['Retry'] = device['Retry']
+                this['isknown'] = True
+                this['service'] = Service(self.cfg, this)
+                logger.debug(f"device: '{this['Hostname']}' is defined in devs.yml.")
                 logger.debug(f"Protocol is {this['Protocol']}")
                 knownDevices += 1
-                this['service'] = Service(self.cfg, this)
-                logger.debug(f"device: '{this['Hostname']}' is defined")
                 
         logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {self.cfg['YMLPath']}/devs.yml")
-        return allDevices, knownDevices, unknownDevices
+        return self.allDevices, knownDevices, unknownDevices
 
 class DeviceListener:
     """Listener für Shelly-Geräte, um IP-Adressen zu sammeln."""
@@ -109,7 +115,8 @@ class Service:
     def __monitoring_thread__(self, stop_event: threading.Event):
         delay = random.randint(1, 300)  # prevent that all devices are asking at the same time
         logger.info(f"starting monitoring thread for {self.name} with initial delay of {delay} s")
-        time.sleep(delay)
+        time.sleep(delay)                
+        time.sleep(random.randint(1, 2))  #prevent that all device are asking at the same time
         while not stop_event.is_set():            
             logger.debug(f"calling {self.name} with protocol: {self.this['Protocol']}")
             if self.this['Protocol'] != 'unknown':
@@ -195,8 +202,9 @@ class Service:
                 else:
                     raise ValueError(f"endpoint was we have no endpoint anymore")
             except Exception as e:
+                logger.warning(f"{self.name}: Retry {retry + 1} failed: {e}")
                 result = f"{self.name}: cant get data from device with {self.this['IP']} ({e})"
-                logger.error(f"{self.name}: Retry {retry + 1} failed with: {result}")
+                logger.error(result)
         logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
         logger.debug(f"---> {self.name}: reading done: {result}")
         return result
