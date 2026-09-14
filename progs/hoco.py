@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     logger.debug("Searching Devices ...")
     devhandler = dh.DeviceHandler(cfg)
-    devices = devhandler.discover_devices()
+    #devices = devhandler.discover_devices()
     reg = registry(cfg)
     
     # ganz wichtig: einmal aufrufen
@@ -36,11 +36,12 @@ if __name__ == "__main__":
     #cfg['dispatchers'] = d
     #logger.debug(f"Handling device: {d.handle()}")
 
-    reg.save_registry(devices[0])
     old_x = []
 
     try:
         while True:
+            devices = devhandler.discover_devices()
+            reg.save_registry(devices[0])
             x = cfg['ThreadManager'].get_all()
             if x != old_x:
                 new_threads = set(x) - set(old_x)   # neu dazugekommen
@@ -52,6 +53,7 @@ if __name__ == "__main__":
                 logger.info(f"all thread(s):     {x}")
                 old_x = x
             time.sleep(cfg['mainloop_sleep'])
+            #time.sleep(5)
     except KeyboardInterrupt:
         reg.save_registry(devices[0])
         logging.info("CTRL+C pressed – terminate Threads…")
