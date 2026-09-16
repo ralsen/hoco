@@ -12,8 +12,6 @@ import random
 from zeroconf import ServiceBrowser, Zeroconf
 from dispatcher import Dispatcher
 
-import config as cfg
-
 logger = logging.getLogger(__name__)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 
@@ -46,7 +44,7 @@ class DeviceHandler:
             for full_name in listener.devices:
                 logger.debug(f"Processing device: {full_name}")
                 if full_name in self.allDevices:
-                    logger.warning(f"Device {full_name} already processed. Skipping.")
+                    logger.debug(f"Device {full_name} already processed. Skipping.")
                     continue
                 self.allDevices[full_name] = {}
                 this = self.allDevices[full_name]
@@ -75,8 +73,8 @@ class DeviceHandler:
                 logger.debug(f"Protocol is {this['Protocol']}")
                 knownDevices += 1
                 
-        logger.info(f"got {knownDevices} of {len(listener.devices)} devices with {knownDevices} known protocols. Please check the {unknownDevices} unrecognised devices in {self.cfg['YMLPath']}/devs.yml")
-        return self.allDevices, knownDevices, unknownDevices
+        logger.debug(f"got {knownDevices} new devices of {len(listener.devices)} detected devices. Please check the {unknownDevices} unrecognised devices in {self.cfg['YMLPath']}/devs.yml")
+        return self.allDevices
 
 class DeviceListener:
     """Listener für Shelly-Geräte, um IP-Adressen zu sammeln."""
@@ -97,10 +95,10 @@ class DeviceListener:
         self.devices[name]['IP'] = ip_address
         self.devices[name]['info'] = info
         self.devices[name]['zeroconf'] = zeroconf
-        logger.info(f"found device: {name} with IP {ip_address}")
+        logger.debug(f"found device: {name} with IP {ip_address}")
 
     def update_service(self, zeroconf, service_type, name):
-        logger.info("### mDNS service updated: ### %s", name)
+        logger.debug("### mDNS service updated: ### %s", name)
         pass
            
 class Service:

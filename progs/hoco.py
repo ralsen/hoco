@@ -4,8 +4,6 @@
 import time
 import logging 
 import os
-import json
-import requests
 
 import config as config
 import hocohandler as dh
@@ -27,21 +25,14 @@ if __name__ == "__main__":
 
     logger.debug("Searching Devices ...")
     devhandler = dh.DeviceHandler(cfg)
-    #devices = devhandler.discover_devices()
     reg = registry(cfg)
     
-    # ganz wichtig: einmal aufrufen
-    #data = {"Type": "SNSW-001X16EU"}
-    #d = Dispatcher(data)
-    #cfg['dispatchers'] = d
-    #logger.debug(f"Handling device: {d.handle()}")
-
     old_x = []
 
     try:
         while True:
             devices = devhandler.discover_devices()
-            reg.save_registry(devices[0])
+            reg.save_registry(devices)
             x = cfg['ThreadManager'].get_all()
             if x != old_x:
                 new_threads = set(x) - set(old_x)   # neu dazugekommen
@@ -52,10 +43,10 @@ if __name__ == "__main__":
                     logger.info(f"Removed thread(s): {mis_threads}")
                 logger.info(f"all thread(s):     {x}")
                 old_x = x
-            time.sleep(cfg['mainloop_sleep'])
-            #time.sleep(5)
+            #time.sleep(cfg['mainloop_sleep'])
+            time.sleep(5)
     except KeyboardInterrupt:
-        reg.save_registry(devices[0])
+        reg.save_registry(devices)
         logging.info("CTRL+C pressed – terminate Threads…")
         cfg['ThreadManager'].stop_all()
 
