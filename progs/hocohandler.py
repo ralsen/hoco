@@ -39,7 +39,7 @@ class DeviceHandler:
         #allDevices = {}
         
         if not listener.devices:
-            logger.error("No devices found.")
+            logger.debug("No devices found.")
         else:
             for full_name in listener.devices:
                 logger.debug(f"Processing device: {full_name}")
@@ -183,9 +183,7 @@ class Service:
             return result   
         logger.debug(f"{self.name}: starting read with max_retries={max_retries}")     
         for retry in range(max_retries):
-            #logger.debug(f"{self.name}: {self.this['InfoURL'][0]}")
             try:
-                logger.debug(f"{self.name}: {retry + 1}. request on http://{self.this['IP']}/{self.this['InfoURL']}") 
                 res = requests.get(f"http://{self.this['IP']}/{self.this['InfoURL']}", timeout=5)
                 logger.debug(f"{self.name}: {res}")
                 if res.ok:
@@ -200,10 +198,10 @@ class Service:
                 else:
                     raise ValueError(f"endpoint was we have no endpoint anymore")
             except Exception as e:
-                logger.warning(f"{self.name}: Retry {retry + 1} failed.")
+                logger.warning(f"{self.name}: Retry {retry} failed.")
                 result = f"{self.name}: cant get data from device with {self.this['IP']} ({e})"
-                if retry > max_retries:
-                    logger.error(result)
+                if retry > (max_retries-1):
+                    logger.error(f"{self.name}: All retries failed: {retry} / {max_retries}: {result}")
                 time.sleep(2)  # kurze Pause vor dem nächsten Versuch
         logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
         logger.debug(f"---> {self.name}: reading done: {result}")

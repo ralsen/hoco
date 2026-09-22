@@ -32,6 +32,7 @@ if __name__ == "__main__":
     try:
         while True:
             devices = devhandler.discover_devices()
+            logger.info(f"Discovered {len(devices)} devices.")            
             reg.save_registry(devices)
             x = cfg['ThreadManager'].get_all()
             if x != old_x:
@@ -43,8 +44,8 @@ if __name__ == "__main__":
                     logger.info(f"Removed thread(s): {mis_threads}")
                 logger.info(f"all thread(s):     {x}")
                 old_x = x
-            #time.sleep(cfg['mainloop_sleep'])
-            time.sleep(5)
+            time.sleep(cfg['mainloop_sleep'])
+            #time.sleep(5)
     except KeyboardInterrupt:
         reg.save_registry(devices)
         logging.info("CTRL+C pressed – terminate Threads…")
