@@ -32,7 +32,7 @@ if __name__ == "__main__":
     try:
         while True:
             devices = devhandler.discover_devices()
-            logger.info(f"Discovered {len(devices)} devices.")            
+            logger.debug(f"Discovered {len(devices)} devices.")            
             reg.save_registry(devices)
             x = cfg['ThreadManager'].get_all()
             if x != old_x:

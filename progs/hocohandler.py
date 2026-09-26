@@ -2,6 +2,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 ###############################################################
+#       Gerät im Netz aber nicht in der yml-Datei -> Meldung an den User -> erl.
+#   Gerät in der yml-Datei aber nicht im Netz -> Meldung an den User
+#       Gerät im Netz und in der yml-Datei -> Daten auslesen und an Server -> erl.
+#   Gerät im Netz und in der yml-Datei aber nicht erreichbar -> Meldung an den User
+
 import logging 
 import socket
 import requests
@@ -36,11 +41,8 @@ class DeviceHandler:
     def initDevices(self, listener):
         knownDevices = 0
         unknownDevices = 0
-        #allDevices = {}
         
-        if not listener.devices:
-            logger.debug("No devices found.")
-        else:
+        if listener.devices:
             for full_name in listener.devices:
                 logger.debug(f"Processing device: {full_name}")
                 if full_name in self.allDevices:
@@ -72,7 +74,9 @@ class DeviceHandler:
                 logger.debug(f"device: '{this['Hostname']}' is defined in devs.yml.")
                 logger.debug(f"Protocol is {this['Protocol']}")
                 knownDevices += 1
-                
+        else:
+            logger.debug("No devices found in the network.")
+                    
         logger.debug(f"got {knownDevices} new devices of {len(listener.devices)} detected devices. Please check the {unknownDevices} unrecognised devices in {self.cfg['YMLPath']}/devs.yml")
         return self.allDevices
 
@@ -198,10 +202,10 @@ class Service:
                 else:
                     raise ValueError(f"endpoint was we have no endpoint anymore")
             except Exception as e:
-                logger.warning(f"{self.name}: Retry {retry} failed.")
+                logger.debug(f"{self.name}: Retry {retry} failed.")
                 result = f"{self.name}: cant get data from device with {self.this['IP']} ({e})"
-                if retry > (max_retries-1):
-                    logger.error(f"{self.name}: All retries failed: {retry} / {max_retries}: {result}")
+                if retry >= (max_retries-1):
+                    logger.warning(f"{self.name}: All retries failed: {result}")
                 time.sleep(2)  # kurze Pause vor dem nächsten Versuch
         logger.debug(f"{self.name}: needed {retry + 1} of {max_retries} retries.")
         logger.debug(f"---> {self.name}: reading done: {result}")
