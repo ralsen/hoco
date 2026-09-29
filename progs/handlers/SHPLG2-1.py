@@ -10,12 +10,16 @@ def handle_SHPLG2(self):
     logger.debug("Handling: SHPLG2-1")
     data = {}
     #data = json.loads(self.this['response'].text)
-    data['name'] = self.this['device']['Hostname']
-    data['Type'] = self.this['device']['Type']
-    data['IP'] = self.this['device']['IP']
-    data['Power'] = self.this['response'].text
-    power = json.loads(data["Power"])
-    power_value = power["power"]
-    data['Power'] = power_value
-    data['Hardware'] = self.this['device']['Hardware']
+    try:
+        data['name'] = self.this['device']['Hostname']
+        data['Type'] = self.this['device']['Type']
+        data['IP'] = self.this['device']['IP']
+        text = json.loads(self.this['response'].text)
+        data['Power'] = text['power']
+        data['total'] = text['total']
+        data['uptime'] = text['timestamp']
+        data['Hardware'] = self.this['device']['Hardware']
+    except Exception as e:
+        logger.error(f"Error occurred while handling SHPLG2-1: {e}")
+        data = {}
     return data
