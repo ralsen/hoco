@@ -17,7 +17,7 @@ def handle_SHPLG2(self):
         text = json.loads(self.this['response'].text)
         data['Power'] = text['power']
         data['total'] = text['total']
-        data['uptime'] = text['timestamp']
+        data['uptime'] = 0 #we dont need the timestamp text['timestamp']
         data['Hardware'] = self.this['device']['Hardware']
     except Exception as e:
         logger.error(f"Error occurred while handling SHPLG2-1: {e}")
