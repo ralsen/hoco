@@ -8,7 +8,7 @@ Buero-68C63A87FACE:
     name:       Buero
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080        
 
 Schlafzimmer-DC4F2210C60E:
@@ -16,7 +16,7 @@ Schlafzimmer-DC4F2210C60E:
     name:       Schlafzimmer
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080        
 
 ToF_Sensor-BCDDC2243BF4:
@@ -24,7 +24,7 @@ ToF_Sensor-BCDDC2243BF4:
     name:       ToF_Sensor
     Cycle:      30
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Heizung-CC50E33BF64D:
@@ -32,7 +32,7 @@ Heizung-CC50E33BF64D:
     name:       Heizung
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080        
 
 Jan-CC50E35DA7A5:
@@ -40,7 +40,7 @@ Jan-CC50E35DA7A5:
     name:       Jan
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Keller-CC50E33C13D3:
@@ -48,7 +48,7 @@ Keller-CC50E33C13D3:
     name:       Keller
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Lars-Dach-CC50E33C0671:
@@ -56,7 +56,7 @@ Lars-Dach-CC50E33C0671:
     name:       Lars-Dach
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Lars-Zimmer-CC50E35DA8F3:
@@ -64,7 +64,7 @@ Lars-Zimmer-CC50E35DA8F3:
     name:       Lars-Zimmer
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 No-Name-7C87CEBE3DA8:
@@ -72,7 +72,7 @@ No-Name-7C87CEBE3DA8:
     name:       No-Name
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Schuppen-4417931BFF55:
@@ -80,7 +80,7 @@ Schuppen-4417931BFF55:
     name:       Schuppen
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Wintergarten-4091514EB45D:
@@ -88,7 +88,7 @@ Wintergarten-4091514EB45D:
     name:       Wintergarten
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Wohnzimmer-4417931C1AE0:
@@ -96,7 +96,7 @@ Wohnzimmer-4417931C1AE0:
     name:       Wohnzimmer
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Aqua-1-CC50E3531E58:
@@ -104,7 +104,7 @@ Aqua-1-CC50E3531E58:
     name:       Aqua-1
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Langsam-CC50E33C1768:
@@ -112,7 +112,7 @@ Langsam-CC50E33C1768:
     name:       Langsam
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 No-Name-8CCE4EDEB2F0:
@@ -120,7 +120,7 @@ No-Name-8CCE4EDEB2F0:
     name:       No-Name
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Schnell-AC0BFBD64174:
@@ -128,7 +128,7 @@ Schnell-AC0BFBD64174:
     name:       Schnell
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 Schuppen-Steckdose-ECFABC9BCC1D:
@@ -136,7 +136,7 @@ Schuppen-Steckdose-ECFABC9BCC1D:
     name:       Schuppen-Steckdose
     Cycle:      300
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
             
 
@@ -148,7 +148,7 @@ ShellyPStripG4-98A3167B61A0:
     name:       Aquarium
     Cycle:      15
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
 
 shellyplug-083A8DF437C7:
@@ -157,7 +157,7 @@ shellyplug-083A8DF437C7:
     Hostname:   hostname
     Cycle:      15
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080
     
 ShellyPro3EM-ECE334F6A15C:
@@ -166,7 +166,7 @@ ShellyPro3EM-ECE334F6A15C:
     Hostname:   Energymeter
     Cycle:      15
     Retry:      3
-    ServerName: Serv64
+    ServerName: Server64
     ServerPort: 8080    
 
 # -----------------------------------------------
