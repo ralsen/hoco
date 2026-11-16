@@ -61,7 +61,7 @@ DeSeTask:
     - ['/Users/ralphfollrichs/Projects/dabo/progs/all.sh', 1800]
 
 Communication:
-    DevServerName: 'Server64.local'    
+    DevServerName: 'Serv64.local'    
     DevServerPort: 8080
     DaBoServerPort: 8088
     TargetNet: "192.168.2.0/24"
